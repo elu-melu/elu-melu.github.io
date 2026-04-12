@@ -63,13 +63,7 @@ export const skills = {
     "Heuristic Evaluation",
     "User Journey Mapping",
   ],
-  "Backend & Data": [
-    "Java",
-    "Python",
-    "MySQL",
-    "Bash",
-    "OAuth 2.0",
-  ],
+  "Backend & Data": ["Java", "Python", "MySQL", "Bash", "OAuth 2.0"],
 };
 
 export interface ExperienceEntry {
@@ -218,7 +212,7 @@ export const affiliations = [
   },
   {
     name: "Bare Max",
-    url: "#",
+    url: "https://www.bare-max.club/",
     description: "Spotlighting Nigerians in the creative industry",
   },
 ];

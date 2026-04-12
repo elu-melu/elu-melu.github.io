@@ -1,12 +1,11 @@
 <template>
   <section id="learning" class="py-24 bg-light-teal">
     <div class="max-w-6xl mx-auto px-6">
-      <h2 class="font-mono text-3xl md:text-4xl text-deep-teal mb-2">
-        learning
-      </h2>
-      <div class="w-12 h-[2px] bg-teal mb-4"></div>
+      <h2 class="font-mono text-3xl md:text-4xl text-deep-teal mb-2">learning</h2>
+      <div class="w-12 h-0.5 bg-teal mb-4"></div>
       <p class="text-charcoal/60 text-sm mb-12 max-w-xl">
-        Keeping myself accountable. Here's what I'm currently learning and what's on the roadmap.
+        Keeping myself accountable. Here's what I'm currently learning and what's on the
+        roadmap.
       </p>
 
       <!-- Filter tabs -->
@@ -46,11 +45,11 @@
             >
               {{ item.status }}
             </span>
-            <span class="font-mono text-xs text-charcoal/40">
-              {{ item.progress }}%
-            </span>
+            <span class="font-mono text-xs text-charcoal/40"> {{ item.progress }}% </span>
           </div>
-          <h4 class="text-charcoal font-semibold mb-1">{{ item.topic }}</h4>
+          <h4 class="text-charcoal font-semibold mb-1">
+            {{ item.topic }}
+          </h4>
           <p class="text-xs text-charcoal/50 font-mono mb-3">
             {{ item.category }}
           </p>
@@ -59,7 +58,11 @@
             <div
               class="h-full rounded-full transition-all duration-700 ease-out"
               :class="
-                item.status === 'active' ? 'bg-teal' : item.status === 'completed' ? 'bg-deep-teal' : 'bg-charcoal/20'
+                item.status === 'active'
+                  ? 'bg-teal'
+                  : item.status === 'completed'
+                    ? 'bg-deep-teal'
+                    : 'bg-charcoal/20'
               "
               :style="{ width: `${item.progress}%` }"
             ></div>

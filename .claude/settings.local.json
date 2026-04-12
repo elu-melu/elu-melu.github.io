@@ -26,7 +26,13 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code} %{redirect_url}\" https://elumelu.dev)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" --resolve elumelu.dev:443:76.76.21.21 https://elumelu.dev)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" --resolve elumelu.dev:443:76.76.21.21 --connect-timeout 10 https://elumelu.dev)",
-      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://elumelu.dev --resolve elumelu.dev:80:76.76.21.21 --connect-timeout 10)"
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://elumelu.dev --resolve elumelu.dev:80:76.76.21.21 --connect-timeout 10)",
+      "Bash(dig elumelu.dev A +short)",
+      "Bash(dig www.elumelu.dev CNAME +short)",
+      "Bash(dig @8.8.8.8 elumelu.dev A +short)",
+      "Bash(dig @8.8.8.8 www.elumelu.dev CNAME +short)",
+      "Bash(curl -sI https://elumelu.dev)",
+      "Bash(curl -s --connect-timeout 10 -o /dev/null -w \"HTTP %{http_code}\\\\nSSL: %{ssl_verify_result}\\\\n\" https://elumelu.dev)"
     ]
   }
 }

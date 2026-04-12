@@ -29,7 +29,7 @@ export const education = [
     location: "Atlanta, GA, USA",
     degree: "Masters of Science in Computer Science",
     focus: "Computing Systems",
-    date: "Expected Dec 2027",
+    date: "Expected Dec 2028",
   },
   {
     school: "Webster University",
@@ -63,13 +63,13 @@ export const skills = {
     "Heuristic Evaluation",
     "User Journey Mapping",
   ],
-  "Backend & Data": ["Java", "Python", "MySQL", "Bash", "OAuth 2.0"],
+  "Backend & Data": ["Python", "MySQL", "Bash", "OAuth 2.0"],
 };
 
 export interface ExperienceEntry {
   role: string;
   company: string;
-  location: string;
+  // location: string;
   date: string;
   bullets: string[];
 }
@@ -78,7 +78,7 @@ export const experience: ExperienceEntry[] = [
   {
     role: "UX/Software Engineer",
     company: "78 Financials",
-    location: "Lagos, NG",
+    // location: "Lagos, NG",
     date: "Jan 2025 - Present",
     bullets: [
       "Architected multi-factor authentication (MFA) and Google OAuth integrations using FingerprintJS, protecting thousands of user accounts",
@@ -92,7 +92,7 @@ export const experience: ExperienceEntry[] = [
   {
     role: "CyberSecurity AI Trainer",
     company: "micro1",
-    location: "Remote",
+    // location: "Remote",
     date: "Dec 2024 - June 2025",
     bullets: [
       "Compiled technical reports quantifying vulnerabilities, improving AI system resilience by 60%",
@@ -103,7 +103,7 @@ export const experience: ExperienceEntry[] = [
   {
     role: "IT Support",
     company: "Niger Delta Power Holding Company",
-    location: "Abuja, NG",
+    // location: "Abuja, NG",
     date: "Jan 2024 - Oct 2024",
     bullets: [
       "Assisted in internal projects concerning malware detection and protection, as well as CDN attack mitigation",
@@ -113,7 +113,7 @@ export const experience: ExperienceEntry[] = [
   {
     role: "Frontend Engineer",
     company: "KNG Technologies",
-    location: "New York, USA",
+    // location: "New York, USA",
     date: "Nov 2022 - August 2024",
     bullets: [
       "Implemented standardized documentation process with centralized repository access",
@@ -133,16 +133,8 @@ export interface Project {
 export const projects: Project[] = [
   {
     title: "Wellness Pathway",
-    description:
-      "Full-stack health platform based on CDC Prevent T2 standards",
-    tech: [
-      "Java",
-      "GCP",
-      "Docker",
-      "MySQL",
-      "GitHub Actions",
-      "OAuth 2.0",
-    ],
+    description: "Full-stack health platform based on CDC Prevent T2 standards",
+    tech: ["Java", "GCP", "Docker", "MySQL", "GitHub Actions", "OAuth 2.0"],
     highlights: [
       "Architected secure Java-based API and backend infrastructure",
       "Engineered CI/CD pipeline using GitHub Actions and GCP",

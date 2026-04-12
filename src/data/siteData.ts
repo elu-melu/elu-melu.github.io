@@ -1,10 +1,10 @@
 export const siteConfig = {
   name: "Webster C. Elumelu",
   handle: "get-webster",
-  title: "Software Engineer & Security Specialist",
+  title: "Software & Cloud Engineer",
   location: "Abuja, NG",
   email: "elumeluwebster@gmail.com",
-  bio: `Results-driven Software Engineer and Cybersecurity Specialist with an MS in Computer Science (Candidate). Proven expertise in architecting secure, scalable fintech applications and performing advanced vulnerability simulations. Skilled in bridging the gap between high-performance engineering and user-centric design to drive digital transformation and strategic business insights.`,
+  bio: `Results-driven Software Engineer with an MS in Computer Science (Candidate). Proven expertise in architecting scalable fintech applications and cloud-native infrastructure. Skilled in bridging the gap between high-performance systems, DevOps practices, and user-centric design to drive digital transformation and reliable, production-grade deployments.`,
 };
 
 export const links = {
@@ -20,7 +20,7 @@ export const interests = [
   { label: "Travel", icon: "map-pin" },
   { label: "Photography", icon: "camera" },
   { label: "Mathematics", icon: "sigma" },
-  { label: "Security", icon: "shield" },
+  { label: "Cloud Infrastructure", icon: "shield" },
 ];
 
 export const education = [
@@ -41,20 +41,20 @@ export const education = [
 ];
 
 export const skills = {
-  "Cloud & DevOps": [
+  "Cloud & Infrastructure": [
     "Docker",
     "Kubernetes",
     "Terraform",
     "GCP",
-    "GitHub Actions",
-    "CI/CD",
+    "Linux",
+    "Networking",
   ],
-  Cybersecurity: [
-    "Vulnerability Mitigation",
-    "OAuth 2.0",
-    "MFA",
-    "PND/PNC Protocols",
-    "Malware Detection",
+  "DevOps & CI/CD": [
+    "GitHub Actions",
+    "CI/CD Pipelines",
+    "Infrastructure as Code",
+    "Container Orchestration",
+    "Monitoring & Observability",
   ],
   "Frontend & UX": [
     "React",
@@ -68,7 +68,7 @@ export const skills = {
     "Python",
     "MySQL",
     "Bash",
-    "Auto-reconciliation Systems",
+    "OAuth 2.0",
   ],
 };
 
@@ -167,6 +167,18 @@ export interface LearningItem {
 
 export const learningTracker: LearningItem[] = [
   {
+    topic: "Kubernetes (CKA)",
+    category: "Cloud Infrastructure",
+    progress: 40,
+    status: "active",
+  },
+  {
+    topic: "Terraform & IaC",
+    category: "Cloud Infrastructure",
+    progress: 30,
+    status: "active",
+  },
+  {
     topic: "Distributed Systems",
     category: "MSCS - Georgia Tech",
     progress: 30,
@@ -185,16 +197,10 @@ export const learningTracker: LearningItem[] = [
     status: "active",
   },
   {
-    topic: "Kubernetes (CKA)",
-    category: "DevOps",
-    progress: 40,
-    status: "active",
-  },
-  {
-    topic: "Penetration Testing",
-    category: "Security",
-    progress: 50,
-    status: "active",
+    topic: "AWS Solutions Architect",
+    category: "Cloud Infrastructure",
+    progress: 0,
+    status: "planned",
   },
   {
     topic: "Rust",

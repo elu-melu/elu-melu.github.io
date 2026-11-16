@@ -63,9 +63,34 @@ const filmPreview = randomise ? filmsThisYear : pinned;
 
         {filmsThisYear.length > 0 && (
           <div class="section-reveal">
-            <h3 class="kicker text-teal mb-6">
-              {filmsThisYear.length} films in {year}{randomise && <span class="text-muted"> · five at random</span>}
-            </h3>
+            <div class="flex items-center justify-between gap-4 mb-6">
+              <h3 class="kicker text-teal">
+                {filmsThisYear.length} films in {year}{randomise && <span class="text-muted"> · five at random</span>}
+              </h3>
+              {randomise && (
+                <button
+                  type="button"
+                  data-film-shuffle
+                  class="hidden shrink-0 p-1.5 -m-1.5 text-rust hover:text-ink transition-colors"
+                  aria-label="Show five other films"
+                  title="Show five other films"
+                >
+                  <svg width="20" height="22" viewBox="0 0 12 13" fill="none" aria-hidden="true" class="shuffle-icon">
+                    <g stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M6 10.4985C7.46569 10.4986 8.81418 9.69746 9.51496 8.41016" />
+                      <path d="M10.0017 6.49776C10.0017 4.2877 8.21006 2.49609 6 2.49609" />
+                      <path d="M6.00001 2.49609C4.53432 2.49597 3.18583 3.29716 2.48505 4.58446" />
+                      <path d="M1.99835 6.5C1.99835 8.71006 3.78996 10.5017 6.00002 10.5017" />
+                      <path d="M2.48505 4.58545C3.35978 2.97794 5.21358 2.16869 6.98713 2.62013C8.76067 3.07157 10.002 4.66865 10.0017 6.49875" />
+                      <path d="M1.99835 6.5C1.99807 8.3301 3.23936 9.92718 5.0129 10.3786C6.78645 10.8301 8.64025 10.0208 9.51498 8.4133" />
+                      <path d="M4.02269 4.58514H2.25446V2.81641" />
+                      <path d="M7.97729 8.41016H9.74553V10.1789" />
+                    </g>
+                  </svg>
+                </button>
+              )}
+            </div>
+            <p class="sr-only" aria-live="polite" data-film-status></p>
             <ul class="space-y-5" data-film-list data-random={randomise ? "" : undefined}>
               {filmPreview.map((f, i) => (
                 <li data-film class:list={[randomise && i >= 5 && "hidden"]}>
@@ -138,10 +163,45 @@ const filmPreview = randomise ? filmsThisYear : pinned;
 
 <script>
   const list = document.querySelector<HTMLElement>("[data-film-list][data-random]");
+  const button = document.querySelector<HTMLButtonElement>("[data-film-shuffle]");
+  const status = document.querySelector<HTMLElement>("[data-film-status]");
+
   if (list) {
     const items = [...list.querySelectorAll<HTMLElement>("[data-film]")];
-    const picks = new Set<number>();
-    while (picks.size < Math.min(5, items.length)) picks.add(Math.floor(Math.random() * items.length));
-    items.forEach((el, i) => el.classList.toggle("hidden", !picks.has(i)));
+    let current = new Set<number>();
+
+    // Pick five films, never repeating the five already on screen when
+    // there are enough films to avoid it.
+    const shuffle = () => {
+      const pool = items.map((_, i) => i).filter((i) => items.length - current.size < 5 || !current.has(i));
+      const next = new Set<number>();
+      while (next.size < Math.min(5, pool.length)) next.add(pool[Math.floor(Math.random() * pool.length)]);
+      items.forEach((el, i) => el.classList.toggle("hidden", !next.has(i)));
+      current = next;
+    };
+
+    shuffle();
+    if (button) {
+      button.classList.remove("hidden");
+      button.addEventListener("click", () => {
+        shuffle();
+        button.classList.remove("spin");
+        void button.offsetWidth; // restart the animation
+        button.classList.add("spin");
+        if (status) status.textContent = "Showing five other films.";
+      });
+    }
   }
 </script>
+
+<style>
+  .spin .shuffle-icon {
+    animation: shuffle-spin 0.5s ease-out;
+  }
+  @keyframes shuffle-spin {
+    to { transform: rotate(360deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .spin .shuffle-icon { animation: none; }
+  }
+</style>

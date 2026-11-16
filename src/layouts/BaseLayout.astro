@@ -25,6 +25,8 @@ const ogImage = Astro.site ? new URL(`${base}/og.png`, Astro.site).href : `${bas
     <meta name="theme-color" content="#F4EEE4" />
     <script is:inline>document.documentElement.classList.add("js");</script>
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <link rel="icon" href={`${base}/favicon.ico`} sizes="48x48" />
+    <link rel="apple-touch-icon" href={`${base}/apple-touch-icon.png`} />
     <title>{title}</title>
     <meta name="description" content={description} />
     {canonical && <link rel="canonical" href={canonical} />}

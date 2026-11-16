@@ -63,6 +63,7 @@ export interface ExperienceEntry {
   role: string;
   company: string;
   location?: string;
+  caseStudy?: { href: string; label: string };
   date: string;
   bullets: string[];
 }
@@ -73,10 +74,11 @@ export const experience: ExperienceEntry[] = [
     company: "78 Financials (Payaza & Rove10)",
     location: "Lagos, NG",
     date: "Jan 2025 - Present",
+    caseStudy: { href: "work/dangote-ipo/", label: "Read the Dangote IPO case study" },
     bullets: [
       "Build Spring Boot REST APIs and microservices for transfers and bill payments, with OAuth, RBAC and audit logging",
       "Build and maintain the Payaza merchant app and Rove10 back office in React, TypeScript and Vue",
-      "Helped design the system Payaza used to sell over 2.79 million Dangote IPO shares (over NGN 1.46 billion)",
+      "Helped design and build the Dangote IPO platform: client side, admin panel and multi-broker deployments; over 2.79 million shares (over NGN 1.46 billion) sold",
       "Shipped Payaza Give end to end, including multi-currency settlement",
     ],
   },

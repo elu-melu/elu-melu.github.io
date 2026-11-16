@@ -4,9 +4,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
-  # Refresh "Last played" from Spotify every 3 hours.
+  # Refresh "Last played" from Spotify every 5 minutes (GitHub's minimum;
+  # scheduled runs can start late when GitHub is busy). Scheduled runs only
+  # deploy when the tracks have changed.
   schedule:
-    - cron: "23 */3 * * *"
+    - cron: "*/5 * * * *"
 
 permissions:
   contents: read
@@ -20,6 +22,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-24.04
+    outputs:
+      skip: ${{ steps.changed.outputs.skip }}
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -39,13 +43,28 @@ jobs:
           SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
           SPOTIFY_REFRESH_TOKEN: ${{ secrets.SPOTIFY_REFRESH_TOKEN }}
-      - run: npx --no-install astro build --site "${{ steps.pages.outputs.origin }}" --base "${{ steps.pages.outputs.base_path }}/"
-      - uses: actions/upload-pages-artifact@v5
+          SITE_URL: ${{ steps.pages.outputs.base_url }}
+      - name: Skip the deploy if nothing changed
+        id: changed
+        run: |
+          live=$(curl -sf "${{ steps.pages.outputs.base_url }}/spotify.json" | jq -c '[.tracks[].id]' || echo none)
+          new=$(jq -c '[.tracks[].id]' src/data/spotify.json)
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "$live" = "$new" ]; then
+            echo "Spotify: no new tracks, skipping the deploy."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.changed.outputs.skip != 'true'
+        run: npx --no-install astro build --site "${{ steps.pages.outputs.origin }}" --base "${{ steps.pages.outputs.base_path }}/"
+      - if: steps.changed.outputs.skip != 'true'
+        uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
   deploy:
     needs: build
+    if: needs.build.outputs.skip != 'true'
     runs-on: ubuntu-24.04
     environment:
       name: github-pages

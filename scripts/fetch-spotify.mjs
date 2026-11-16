@@ -11,12 +11,15 @@
 import { writeFile } from "node:fs/promises";
 
 const OUT = new URL("../src/data/spotify.json", import.meta.url);
+// Also published at /spotify.json so the next scheduled run can tell whether
+// anything changed, and skip the deploy when it hasn't.
+const PUBLIC = new URL("../public/spotify.json", import.meta.url);
 const { SPOTIFY_CLIENT_ID: id, SPOTIFY_CLIENT_SECRET: secret, SPOTIFY_REFRESH_TOKEN: refresh } = process.env;
 
 async function main() {
   if (!id || !secret || !refresh) {
     console.log("Spotify: secrets not set, skipping.");
-    return;
+    return keepLive();
   }
 
   const tokenRes = await fetch("https://accounts.spotify.com/api/token", {
@@ -54,10 +57,29 @@ async function main() {
     if (tracks.length === 5) break;
   }
 
-  await writeFile(OUT, JSON.stringify({ updatedAt: new Date().toISOString(), tracks }, null, 2) + "\n");
+  const json = JSON.stringify({ updatedAt: new Date().toISOString(), tracks }, null, 2) + "\n";
+  await writeFile(OUT, json);
+  await writeFile(PUBLIC, json);
   console.log(`Spotify: saved ${tracks.length} recent tracks.`);
 }
 
-main().catch((err) => {
+// If Spotify can't be reached, reuse what the live site already shows, so a
+// failed fetch never wipes "Last played".
+async function keepLive() {
+  const site = process.env.SITE_URL;
+  if (!site) return;
+  try {
+    const res = await fetch(`${site.replace(/\/$/, "")}/spotify.json`, { signal: AbortSignal.timeout(10000) });
+    if (!res.ok) return;
+    const json = await res.text();
+    JSON.parse(json);
+    await writeFile(OUT, json);
+    await writeFile(PUBLIC, json);
+    console.log("Spotify: reused the tracks from the live site.");
+  } catch {}
+}
+
+main().catch(async (err) => {
   console.log(`Spotify: ${err.message}; keeping the existing data.`);
+  await keepLive();
 });

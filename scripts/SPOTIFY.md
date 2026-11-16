@@ -1,8 +1,8 @@
 # "Last played" from Spotify
 
 The site shows your five most recent Spotify tracks and a player for the latest
-one. A GitHub Actions run fetches them every 3 hours (and on every deploy) and
-rebuilds the site. Until the three secrets below exist, the column just links to
+one. A GitHub Actions run checks Spotify every 5 minutes (and on every deploy),
+and rebuilds the site only when the tracks have changed. Until the three secrets below exist, the column just links to
 your profile.
 
 ## One-time setup

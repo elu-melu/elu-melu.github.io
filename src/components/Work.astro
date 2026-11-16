@@ -1,110 +1,149 @@
 ---
-import { Image } from "astro:assets";
-import SectionHead from "./SectionHead.astro";
+import { ArrowRight, ArrowUpRight } from "@lucide/vue";
 import { experience, projects, skills } from "../data/siteData";
-import rove10 from "../assets/work/rove10-sign-in.jpg";
-import payaza from "../assets/work/payaza-login.jpg";
+import Rove10Charts from "./rove10/Rove10Charts.vue";
+import Rove10Table from "./rove10/Rove10Table.vue";
 
-const shots = [
-  { src: rove10, name: "Rove10", note: "sign-in", href: "https://app.rove10.com", alt: "The Rove10 sign-in page: a welcome-back login form beside a photo of a professional working on a laptop" },
-  { src: payaza, name: "Payaza", note: "log in", href: "https://business.payaza.africa", alt: "The Payaza Business log-in page: a purple panel with a customer quote beside an email and password form" },
+const products = [
+  { name: "Rove10", href: "https://app.rove10.com" },
+  { name: "Payaza Business", href: "https://business.payaza.africa" },
 ];
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
-<section id="work" class="py-16 md:py-24">
-  <div class="max-w-6xl mx-auto px-6">
-    <SectionHead title="Work" />
-
-    <ol class="divide-y divide-rule border-b border-rule mb-20">
-      {experience.map((job) => (
-        <li class="grid md:grid-cols-12 gap-x-8 gap-y-2 py-8">
-          <div class="md:col-span-3 font-sans text-sm text-muted pt-1">
-            <p>{job.date}</p>
-            {job.location && <p>{job.location}</p>}
-          </div>
-          <div class="md:col-span-9">
-            <h3 class="font-display text-3xl leading-tight">{job.role}</h3>
-            <p class="font-sans text-base text-teal mt-2 mb-4">{job.company}</p>
-            <ul class="space-y-2 max-w-2xl">
-              {job.bullets.map((b) => (
-                <li class="pl-5 relative before:content-['—'] before:absolute before:left-0 before:text-muted">{b}</li>
-              ))}
-            </ul>
-            {job.caseStudy && (
-              <a href={`${base}/${job.caseStudy.href}`} class="inline-block mt-5 font-sans text-sm font-medium text-rust link">
-                {job.caseStudy.label} →
-              </a>
-            )}
-          </div>
-        </li>
-      ))}
-    </ol>
-
-    <div class="grid md:grid-cols-2 gap-x-8 gap-y-10 mb-20">
-      {shots.map((s, i) => (
-        <figure class:list={[i % 2 === 1 && "md:mt-16"]}>
-          <a href={s.href} target="_blank" rel="noopener noreferrer" class="block border border-rule hover:border-ink transition-colors">
-            <Image src={s.src} alt={s.alt} widths={[500, 800, 1100]} sizes="(min-width: 768px) 540px, 92vw" class="w-full h-auto" />
-            <span class="sr-only">{s.name} (opens in a new tab)</span>
-          </a>
-          <figcaption class="mt-3 flex items-baseline justify-between gap-4">
-            <span class="font-display text-2xl leading-none">{s.name}<span class="font-sans text-sm text-muted"> · {s.note}</span></span>
-            <a href={s.href} target="_blank" rel="noopener noreferrer" class="font-sans text-sm font-medium text-rust link">Open ↗<span class="sr-only"> {s.name} (opens in a new tab)</span></a>
-          </figcaption>
-        </figure>
-      ))}
+<section id="work" class="pt-section">
+  <div class="max-w-page mx-auto px-gutter">
+    <div class="grid lg:grid-cols-12 gap-x-6 mb-block">
+      <h2 class="lg:col-span-3 lg:sticky lg:top-20 self-start text-title mb-8 lg:mb-0">Work</h2>
+      <ol class="lg:col-span-9 min-w-0 divide-y divide-line">
+        {experience.map((job) => (
+          <li class="grid sm:grid-cols-[9.5rem_minmax(0,1fr)] gap-x-6 gap-y-1 py-8 first:pt-0">
+            <div class="text-meta text-muted num sm:pt-1">
+              <p>{job.date}</p>
+              {job.location && <p>{job.location}</p>}
+            </div>
+            <div class="min-w-0">
+              <h3 class="text-heading">{job.role}</h3>
+              <p class="text-small text-ink-2 mt-1">{job.company}</p>
+              <ul class="mt-4 space-y-2 max-w-measure text-ink-2">
+                {job.bullets.map((b) => (
+                  <li>{b}</li>
+                ))}
+              </ul>
+              {job.caseStudy && (
+                <a href={`${base}/${job.caseStudy.href}`} class="link text-small font-[560] inline-flex items-center gap-1.5 mt-5">
+                  {job.caseStudy.label}
+                  <ArrowRight size={16} stroke-width={1.5} aria-hidden="true" class="i-fwd" />
+                </a>
+              )}
+            </div>
+          </li>
+        ))}
+      </ol>
     </div>
 
     <a
       href={`${base}/work/dangote-ipo/`}
-      class="group block bg-ink text-paper p-8 md:p-12 mb-20 hover:bg-teal transition-colors"
+      class="lit block p-6 md:p-12 mb-block grid md:grid-cols-12 gap-x-6 gap-y-8 items-end"
     >
-      <p class="font-display text-4xl md:text-6xl leading-[1.02] max-w-3xl mb-6">
-        The platform behind 2.79&nbsp;million Dangote IPO shares
-      </p>
-      <p class="text-paper/85 max-w-2xl mb-6">
-        An open offer that grew from Nigeria-only to the diaspora. I built the client side, owned the admin panel and
-        designed the deployments that let different brokers run on it.
-      </p>
-      <span class="font-sans text-sm font-medium underline underline-offset-4">Read the case study →</span>
+      <div class="md:col-span-5 min-w-0">
+        <p class="text-figure num">2.79M</p>
+        <p class="text-meta text-muted num mt-3">shares sold, 14 Sep to 27 Oct 2026</p>
+      </div>
+      <div class="md:col-span-7 min-w-0">
+        <p class="text-headline text-[clamp(1.75rem,3.6vw,3rem)]">The platform behind the Dangote IPO</p>
+        <p class="text-ink-2 max-w-measure mt-4">
+          An open offer that grew from Nigeria-only to the diaspora. I built the client side, owned the admin panel and
+          designed the deployments that let different brokers run on it.
+        </p>
+        <span class="link text-small font-[560] inline-flex items-center gap-1.5 mt-6">
+          Read the case study
+          <ArrowRight size={16} stroke-width={1.5} aria-hidden="true" class="i-fwd" />
+        </span>
+      </div>
     </a>
 
-    <div class="flex items-baseline justify-between border-t border-ink pt-4 mb-2">
-      <h3 class="font-display text-4xl">Index of projects</h3>
-      <p class="font-sans text-sm text-muted">{projects.length} projects</p>
-    </div>
-    <ol class="mb-20">
-      {projects.map((project, i) => {
-        const Tag = project.link ? "a" : "div";
-        return (
-          <li class="border-b border-rule">
-            <Tag
-              {...(project.link ? { href: project.link, target: "_blank", rel: "noopener noreferrer" } : {})}
-              class:list={["grid grid-cols-[2.5rem_1fr] md:grid-cols-[3rem_minmax(0,5fr)_minmax(0,7fr)_4rem] gap-x-6 gap-y-1 py-6 items-baseline", project.link && "group hover:bg-paper-deep transition-colors"]}
-            >
-              <span class="font-sans text-sm text-muted">{String(i + 1).padStart(2, "0")}</span>
-              <span class="font-display text-3xl leading-tight group-hover:text-rust transition-colors">{project.title}</span>
-              <span class="col-start-2 md:col-start-auto">
-                <span class="block">{project.description}</span>
-                <span class="block font-sans text-xs text-muted mt-2">{project.tech.join(" · ")}</span>
-              </span>
-              <span class="col-start-2 md:col-start-auto font-sans text-sm font-medium text-rust">
-                {project.link ? <>Code ↗<span class="sr-only"> for {project.title} (opens in a new tab)</span></> : ""}
-              </span>
-            </Tag>
-          </li>
-        );
-      })}
-    </ol>
+    <div class="grid lg:grid-cols-12 gap-x-6 mb-block">
+      <div class="lg:col-span-3 lg:sticky lg:top-20 self-start mb-8 lg:mb-0">
+        <h3 class="text-title">Rove10</h3>
+        <p class="text-meta text-muted mt-2">Two parts, running live</p>
+      </div>
+      <div class="lg:col-span-9 min-w-0">
+        <p class="text-ink-2 max-w-measure">
+          Two pieces of the Rove10 app, rebuilt here so you can use them. Every figure is invented.
+        </p>
 
-    <div class="border-t border-ink pt-4">
-      <h3 class="font-display text-4xl mb-8">Toolkit</h3>
-      <dl class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <figure class="mt-10 min-w-0">
+          <Rove10Charts client:visible />
+          <figcaption class="text-meta text-muted mt-4 max-w-measure">
+            Performance chart. Drawn in plain SVG with no chart library. Switch the range.
+          </figcaption>
+        </figure>
+
+        <figure class="mt-16 min-w-0">
+          <Rove10Table client:visible />
+          <figcaption class="text-meta text-muted mt-4 max-w-measure">
+            Transactions table. Flip the switches to see the loading and empty states.
+          </figcaption>
+        </figure>
+
+        <p class="mt-12 flex flex-wrap gap-x-6 gap-y-2 text-small">
+          {products.map((p) => (
+            <a href={p.href} target="_blank" rel="noopener noreferrer" class="link inline-flex items-center gap-1">
+              {p.name}
+              <ArrowUpRight size={16} stroke-width={1.5} aria-hidden="true" class="i-out" />
+              <span class="sr-only"> (opens in a new tab)</span>
+            </a>
+          ))}
+        </p>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-12 gap-x-6 mb-block">
+      <div class="lg:col-span-3 lg:sticky lg:top-20 self-start mb-8 lg:mb-0">
+        <h3 class="text-title">Projects</h3>
+        <p class="text-meta text-muted num mt-2">{projects.length} projects</p>
+      </div>
+      <ol class="lg:col-span-9 min-w-0 divide-y divide-line">
+        {projects.map((project) => {
+          const Tag = project.link ? "a" : "div";
+          return (
+            <li>
+              <Tag
+                {...(project.link ? { href: project.link, target: "_blank", rel: "noopener noreferrer" } : {})}
+                class:list={[
+                  "grid md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)_auto] gap-x-6 gap-y-2 py-6 items-baseline -mx-3 px-3 rounded-sm",
+                  project.link && "hover:bg-surface hover:shadow-rest transition-[background-color,box-shadow] duration-150 active:bg-sunken active:shadow-press",
+                ]}
+              >
+                <span class="text-heading">{project.title}</span>
+                <span class="min-w-0">
+                  <span class="block text-ink-2">{project.description}</span>
+                  <span class="block text-meta text-muted mt-2">{project.tech.join(", ")}</span>
+                </span>
+                <span class="text-small text-accent inline-flex items-center gap-1">
+                  {project.link ? (
+                    <>
+                      Code
+                      <ArrowUpRight size={16} stroke-width={1.5} aria-hidden="true" class="i-out" />
+                      <span class="sr-only"> for {project.title} (opens in a new tab)</span>
+                    </>
+                  ) : ""}
+                </span>
+              </Tag>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
+
+    <div class="grid lg:grid-cols-12 gap-x-6">
+      <h3 class="lg:col-span-3 text-title mb-8 lg:mb-0">Toolkit</h3>
+      <dl class="lg:col-span-9 min-w-0 grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8">
         {Object.entries(skills).map(([category, items]) => (
           <div>
-            <dt class="kicker text-teal mb-3">{category}</dt>
-            {items.map((skill) => <dd>{skill}</dd>)}
+            <dt class="text-small font-semibold text-ink mb-2">{category}</dt>
+            {items.map((skill) => <dd class="text-ink-2">{skill}</dd>)}
           </div>
         ))}
       </dl>

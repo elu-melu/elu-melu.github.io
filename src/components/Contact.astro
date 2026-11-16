@@ -1,4 +1,5 @@
 ---
+import { ArrowUpRight, Check, Copy, Download } from "@lucide/vue";
 import { siteConfig, links } from "../data/siteData";
 import Footer from "./Footer.astro";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -10,29 +11,36 @@ const social = [
 ];
 ---
 
-<section id="contact" class="py-20 md:py-32 bg-ink text-paper">
-  <div class="max-w-6xl mx-auto px-6">
-    <h2 class="font-display text-6xl md:text-8xl leading-[0.95] mb-8">
-      Write <em>to me.</em>
-    </h2>
-    <p class="text-xl text-paper/85 max-w-xl mb-10">{siteConfig.seeking}</p>
+<section id="contact" class="on-ink mt-section bg-ink text-ground relative overflow-hidden">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 bg-[radial-gradient(60rem_32rem_at_0%_0%,rgb(107_82_135/0.38),transparent_70%)]"></div>
+  <div class="relative max-w-page mx-auto px-gutter py-section">
+    <h2 class="text-title">Write to me.</h2>
+    <a
+      href={`mailto:${siteConfig.email}`}
+      class="block mt-6 text-[clamp(1.25rem,5.6vw,4.5rem)] leading-none tracking-[-0.035em] font-[560] break-all hover:text-accent-light transition-colors duration-150"
+    >{siteConfig.email}</a>
+    <p class="text-lead text-on-ink-muted max-w-measure mt-8">{siteConfig.seeking}</p>
 
-    <div class="flex flex-wrap gap-4 font-sans text-sm mb-14">
-      <a href={`mailto:${siteConfig.email}`} class="bg-paper text-ink font-medium px-6 py-3 hover:bg-sky transition-colors">Send email</a>
-      <button id="copy-email" type="button" class="border border-paper font-medium px-6 py-3 hover:bg-paper hover:text-ink transition-colors">
-        Copy email
+    <div class="mt-8 flex flex-wrap gap-3">
+      <button id="copy-email" type="button" class="btn btn-primary">
+        <span data-icon="copy" class="inline-flex"><Copy size={16} stroke-width={1.5} aria-hidden="true" /></span>
+        <span data-icon="check" class="hidden"><Check size={16} stroke-width={1.5} aria-hidden="true" /></span>
+        <span data-label>Copy email</span>
       </button>
-      <a href={`${base}/${siteConfig.resume}`} class="border border-paper font-medium px-6 py-3 hover:bg-paper hover:text-ink transition-colors">
+      <a href={`${base}/${siteConfig.resume}`} class="btn">
         Download resume
+        <Download size={16} stroke-width={1.5} aria-hidden="true" />
       </a>
     </div>
     <p id="copy-status" class="sr-only" aria-live="polite"></p>
 
-    <ul class="flex flex-wrap gap-x-8 gap-y-3 font-sans text-sm border-t border-paper/25 pt-6">
+    <ul class="mt-block pt-6 border-t border-ground/15 flex flex-wrap gap-x-8 gap-y-3 text-small">
       {social.map((s) => (
         <li>
-          <a href={s.href} target="_blank" rel="noopener noreferrer" class="text-paper/85 hover:text-rust-light underline-offset-4 hover:underline">
-            {s.label} ↗<span class="sr-only"> (opens in a new tab)</span>
+          <a href={s.href} target="_blank" rel="noopener noreferrer" class="text-on-ink-muted hover:text-ground transition-colors duration-150 inline-flex items-center gap-1 min-h-11">
+            {s.label}
+            <ArrowUpRight size={16} stroke-width={1.5} aria-hidden="true" class="i-out" />
+            <span class="sr-only"> (opens in a new tab)</span>
           </a>
         </li>
       ))}
@@ -44,16 +52,24 @@ const social = [
 <script define:vars={{ email: siteConfig.email }}>
   const btn = document.getElementById("copy-email");
   const status = document.getElementById("copy-status");
+  const label = btn?.querySelector("[data-label]");
+  const copyIcon = btn?.querySelector("[data-icon=copy]");
+  const checkIcon = btn?.querySelector("[data-icon=check]");
+
+  function showCopied(copied) {
+    copyIcon?.classList.toggle("hidden", copied);
+    checkIcon?.classList.toggle("hidden", !copied);
+    if (label) label.textContent = copied ? "Copied" : "Copy email";
+  }
+
   btn?.addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(email);
-      btn.textContent = "Copied";
+      showCopied(true);
       if (status) status.textContent = "Email address copied";
     } catch {
-      btn.textContent = email;
+      if (label) label.textContent = email;
     }
-    setTimeout(() => {
-      btn.textContent = "Copy email";
-    }, 2000);
+    setTimeout(() => showCopied(false), 2000);
   });
 </script>

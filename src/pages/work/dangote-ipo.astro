@@ -3,6 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
 import { siteConfig } from "../../data/siteData";
+import { ArrowLeft, Download } from "@lucide/vue";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 const role = [
@@ -13,77 +14,75 @@ const role = [
   { title: "A/B testing", body: "Ran A/B tests on the client side." },
   { title: "Design system", body: "The design system was built by the engineers on the ground, and I did a large share of that work." },
 ];
+const facts = [
+  { label: "Shares sold", value: "2.79M+" },
+  { label: "Value sold", value: "NGN 1.46B+" },
+  { label: "Offering window", value: "14 Sep to 27 Oct 2026, 6 weeks" },
+];
 ---
 
 <BaseLayout
   title="Dangote IPO platform | Webster Elumelu"
   description="Case study: the platform Payaza used to sell shares in the Dangote IPO. Over 2.79 million shares, worth over NGN 1.46 billion, were sold through it between 14 September and 27 October 2026."
 >
-  <a href="#case-study" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:bg-ink focus:text-paper focus:px-4 focus:py-2">Skip to content</a>
+  <a href="#case-study" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:bg-ink focus:text-ground focus:rounded-sm focus:px-4 focus:py-2">Skip to content</a>
   <Navbar />
-  <main id="case-study" class="flex-1 pt-32 pb-24">
-    <article class="max-w-3xl mx-auto px-6">
-      <a href={`${base}/#work`} class="font-sans text-sm text-rust link">← Back to work</a>
+  <main id="case-study" class="flex-1 pt-16 md:pt-24 pb-section">
+    <article class="max-w-page mx-auto px-gutter">
+      <a href={`${base}/#work`} class="link text-small inline-flex items-center gap-1.5">
+        <ArrowLeft size={16} stroke-width={1.5} aria-hidden="true" class="i-back" />
+        Back to work
+      </a>
 
-      <h1 class="font-display text-6xl md:text-8xl leading-[0.95] mt-10 mb-8">The Dangote <em>IPO</em> platform</h1>
-      <p class="text-2xl leading-snug mb-14">
+      <h1 class="text-headline mt-10 max-w-[16ch]">The Dangote IPO platform</h1>
+      <p class="text-lead text-ink-2 max-w-measure mt-6">
         The system Payaza used to sell shares in the Dangote IPO, from 14 September to 27 October 2026.
       </p>
 
-      <dl class="grid grid-cols-1 sm:grid-cols-3 border-t border-ink mb-16">
-        <div class="py-5 sm:pr-4">
-          <dt class="sr-only">Shares sold</dt>
-          <dd class="font-display text-5xl leading-none">2.79M+</dd>
-          <dd class="font-sans text-sm text-muted mt-2">shares sold through the platform</dd>
-        </div>
-        <div class="py-5 sm:px-4 sm:border-l border-rule">
-          <dt class="sr-only">Value sold</dt>
-          <dd class="font-display text-5xl leading-none">₦1.46B+</dd>
-          <dd class="font-sans text-sm text-muted mt-2">worth of shares sold</dd>
-        </div>
-        <div class="py-5 sm:pl-4 sm:border-l border-rule">
-          <dt class="sr-only">Offering window</dt>
-          <dd class="font-display text-5xl leading-none">6 weeks</dd>
-          <dd class="font-sans text-sm text-muted mt-2">14 Sep - 27 Oct 2026</dd>
-        </div>
+      <dl class="lit mt-block mb-block divide-y divide-line max-w-2xl">
+        {facts.map((f) => (
+          <div class="flex items-baseline justify-between gap-6 px-5 py-4">
+            <dt class="text-small text-muted">{f.label}</dt>
+            <dd class="text-heading num text-right">{f.value}</dd>
+          </div>
+        ))}
       </dl>
 
-      <section class="mb-14">
-        <h2 class="kicker text-teal mb-4">Context</h2>
-        <p class="drop-cap text-xl leading-relaxed">
+      <section class="grid lg:grid-cols-12 gap-x-6 mb-block">
+        <h2 class="lg:col-span-3 text-title mb-4">Context</h2>
+        <p class="lg:col-span-9 text-lead max-w-measure">
           The IPO was an open call to bring in as many investors as possible. It was first set up for investors in
           Nigeria only. Partway through, it opened to Nigerians and non-Nigerians in the diaspora, so the platform had
           to serve investors outside the country as well.
         </p>
       </section>
 
-      <section class="mb-14">
-        <h2 class="kicker text-teal mb-6">My role</h2>
-        <dl class="divide-y divide-rule border-y border-rule">
+      <section class="grid lg:grid-cols-12 gap-x-6 mb-block">
+        <h2 class="lg:col-span-3 text-title mb-4">My role</h2>
+        <dl class="lg:col-span-9 min-w-0 divide-y divide-line">
           {role.map((r) => (
-            <div class="grid sm:grid-cols-3 gap-2 py-5">
-              <dt class="font-display text-2xl leading-tight">{r.title}</dt>
-              <dd class="sm:col-span-2">{r.body}</dd>
+            <div class="grid sm:grid-cols-[14rem_minmax(0,1fr)] gap-x-6 gap-y-1 py-5 first:pt-0">
+              <dt class="text-heading">{r.title}</dt>
+              <dd class="text-ink-2">{r.body}</dd>
             </div>
           ))}
         </dl>
       </section>
 
-      <section class="mb-16">
-        <h2 class="kicker text-teal mb-4">Outcome</h2>
-        <p class="font-display italic text-3xl leading-snug">
-          Over 2.79 million shares, worth over NGN 1.46 billion, were sold through the platform during the offering
+      <section class="grid lg:grid-cols-12 gap-x-6 mb-block">
+        <h2 class="lg:col-span-3 text-title mb-4">Outcome</h2>
+        <p class="lg:col-span-9 text-lead max-w-measure">
+          Over <span class="num font-[560]">2.79 million</span> shares, worth over <span class="num font-[560]">NGN 1.46 billion</span>, were sold through the platform during the offering
           window.
         </p>
       </section>
 
-      <div class="flex flex-wrap gap-4 font-sans text-sm">
-        <a href={`${base}/${siteConfig.resume}`} class="bg-ink text-paper font-medium px-6 py-3 hover:bg-rust transition-colors">
+      <div class="flex flex-wrap gap-3">
+        <a href={`${base}/${siteConfig.resume}`} class="btn btn-primary">
           Download resume
+          <Download size={16} stroke-width={1.5} aria-hidden="true" />
         </a>
-        <a href={`mailto:${siteConfig.email}`} class="border border-ink font-medium px-6 py-3 hover:bg-ink hover:text-paper transition-colors">
-          Email me
-        </a>
+        <a href={`mailto:${siteConfig.email}`} class="btn">Email me</a>
       </div>
     </article>
   </main>

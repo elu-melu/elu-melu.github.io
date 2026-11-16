@@ -3,6 +3,7 @@ import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
+import { ArrowLeft } from "@lucide/vue";
 
 export async function getStaticPaths() {
   const films = await getCollection("films");
@@ -21,15 +22,20 @@ const watched = film.data.watched
 ---
 
 <BaseLayout title={`${film.data.title} | Webster Elumelu`} description={film.data.note ?? `Webster Elumelu on ${film.data.title}.`}>
-  <a href="#film" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-60 focus:bg-ink focus:text-paper focus:px-4 focus:py-2">Skip to content</a>
+  <a href="#film" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-60 focus:bg-ink focus:text-ground focus:rounded-sm focus:px-4 focus:py-2">Skip to content</a>
   <Navbar />
-  <main id="film" class="flex-1 pt-32 pb-24">
-    <article class="max-w-2xl mx-auto px-6">
-      <a href={`${base}/watching/`} class="font-sans text-sm text-rust link">← All films</a>
-      <h1 class="font-display text-6xl md:text-7xl leading-none mt-10 mb-3"><em>{film.data.title}</em></h1>
-      <p class="font-sans text-sm text-muted mb-10">{[meta, `Watched ${watched}`].filter(Boolean).join(" · ")}</p>
-      <div class="prose-film text-xl leading-relaxed space-y-5">
-        <Content />
+  <main id="film" class="flex-1 pt-16 md:pt-24 pb-section">
+    <article class="max-w-page mx-auto px-gutter">
+      <div class="lg:ml-[25%]">
+        <a href={`${base}/watching/`} class="link text-small inline-flex items-center gap-1.5">
+          <ArrowLeft size={16} stroke-width={1.5} aria-hidden="true" class="i-back" />
+          All films
+        </a>
+        <h1 class="text-headline mt-10 max-w-[18ch]">{film.data.title}</h1>
+        <p class="text-meta text-muted num mt-4 mb-10">{[meta, `Watched ${watched}`].filter(Boolean).join(", ")}</p>
+        <div class="prose-film">
+          <Content />
+        </div>
       </div>
     </article>
   </main>

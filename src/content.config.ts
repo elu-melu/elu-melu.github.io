@@ -9,8 +9,9 @@ const books = defineCollection({
   loader: glob({ pattern: "**/[^_]*.md", base: "./src/content/books" }),
   schema: z.object({
     title: z.string(),
-    author: z.string(),
+    author: z.string().optional(),
     status: z.enum(["reading", "read"]).default("read"),
+    order: z.number().int().optional(), // position in your list, used when there's no finish date
     finished: z.coerce.date().optional(),
     note: z.string().optional(),
   }),

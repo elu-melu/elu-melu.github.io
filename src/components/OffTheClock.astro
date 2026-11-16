@@ -7,7 +7,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 const books = (await getCollection("books")).sort((a, b) => {
   if (a.data.status !== b.data.status) return a.data.status === "reading" ? -1 : 1;
-  return (b.data.finished?.getTime() ?? 0) - (a.data.finished?.getTime() ?? 0);
+  const t = (b.data.finished?.getTime() ?? 0) - (a.data.finished?.getTime() ?? 0);
+  return t !== 0 ? t : (a.data.order ?? 0) - (b.data.order ?? 0);
 });
 const films = await getFilms();
 const year = films[0]?.data.seen ?? new Date().getFullYear();
@@ -44,9 +45,11 @@ const filmPreview = randomise ? filmsThisYear : pinned;
                   <p class="font-display text-2xl leading-tight">
                     <em>{b.data.title}</em>
                   </p>
-                  <p class="font-sans text-sm text-muted">
-                    {b.data.author}{b.data.status === "reading" && " · reading now"}
-                  </p>
+                  {(b.data.author || b.data.status === "reading") && (
+                    <p class="font-sans text-sm text-muted">
+                      {[b.data.author, b.data.status === "reading" && "reading now"].filter(Boolean).join(" · ")}
+                    </p>
+                  )}
                   {b.data.note && <p class="text-base mt-1">{b.data.note}</p>}
                 </li>
               ))}

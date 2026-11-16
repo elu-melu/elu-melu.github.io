@@ -1,6 +1,9 @@
 export const siteConfig = {
   name: "Webster C. Elumelu",
   handle: "get-webster",
+  tagline: "I build payment systems and research AI security.",
+  resume: "webster-elumelu-resume.pdf",
+  seeking: "Open to software and security engineering roles in London, Europe and remote.",
   title: "Software Engineer & Security Researcher",
   location: "Abuja, NG",
   email: "elumeluwebster@gmail.com",
@@ -12,7 +15,15 @@ export const links = {
   github: "https://github.com/elu-melu",
   githubLab: "https://github.com/LaBackDoor",
   labackdoor: "https://www.labackdoor.com",
+  scholar: "https://scholar.google.com/citations?user=ukgh9BkAAAAJ",
 };
+
+export const stats = [
+  { value: "2.79M+", label: "Dangote IPO shares sold through a system I helped design" },
+  { value: "₦1.46B+", label: "worth of shares sold through it, 14 Sep - 27 Oct 2026" },
+  { value: "30+", label: "lab environments automated with Terraform and Ansible" },
+  { value: "2", label: "published papers, 3 more under review" },
+];
 
 export const interests = [
   { label: "Design", icon: "pen-tool" },
@@ -42,18 +53,16 @@ export const education = [
 ];
 
 export const skills = {
-  "Frontend": ["React", "TypeScript", "Vue.js", "WebSockets", "Analytics instrumentation"],
-  "Backend & APIs": ["Java (Spring Boot)", "Python (Django, FastAPI)", "Go", "REST APIs", "Microservices", "OAuth 2.0", "RBAC"],
-  "Data": ["PostgreSQL", "Oracle", "MySQL", "MongoDB", "AWS S3"],
-  "Cloud & Infrastructure": ["Docker", "Kubernetes", "Terraform", "Ansible", "Proxmox", "GCP", "Linux"],
-  "Tooling": ["Git & GitHub", "GitHub Actions", "CI/CD Pipelines", "Bash"],
-  "Systems": ["C/C++", "Rust"],
+  "Frontend": ["React", "TypeScript", "Vue.js"],
+  "Backend": ["Java (Spring Boot)", "Python", "Go", "REST APIs"],
+  "Data": ["PostgreSQL", "MongoDB"],
+  "Security & Infra": ["OAuth, MFA, RBAC", "Docker", "Terraform"],
 };
 
 export interface ExperienceEntry {
   role: string;
   company: string;
-  // location: string;
+  location?: string;
   date: string;
   bullets: string[];
 }
@@ -62,23 +71,18 @@ export const experience: ExperienceEntry[] = [
   {
     role: "UX/Software Engineer",
     company: "78 Financials (Payaza & Rove10)",
-    // location: "Lagos, NG",
+    location: "Lagos, NG",
     date: "Jan 2025 - Present",
     bullets: [
-      "Build and maintain Spring Boot REST APIs and microservices for Transfer and Bills Payment, with OAuth, role-based access control and audit logging",
-      "Build and maintain two production frontends, Payaza's merchant app and Rove10's back office (React, TypeScript, Vue), shipped through development, UAT and main",
-      "Helped design the system Payaza used to sell shares in the Dangote IPO (14 Sep - 27 Oct 2026); over 2.79 million shares (over NGN 1.46 billion) were sold through it",
-      "Shipped Payaza Give end to end, including multi-currency settlement, onboarding and link-creation workflows",
-      "Built MFA and Google OAuth integrations using FingerprintJS, and designed multi-tenancy for white-labeled merchant and back-office applications",
-      "Engineered a custom auto-reconciliation system providing real-time financial insights for executive leadership",
-      "Developed accounts infrastructure with PND/PNC implementations",
-      "Optimised queries across PostgreSQL, Oracle, MySQL and MongoDB, and debugged client integrations to root cause",
+      "Build Spring Boot REST APIs and microservices for transfers and bill payments, with OAuth, RBAC and audit logging",
+      "Build and maintain the Payaza merchant app and Rove10 back office in React, TypeScript and Vue",
+      "Helped design the system Payaza used to sell over 2.79 million Dangote IPO shares (over NGN 1.46 billion)",
+      "Shipped Payaza Give end to end, including multi-currency settlement",
     ],
   },
   {
     role: "Research Assistant (Systems & Infrastructure)",
     company: "LaBackDoor Cybersecurity Research Lab",
-    // location: "Remote",
     date: "Jun 2023 - Present",
     bullets: [
       "Automated provisioning of 30+ virtualised lab environments (Terraform, Ansible, Proxmox)",
@@ -90,34 +94,71 @@ export const experience: ExperienceEntry[] = [
   {
     role: "CyberSecurity AI Trainer",
     company: "micro1",
-    // location: "Remote",
+    location: "Remote",
     date: "Dec 2024 - Jan 2026",
     bullets: [
       "Built training data and evaluation benchmarks for AI models in the cybersecurity domain",
-      "Simulated attack vectors against large language models in Docker-based VM environments",
-      "Documented vulnerabilities, failure modes and mitigations in technical reports for model and system hardening",
+      "Simulated attacks on large language models and documented failure modes and mitigations",
     ],
   },
   {
     role: "IT Support",
     company: "Niger Delta Power Holding Company",
-    // location: "Abuja, NG",
+    location: "Abuja, NG",
     date: "Jan 2024 - Oct 2024",
     bullets: [
-      "Assisted in internal projects concerning malware detection and protection, as well as CDN attack mitigation",
-      "Managed repairs and maintenance of enterprise computing infrastructure",
+      "Supported malware detection and protection projects and enterprise hardware maintenance",
     ],
   },
   {
     role: "Frontend Engineer",
     company: "KNG Technologies",
-    // location: "New York, USA",
+    location: "New York, USA",
     date: "Nov 2022 - Aug 2024",
     bullets: [
       "Built React and TypeScript components for internal and client-facing products",
-      "Implemented standardized documentation process with centralized repository access",
-      "Developed custom solutions used as patch updates for legacy projects",
+      "Standardised technical documentation in a central repository",
     ],
+  },
+];
+
+export interface Publication {
+  title: string;
+  venue: string;
+  year: string;
+  status: "published" | "under review";
+}
+
+export const publications: Publication[] = [
+  {
+    title: "A Unified Framework Incorporating AW-TRBAC and Semantic Variational Autoencoders for Dynamic Threat Detection and Access Control",
+    venue: "International Conference on Artificial Intelligence (World Congress in Computer Science, Computer Engineering & Applied Computing)",
+    year: "2025",
+    status: "published",
+  },
+  {
+    title: "Predicting Software Vulnerability Trends with Multi-Recurrent Neural Networks: A Time Series Forecasting Approach",
+    venue: "NLPAICS 2024, ACL Anthology",
+    year: "2024",
+    status: "published",
+  },
+  {
+    title: "SysRepair-Bench: A Benchmark for AI Agents' Ability to Remediate Real-World System Vulnerabilities",
+    venue: "Under review",
+    year: "",
+    status: "under review",
+  },
+  {
+    title: "SysRepair: A Benchmark and Multi-Architecture Approach to Autonomous Vulnerability Remediation",
+    venue: "Under review",
+    year: "",
+    status: "under review",
+  },
+  {
+    title: "Autonomous System Vulnerability Remediation: A Survey of Agentic AI, Reinforcement Learning, Benchmarks, and Operational Safety",
+    venue: "Under review",
+    year: "",
+    status: "under review",
   },
 ];
 
@@ -126,19 +167,38 @@ export interface Project {
   description: string;
   tech: string[];
   highlights: string[];
+  link?: string;
+  linkLabel?: string;
 }
 
 export const projects: Project[] = [
   {
+    title: "Vulnerability trend forecasting",
+    description: "Multi-recurrent neural networks that forecast software vulnerability trends from time-series data. Code for the NLPAICS 2024 paper.",
+    tech: ["Python", "RNNs", "Time series"],
+    highlights: ["Published in the ACL Anthology (NLPAICS 2024)"],
+    link: "https://github.com/LaBackDoor/multi-recurrent-network",
+    linkLabel: "View code",
+  },
+  {
+    title: "AW-TRBAC and SVAE threat detection",
+    description: "Access control for large distributed NoSQL databases combined with semantic variational autoencoders for dynamic threat detection.",
+    tech: ["Python", "NoSQL", "VAEs", "Access control"],
+    highlights: ["Published at the International Conference on Artificial Intelligence, 2025"],
+    link: "https://github.com/CybearsecurityLab/svae-based-dynamic-threat-detection",
+    linkLabel: "View code",
+  },
+  {
+    title: "Automated lab provisioning",
+    description: "Infrastructure as code that provisions virtualised research environments for the LaBackDoor lab.",
+    tech: ["Terraform", "Ansible", "Proxmox"],
+    highlights: ["30+ environments provisioned with Terraform and Ansible on Proxmox"],
+  },
+  {
     title: "Wellness Pathway",
-    description: "Full-stack health platform based on CDC Prevent T2 standards",
+    description: "Full-stack health platform based on CDC Prevent T2 standards.",
     tech: ["Java", "GCP", "Docker", "MySQL", "GitHub Actions", "OAuth 2.0"],
-    highlights: [
-      "Architected secure Java-based API and backend infrastructure",
-      "Engineered CI/CD pipeline using GitHub Actions and GCP",
-      "Implemented Gmail API integration via OAuth 2.0 for notifications",
-      "Designed MySQL schemas with automated data loading scripts",
-    ],
+    highlights: ["Java API, CI/CD on GCP, Gmail API notifications via OAuth 2.0"],
   },
 ];
 
@@ -159,7 +219,7 @@ export const learningTracker: LearningItem[] = [
   {
     topic: "Terraform & IaC",
     category: "Cloud Infrastructure",
-    progress: 30,
+    progress: 70,
     status: "active",
   },
   {
@@ -189,8 +249,8 @@ export const learningTracker: LearningItem[] = [
   {
     topic: "Rust",
     category: "Systems Programming",
-    progress: 0,
-    status: "planned",
+    progress: 40,
+    status: "active",
   },
 ];
 

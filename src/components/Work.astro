@@ -4,47 +4,26 @@ import { experience, projects, skills } from "../data/siteData";
 
 <section id="work" class="py-24 bg-charcoal">
   <div class="max-w-6xl mx-auto px-6">
-    <h2 class="font-mono text-3xl md:text-4xl text-white mb-2 section-reveal">
-      work
-    </h2>
+    <h2 class="font-mono text-4xl md:text-5xl text-white mb-2 section-reveal">Work</h2>
     <div class="w-12 h-[2px] bg-teal mb-12 section-reveal"></div>
 
-    <!-- Skills grid -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16 section-reveal">
-      {Object.entries(skills).map(([category, items]) => (
-        <div>
-          <h4 class="font-mono text-teal text-xs uppercase tracking-wider mb-3">
-            {category}
-          </h4>
-          <ul class="space-y-1">
-            {items.map((skill) => (
-              <li class="text-white/60 text-sm">{skill}</li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </div>
-
-    <!-- Experience -->
-    <h3 class="font-mono text-white text-xl mb-8 section-reveal">experience</h3>
-    <div class="space-y-8 mb-16">
+    <h3 class="text-white text-xl font-semibold mb-8 section-reveal">Experience</h3>
+    <div class="space-y-10 mb-20">
       {experience.map((job) => (
-        <div class="group border-l-2 border-teal/30 pl-6 hover:border-teal transition-colors section-reveal">
-          <div class="flex flex-col md:flex-row md:items-baseline md:justify-between mb-2">
+        <div class="border-l-2 border-teal/40 pl-6 hover:border-teal transition-colors section-reveal">
+          <div class="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 mb-3">
             <div>
               <h4 class="text-white font-semibold text-lg">{job.role}</h4>
-              <p class="text-teal text-sm font-mono">
+              <p class="text-teal">
                 {job.company}
-                <span class="text-white/40"> / {job.location}</span>
+                {job.location && <span class="text-white/70"> · {job.location}</span>}
               </p>
             </div>
-            <p class="text-white/40 text-xs font-mono mt-1 md:mt-0 shrink-0">
-              {job.date}
-            </p>
+            <p class="text-white/70 text-sm shrink-0">{job.date}</p>
           </div>
-          <ul class="space-y-2 mt-3">
+          <ul class="space-y-2">
             {job.bullets.map((bullet) => (
-              <li class="text-white/60 text-sm pl-4 relative before:content-[''] before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-teal/40 before:rounded-full">
+              <li class="text-white/85 pl-4 relative before:content-[''] before:absolute before:left-0 before:top-2.5 before:w-1.5 before:h-1.5 before:bg-teal before:rounded-full">
                 {bullet}
               </li>
             ))}
@@ -53,23 +32,45 @@ import { experience, projects, skills } from "../data/siteData";
       ))}
     </div>
 
-    <!-- Projects -->
-    <h3 class="font-mono text-white text-xl mb-8 section-reveal">projects</h3>
-    <div class="grid md:grid-cols-2 gap-6">
+    <h3 class="text-white text-xl font-semibold mb-8 section-reveal">Projects</h3>
+    <div class="grid md:grid-cols-2 gap-6 mb-20">
       {projects.map((project) => (
-        <div class="border border-white/10 p-6 hover:border-teal/40 transition-colors section-reveal">
+        <article class="flex flex-col border border-white/15 p-6 hover:border-teal transition-colors section-reveal">
           <h4 class="text-white font-semibold text-lg mb-2">{project.title}</h4>
-          <p class="text-white/60 text-sm mb-4">{project.description}</p>
-          <div class="flex flex-wrap gap-2 mb-4">
-            {project.tech.map((t) => (
-              <span class="text-xs font-mono bg-teal/10 text-teal px-2 py-1">
-                {t}
-              </span>
-            ))}
-          </div>
-          <ul class="space-y-1">
+          <p class="text-white/85 mb-4">{project.description}</p>
+          <ul class="mb-4">
             {project.highlights.map((h) => (
-              <li class="text-white/50 text-xs">{h}</li>
+              <li class="text-white/70 text-sm">{h}</li>
+            ))}
+          </ul>
+          <ul class="flex flex-wrap gap-2 mb-4">
+            {project.tech.map((t) => (
+              <li class="text-xs bg-teal/15 text-light-teal px-2 py-1">{t}</li>
+            ))}
+          </ul>
+          {project.link && (
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-auto self-start text-sm font-medium text-teal hover:text-light-teal underline underline-offset-4"
+            >
+              {project.linkLabel ?? "View project"}
+              <span class="sr-only"> for {project.title} (opens in a new tab)</span>
+            </a>
+          )}
+        </article>
+      ))}
+    </div>
+
+    <h3 class="text-white text-xl font-semibold mb-6 section-reveal">Core skills</h3>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 section-reveal">
+      {Object.entries(skills).map(([category, items]) => (
+        <div>
+          <h4 class="text-teal text-sm font-semibold uppercase tracking-wider mb-3">{category}</h4>
+          <ul class="space-y-1">
+            {items.map((skill) => (
+              <li class="text-white/85">{skill}</li>
             ))}
           </ul>
         </div>

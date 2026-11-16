@@ -1,82 +1,75 @@
 ---
 import { siteConfig, links } from "../data/siteData";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const social = [
+  { href: links.linkedin, label: "LinkedIn" },
+  { href: links.github, label: "GitHub" },
+  { href: links.scholar, label: "Google Scholar" },
+  { href: links.labackdoor, label: "LaBackDoor" },
+];
 ---
 
-<section id="contact" class="py-24 bg-charcoal">
+<section id="contact" class="py-24 bg-pale-teal">
   <div class="max-w-6xl mx-auto px-6 text-center">
-    <h2 class="font-mono text-3xl md:text-4xl text-white mb-2 section-reveal">
-      contact
-    </h2>
-    <div class="w-12 h-[2px] bg-teal mx-auto mb-8 section-reveal"></div>
-    <p class="text-white/60 max-w-lg mx-auto mb-12 section-reveal">
-      Open to collaboration, research opportunities, and interesting conversations.
-      Feel free to reach out.
-    </p>
+    <h2 class="font-mono text-4xl md:text-5xl text-deep-teal mb-2 section-reveal">Contact</h2>
+    <div class="w-12 h-[2px] bg-deep-teal mx-auto mb-8 section-reveal"></div>
+    <p class="text-charcoal text-lg max-w-xl mx-auto mb-10 section-reveal">{siteConfig.seeking}</p>
 
     <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 section-reveal">
       <a
         href={`mailto:${siteConfig.email}`}
-        class="inline-block border border-teal text-teal px-8 py-3 text-sm font-mono tracking-wider hover:bg-teal hover:text-charcoal transition-all duration-300"
+        class="inline-block bg-deep-teal text-white font-medium px-7 py-3 text-sm hover:bg-charcoal transition-colors"
       >
-        send email
+        Send email
       </a>
       <button
         id="copy-email"
-        class="inline-block border border-white/20 text-white/60 px-8 py-3 text-sm font-mono tracking-wider hover:border-teal hover:text-teal transition-all duration-300"
+        type="button"
+        class="inline-block border border-deep-teal text-deep-teal font-medium px-7 py-3 text-sm hover:bg-deep-teal hover:text-white transition-colors"
       >
-        copy email
+        Copy email
       </button>
+      <a
+        href={`${base}/${siteConfig.resume}`}
+        class="inline-block border border-deep-teal text-deep-teal font-medium px-7 py-3 text-sm hover:bg-deep-teal hover:text-white transition-colors"
+      >
+        Download resume
+      </a>
     </div>
+    <p id="copy-status" class="sr-only" aria-live="polite"></p>
 
-    <div class="flex items-center justify-center gap-6 section-reveal">
-      <a
-        href={links.linkedin}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-white/40 hover:text-teal transition-colors text-sm font-mono"
-      >
-        linkedin
-      </a>
-      <span class="text-white/20">|</span>
-      <a
-        href={links.github}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-white/40 hover:text-teal transition-colors text-sm font-mono"
-      >
-        github
-      </a>
-      <span class="text-white/20">|</span>
-      <a
-        href={links.labackdoor}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-white/40 hover:text-teal transition-colors text-sm font-mono"
-      >
-        labackdoor
-      </a>
-    </div>
+    <ul class="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 section-reveal">
+      {social.map((s) => (
+        <li>
+          <a href={s.href} target="_blank" rel="noopener noreferrer" class="text-deep-teal font-medium hover:text-charcoal underline-offset-4 hover:underline">
+            {s.label}<span class="sr-only"> (opens in a new tab)</span>
+          </a>
+        </li>
+      ))}
+    </ul>
   </div>
 </section>
 
 <footer class="bg-deep-teal py-6">
-  <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between">
-    <p class="font-mono text-white/40 text-xs">
-      &copy; {new Date().getFullYear()} {siteConfig.handle}
-    </p>
-    <p class="font-mono text-white/30 text-xs mt-2 sm:mt-0">
-      built with astro + vue
-    </p>
+  <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm">
+    <p class="text-white/80">&copy; {new Date().getFullYear()} {siteConfig.name}</p>
+    <a href={`mailto:${siteConfig.email}`} class="text-white/80 hover:text-white">{siteConfig.email}</a>
   </div>
 </footer>
 
 <script define:vars={{ email: siteConfig.email }}>
   const btn = document.getElementById("copy-email");
+  const status = document.getElementById("copy-status");
   btn?.addEventListener("click", async () => {
-    await navigator.clipboard.writeText(email);
-    btn.textContent = "copied!";
+    try {
+      await navigator.clipboard.writeText(email);
+      btn.textContent = "Copied";
+      if (status) status.textContent = "Email address copied";
+    } catch {
+      btn.textContent = email;
+    }
     setTimeout(() => {
-      btn.textContent = "copy email";
+      btn.textContent = "Copy email";
     }, 2000);
   });
 </script>

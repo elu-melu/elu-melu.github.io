@@ -4,59 +4,46 @@ import { siteConfig, interests, education, affiliations } from "../data/siteData
 
 <section id="about" class="py-24 bg-pale-teal">
   <div class="max-w-6xl mx-auto px-6">
-    <h2 class="font-mono text-3xl md:text-4xl text-deep-teal mb-2 section-reveal">
-      about
-    </h2>
-    <div class="w-12 h-[2px] bg-teal mb-12 section-reveal"></div>
+    <h2 class="font-mono text-4xl md:text-5xl text-deep-teal mb-2 section-reveal">About</h2>
+    <div class="w-12 h-[2px] bg-deep-teal mb-12 section-reveal"></div>
 
     <div class="grid md:grid-cols-2 gap-12">
-      <!-- Bio -->
       <div class="section-reveal">
-        <p class="text-charcoal/80 leading-relaxed mb-8">
-          {siteConfig.bio}
-        </p>
-        <div class="flex flex-wrap gap-3 mb-8">
+        <p class="text-charcoal text-lg leading-relaxed mb-8">{siteConfig.bio}</p>
+        <div class="flex flex-wrap gap-3">
           {affiliations.map((a) => (
             <a
               href={a.url}
               target="_blank"
               rel="noopener noreferrer"
-              class="text-xs font-mono bg-deep-teal text-white px-4 py-2 hover:bg-teal transition-colors"
+              class="text-sm bg-deep-teal text-white px-4 py-2 hover:bg-charcoal transition-colors"
             >
               {a.name}
+              <span class="sr-only"> (opens in a new tab)</span>
             </a>
           ))}
         </div>
       </div>
 
-      <!-- Education & Interests -->
-      <div class="space-y-8 section-reveal">
+      <div class="space-y-10 section-reveal">
         <div>
-          <h3 class="font-mono text-deep-teal text-lg mb-4">education</h3>
+          <h3 class="text-deep-teal text-sm font-semibold uppercase tracking-wider mb-4">Education</h3>
           {education.map((edu) => (
-            <div class="mb-4 last:mb-0">
+            <div class="mb-5 last:mb-0">
               <p class="font-semibold text-charcoal">{edu.school}</p>
-              <p class="text-sm text-charcoal/70">{edu.degree}</p>
-              {edu.focus && (
-                <p class="text-sm text-charcoal/60">Focus: {edu.focus}</p>
-              )}
-              {edu.minor && (
-                <p class="text-sm text-charcoal/60">Minor: {edu.minor}</p>
-              )}
-              <p class="text-xs font-mono text-teal mt-1">{edu.date}</p>
+              <p class="text-charcoal/85">{edu.degree}{edu.focus && `, ${edu.focus}`}{edu.minor && `, minor in ${edu.minor}`}</p>
+              <p class="text-sm text-deep-teal mt-1">{edu.date}</p>
             </div>
           ))}
         </div>
 
         <div>
-          <h3 class="font-mono text-deep-teal text-lg mb-4">talk to me about</h3>
-          <div class="flex flex-wrap gap-2">
+          <h3 class="text-deep-teal text-sm font-semibold uppercase tracking-wider mb-4">Talk to me about</h3>
+          <ul class="flex flex-wrap gap-2">
             {interests.map((item) => (
-              <span class="text-xs font-mono border border-deep-teal/30 text-deep-teal px-3 py-1.5 hover:bg-deep-teal hover:text-white transition-colors cursor-default">
-                {item.label}
-              </span>
+              <li class="text-sm border border-deep-teal/40 text-deep-teal px-3 py-1.5">{item.label}</li>
             ))}
-          </div>
+          </ul>
         </div>
       </div>
     </div>

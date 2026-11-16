@@ -3,7 +3,7 @@ export const siteConfig = {
   handle: "get-webster",
   tagline: "I build payment systems and research AI security.",
   resume: "webster-elumelu-resume.pdf",
-  seeking: "Open to software and security engineering roles in London, Europe and remote.",
+  seeking: "Open to software and security engineering roles worldwide, remote or on-site.",
   title: "Software Engineer & Security Researcher",
   location: "Abuja, NG",
   email: "elumeluwebster@gmail.com",

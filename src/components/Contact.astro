@@ -9,29 +9,29 @@ const social = [
 ];
 ---
 
-<section id="contact" class="py-24 bg-pale-teal">
+<section id="contact" class="py-24 bg-charcoal">
   <div class="max-w-6xl mx-auto px-6 text-center">
-    <h2 class="font-mono text-4xl md:text-5xl text-deep-teal mb-2 section-reveal">Contact</h2>
-    <div class="w-12 h-[2px] bg-deep-teal mx-auto mb-8 section-reveal"></div>
-    <p class="text-charcoal text-lg max-w-xl mx-auto mb-10 section-reveal">{siteConfig.seeking}</p>
+    <h2 class="font-mono text-4xl md:text-5xl text-white mb-2 section-reveal">Contact</h2>
+    <div class="w-12 h-[2px] bg-teal mx-auto mb-8 section-reveal"></div>
+    <p class="text-white/85 text-lg max-w-xl mx-auto mb-10 section-reveal">{siteConfig.seeking}</p>
 
     <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 section-reveal">
       <a
         href={`mailto:${siteConfig.email}`}
-        class="inline-block bg-deep-teal text-white font-medium px-7 py-3 text-sm hover:bg-charcoal transition-colors"
+        class="inline-block bg-teal text-charcoal font-medium px-7 py-3 text-sm hover:bg-light-teal transition-colors"
       >
         Send email
       </a>
       <button
         id="copy-email"
         type="button"
-        class="inline-block border border-deep-teal text-deep-teal font-medium px-7 py-3 text-sm hover:bg-deep-teal hover:text-white transition-colors"
+        class="inline-block border border-teal text-teal font-medium px-7 py-3 text-sm hover:bg-teal hover:text-charcoal transition-colors"
       >
         Copy email
       </button>
       <a
         href={`${base}/${siteConfig.resume}`}
-        class="inline-block border border-deep-teal text-deep-teal font-medium px-7 py-3 text-sm hover:bg-deep-teal hover:text-white transition-colors"
+        class="inline-block border border-teal text-teal font-medium px-7 py-3 text-sm hover:bg-teal hover:text-charcoal transition-colors"
       >
         Download resume
       </a>
@@ -41,7 +41,7 @@ const social = [
     <ul class="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 section-reveal">
       {social.map((s) => (
         <li>
-          <a href={s.href} target="_blank" rel="noopener noreferrer" class="text-deep-teal font-medium hover:text-charcoal underline-offset-4 hover:underline">
+          <a href={s.href} target="_blank" rel="noopener noreferrer" class="text-teal font-medium hover:text-light-teal underline-offset-4 hover:underline">
             {s.label}<span class="sr-only"> (opens in a new tab)</span>
           </a>
         </li>

@@ -24,5 +24,28 @@ your profile.
    `SPOTIFY_REFRESH_TOKEN`.
 5. Actions → Deploy to GitHub Pages → Run workflow.
 
+## Keeping it current (external cron)
+
+GitHub runs scheduled workflows late or not at all, so an outside cron service
+calls the workflow every 5 minutes instead. With `spotify_only` set, a run only
+deploys when the tracks changed.
+
+1. Create a fine-grained GitHub token: Settings → Developer settings →
+   Fine-grained tokens. Repository access: only `elu-melu.github.io`.
+   Permissions: **Actions: Read and write** (nothing else). Pick an expiry and
+   note it; the cron stops working when the token expires.
+2. Make a free account at https://cron-job.org and create a job:
+   - URL: `https://api.github.com/repos/elu-melu/elu-melu.github.io/actions/workflows/pages.yml/dispatches`
+   - Schedule: every 5 minutes
+   - Request method: `POST`
+   - Headers:
+     - `Authorization: Bearer <your token>`
+     - `Accept: application/vnd.github+json`
+     - `X-GitHub-Api-Version: 2022-11-28`
+     - `Content-Type: application/json`
+   - Body: `{"ref":"main","inputs":{"spotify_only":"true"}}`
+3. Save, then use "Test run". GitHub answers `204 No Content` when it worked,
+   and a new run appears under Actions.
+
 Never commit the secret or the token. If you ever leak them, reset the client
 secret in the Spotify dashboard and repeat step 3.

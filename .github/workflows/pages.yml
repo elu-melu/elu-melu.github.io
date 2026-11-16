@@ -4,9 +4,15 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
-  # Refresh "Last played" from Spotify every 5 minutes (GitHub's minimum;
-  # scheduled runs can start late when GitHub is busy). Scheduled runs only
-  # deploy when the tracks have changed.
+    inputs:
+      # Set by the external cron (see scripts/SPOTIFY.md): only deploy when the
+      # tracks changed. A manual run leaves it off and always deploys.
+      spotify_only:
+        type: boolean
+        default: false
+  # Backup refresh. GitHub runs these late or skips them, which is why an
+  # external cron also calls workflow_dispatch with spotify_only.
+  # Scheduled runs only deploy when the tracks have changed.
   schedule:
     - cron: "*/5 * * * *"
 
@@ -49,7 +55,8 @@ jobs:
         run: |
           live=$(curl -sf "${{ steps.pages.outputs.base_url }}/spotify.json" | jq -c '[.tracks[].id]' || echo none)
           new=$(jq -c '[.tracks[].id]' src/data/spotify.json)
-          if [ "${{ github.event_name }}" = "schedule" ] && [ "$live" = "$new" ]; then
+          refresh_only="${{ github.event_name == 'schedule' || inputs.spotify_only == true }}"
+          if [ "$refresh_only" = "true" ] && [ "$live" = "$new" ]; then
             echo "Spotify: no new tracks, skipping the deploy."
             echo "skip=true" >> "$GITHUB_OUTPUT"
           else

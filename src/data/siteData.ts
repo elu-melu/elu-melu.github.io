@@ -17,7 +17,7 @@ export const links = {
   labackdoor: "https://www.labackdoor.com",
   scholar: "https://scholar.google.com/citations?user=ukgh9BkAAAAJ",
   // Paste your Spotify profile or playlist link here; the Listening column appears once it is set.
-  spotify: "",
+  spotify: "https://open.spotify.com/user/lrhdt8pv6tr2wzng7jho127l1",
   bareMax: "https://www.bare-max.club/",
 };
 

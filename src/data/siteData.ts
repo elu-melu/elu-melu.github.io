@@ -1,15 +1,16 @@
 export const siteConfig = {
   name: "Webster C. Elumelu",
   handle: "get-webster",
-  title: "Software & Cloud Engineer",
+  title: "Software Engineer & Security Researcher",
   location: "Abuja, NG",
   email: "elumeluwebster@gmail.com",
-  bio: `Results-driven Software Engineer with an MS in Computer Science (Candidate). Proven expertise in architecting scalable fintech applications and cloud-native infrastructure. Skilled in bridging the gap between high-performance systems, DevOps practices, and user-centric design to drive digital transformation and reliable, production-grade deployments.`,
+  bio: `Software engineer building payment products end to end at 78 Financials: React, TypeScript and Vue frontends, Spring Boot and Python backends, and the databases behind them. I also research AI security at the LaBackDoor Cybersecurity Research Lab, with published work on vulnerability forecasting and access control. M.S. in Computer Science (Computing Systems) in progress at Georgia Tech.`,
 };
 
 export const links = {
   linkedin: "https://linkedin.com/in/webster-elumelu",
-  github: "https://github.com/LaBackDoor",
+  github: "https://github.com/elu-melu",
+  githubLab: "https://github.com/LaBackDoor",
   labackdoor: "https://www.labackdoor.com",
 };
 
@@ -29,7 +30,7 @@ export const education = [
     location: "Atlanta, GA, USA",
     degree: "Masters of Science in Computer Science",
     focus: "Computing Systems",
-    date: "Expected Dec 2028",
+    date: "Expected Dec 2027",
   },
   {
     school: "Webster University",
@@ -41,29 +42,12 @@ export const education = [
 ];
 
 export const skills = {
-  "Cloud & Infrastructure": [
-    "Docker",
-    "Kubernetes",
-    "Terraform",
-    "GCP",
-    "Linux",
-    "Networking",
-  ],
-  "DevOps & CI/CD": [
-    "GitHub Actions",
-    "CI/CD Pipelines",
-    "Infrastructure as Code",
-    "Container Orchestration",
-    "Monitoring & Observability",
-  ],
-  "Frontend & UX": [
-    "React",
-    "Vue.js",
-    "TypeScript",
-    "Heuristic Evaluation",
-    "User Journey Mapping",
-  ],
-  "Backend & Data": ["Python", "MySQL", "Bash", "OAuth 2.0"],
+  "Frontend": ["React", "TypeScript", "Vue.js", "WebSockets", "Analytics instrumentation"],
+  "Backend & APIs": ["Java (Spring Boot)", "Python (Django, FastAPI)", "Go", "REST APIs", "Microservices", "OAuth 2.0", "RBAC"],
+  "Data": ["PostgreSQL", "Oracle", "MySQL", "MongoDB", "AWS S3"],
+  "Cloud & Infrastructure": ["Docker", "Kubernetes", "Terraform", "Ansible", "Proxmox", "GCP", "Linux"],
+  "Tooling": ["Git & GitHub", "GitHub Actions", "CI/CD Pipelines", "Bash"],
+  "Systems": ["C/C++", "Rust"],
 };
 
 export interface ExperienceEntry {
@@ -77,27 +61,41 @@ export interface ExperienceEntry {
 export const experience: ExperienceEntry[] = [
   {
     role: "UX/Software Engineer",
-    company: "78 Financials",
+    company: "78 Financials (Payaza & Rove10)",
     // location: "Lagos, NG",
     date: "Jan 2025 - Present",
     bullets: [
-      "Architected multi-factor authentication (MFA) and Google OAuth integrations using FingerprintJS, protecting thousands of user accounts",
+      "Build and maintain Spring Boot REST APIs and microservices for Transfer and Bills Payment, with OAuth, role-based access control and audit logging",
+      "Build and maintain two production frontends, Payaza's merchant app and Rove10's back office (React, TypeScript, Vue), shipped through development, UAT and main",
+      "Helped design the system Payaza used to sell shares in the Dangote IPO (14 Sep - 27 Oct 2026); over 2.79 million shares (over NGN 1.46 billion) were sold through it",
+      "Shipped Payaza Give end to end, including multi-currency settlement, onboarding and link-creation workflows",
+      "Built MFA and Google OAuth integrations using FingerprintJS, and designed multi-tenancy for white-labeled merchant and back-office applications",
       "Engineered a custom auto-reconciliation system providing real-time financial insights for executive leadership",
-      "Shipped Payaza Give product end-to-end, developing complete onboarding flows and link creation systems",
-      "Designed multi-tenancy architecture for white-labeled merchant and back office applications",
-      "Developed critical accounts infrastructure with PND/PNC implementations",
-      "Architected responsive UI components and led UX ideation for currency exchange features using VueJS and TypeScript",
+      "Developed accounts infrastructure with PND/PNC implementations",
+      "Optimised queries across PostgreSQL, Oracle, MySQL and MongoDB, and debugged client integrations to root cause",
+    ],
+  },
+  {
+    role: "Research Assistant (Systems & Infrastructure)",
+    company: "LaBackDoor Cybersecurity Research Lab",
+    // location: "Remote",
+    date: "Jun 2023 - Present",
+    bullets: [
+      "Automated provisioning of 30+ virtualised lab environments (Terraform, Ansible, Proxmox)",
+      "Built an access-control framework (AW-TRBAC) for large distributed NoSQL databases",
+      "Built distributed Python network-analysis systems and a Rust networking stack",
+      "Prototyped an LLM-driven agentic system for finding and fixing software vulnerabilities",
     ],
   },
   {
     role: "CyberSecurity AI Trainer",
     company: "micro1",
     // location: "Remote",
-    date: "Dec 2024 - June 2025",
+    date: "Dec 2024 - Jan 2026",
     bullets: [
-      "Compiled technical reports quantifying vulnerabilities, improving AI system resilience by 60%",
-      "Simulated over 10 cyber attack vectors on LLMs in Docker-based VM environments, mitigating up to 85% of targeted vulnerabilities",
-      "Designed secure Docker setups reducing environment deployment time by 30%",
+      "Built training data and evaluation benchmarks for AI models in the cybersecurity domain",
+      "Simulated attack vectors against large language models in Docker-based VM environments",
+      "Documented vulnerabilities, failure modes and mitigations in technical reports for model and system hardening",
     ],
   },
   {
@@ -114,11 +112,11 @@ export const experience: ExperienceEntry[] = [
     role: "Frontend Engineer",
     company: "KNG Technologies",
     // location: "New York, USA",
-    date: "Nov 2022 - August 2024",
+    date: "Nov 2022 - Aug 2024",
     bullets: [
+      "Built React and TypeScript components for internal and client-facing products",
       "Implemented standardized documentation process with centralized repository access",
       "Developed custom solutions used as patch updates for legacy projects",
-      "Built components using React TypeScript best practices for optimal page load performance",
     ],
   },
 ];

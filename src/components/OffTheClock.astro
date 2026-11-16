@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import SectionHead from "./SectionHead.astro";
+import { ArrowRight, ArrowUpRight, RefreshCw } from "@lucide/vue";
 import { getFilms, hasThoughts } from "../lib/films";
 import { bareMax, links } from "../data/siteData";
 import spotify from "../data/spotify.json";
@@ -24,35 +24,36 @@ const randomise = pinned.length === 0;
 const filmPreview = randomise ? filmsThisYear : pinned;
 ---
 
-<section id="off-the-clock" class="py-16 md:py-24">
-  <div class="max-w-6xl mx-auto px-6">
-    <SectionHead title="Off the clock" />
-
-    <div class="mb-16">
-      <p class="font-sans text-sm text-muted mb-2">{bareMax.role}</p>
-      <a href={links.bareMax} target="_blank" rel="noopener noreferrer" class="font-display italic text-7xl md:text-[9rem] leading-[0.9] link">
-        Bare Max<span class="sr-only"> (opens in a new tab)</span>
-      </a>
-      <p class="mt-8 max-w-2xl md:ml-[33%] text-xl leading-relaxed">{bareMax.body}</p>
+<section id="off-the-clock" class="pt-section">
+  <div class="max-w-page mx-auto px-gutter">
+    <div class="grid lg:grid-cols-12 gap-x-6 mb-block">
+      <h2 class="lg:col-span-3 lg:sticky lg:top-20 self-start text-title mb-8 lg:mb-0">Off the clock</h2>
+      <div class="lg:col-span-9 min-w-0">
+        <p class="text-meta text-muted mb-3">{bareMax.role}</p>
+        <a href={links.bareMax} target="_blank" rel="noopener noreferrer" class="text-headline font-light text-ink hover:text-accent transition-colors duration-150 inline-flex items-baseline gap-3">
+          Bare Max
+          <ArrowUpRight size={28} stroke-width={1.5} aria-hidden="true" class="i-out" />
+          <span class="sr-only"> (opens in a new tab)</span>
+        </a>
+        <p class="text-lead text-ink-2 max-w-measure mt-6">{bareMax.body}</p>
+      </div>
     </div>
 
     {(books.length > 0 || filmsThisYear.length > 0 || links.spotify) && (
-      <div class="grid md:grid-cols-3 gap-x-10 gap-y-12 border-t border-ink pt-8">
+      <div class="grid md:grid-cols-3 gap-x-6 gap-y-12 pt-8 border-t border-line">
         {books.length > 0 && (
-          <div>
-            <h3 class="kicker text-teal mb-6">Reading</h3>
+          <div class="min-w-0">
+            <h3 class="text-small font-semibold text-ink mb-5">Reading</h3>
             <ul class="space-y-5">
               {books.map((b) => (
                 <li>
-                  <p class="font-display text-2xl leading-tight">
-                    <em>{b.data.title}</em>
-                  </p>
+                  <p class="text-body font-[560] leading-snug">{b.data.title}</p>
                   {(b.data.author || b.data.status === "reading") && (
-                    <p class="font-sans text-sm text-muted">
-                      {[b.data.author, b.data.status === "reading" && "reading now"].filter(Boolean).join(" · ")}
+                    <p class="text-meta text-muted num mt-0.5">
+                      {[b.data.author, b.data.status === "reading" && "reading now"].filter(Boolean).join(", ")}
                     </p>
                   )}
-                  {b.data.note && <p class="text-base mt-1">{b.data.note}</p>}
+                  {b.data.note && <p class="text-small text-ink-2 font-normal mt-1">{b.data.note}</p>}
                 </li>
               ))}
             </ul>
@@ -60,64 +61,59 @@ const filmPreview = randomise ? filmsThisYear : pinned;
         )}
 
         {filmsThisYear.length > 0 && (
-          <div>
-            <div class="flex items-center justify-between gap-4 mb-6">
-              <h3 class="kicker text-teal">
-                {filmsThisYear.length} films in {year}{randomise && <span class="text-muted"> · five at random</span>}
+          <div class="min-w-0">
+            <div class="flex items-center justify-between gap-4 mb-5">
+              <h3 class="text-small font-semibold text-ink num">
+                {filmsThisYear.length} films in {year}{randomise && <span class="text-muted font-normal">, five at random</span>}
               </h3>
               {randomise && (
-                <button
-                  type="button"
-                  data-film-shuffle
-                  class="hidden shrink-0 p-1.5 -m-1.5 text-rust hover:text-ink transition-colors"
-                  aria-label="Show five other films"
-                  title="Show five other films"
-                >
-                  <svg width="20" height="22" viewBox="0 0 12 13" fill="none" aria-hidden="true" class="shuffle-icon">
-                    <g stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M6 10.4985C7.46569 10.4986 8.81418 9.69746 9.51496 8.41016" />
-                      <path d="M10.0017 6.49776C10.0017 4.2877 8.21006 2.49609 6 2.49609" />
-                      <path d="M6.00001 2.49609C4.53432 2.49597 3.18583 3.29716 2.48505 4.58446" />
-                      <path d="M1.99835 6.5C1.99835 8.71006 3.78996 10.5017 6.00002 10.5017" />
-                      <path d="M2.48505 4.58545C3.35978 2.97794 5.21358 2.16869 6.98713 2.62013C8.76067 3.07157 10.002 4.66865 10.0017 6.49875" />
-                      <path d="M1.99835 6.5C1.99807 8.3301 3.23936 9.92718 5.0129 10.3786C6.78645 10.8301 8.64025 10.0208 9.51498 8.4133" />
-                      <path d="M4.02269 4.58514H2.25446V2.81641" />
-                      <path d="M7.97729 8.41016H9.74553V10.1789" />
-                    </g>
-                  </svg>
-                </button>
+                <span data-film-shuffle-wrap class="hidden">
+                  <button
+                    type="button"
+                    data-film-shuffle
+                    class="size-11 -m-3 grid place-items-center rounded-full text-ink-2 hover:text-accent active:scale-[0.97] transition duration-150"
+                    aria-label="Show five other films"
+                    title="Show five other films"
+                  >
+                    <RefreshCw size={18} stroke-width={1.5} aria-hidden="true" class="shuffle-icon" />
+                  </button>
+                </span>
               )}
             </div>
             <p class="sr-only" aria-live="polite" data-film-status></p>
             <ul class="space-y-5" data-film-list data-random={randomise ? "" : undefined}>
               {filmPreview.map((f, i) => (
                 <li data-film class:list={[randomise && i >= 5 && "hidden"]}>
-                  <p class="font-display text-2xl leading-tight">
+                  <p class="text-body font-[560] leading-snug">
                     {hasThoughts(f) ? (
-                      <a href={`${base}/watching/${f.id}/`} class="link"><em>{f.data.title}</em></a>
+                      <a href={`${base}/watching/${f.id}/`} class="link">{f.data.title}</a>
                     ) : (
-                      <em>{f.data.title}</em>
+                      f.data.title
                     )}
                   </p>
                   {(f.data.director || f.data.year) && (
-                    <p class="font-sans text-sm text-muted">{[f.data.director, f.data.year].filter(Boolean).join(", ")}</p>
+                    <p class="text-meta text-muted num mt-0.5">{[f.data.director, f.data.year].filter(Boolean).join(", ")}</p>
                   )}
-                  {f.data.note && <p class="text-base mt-1">{f.data.note}</p>}
+                  {f.data.note && <p class="text-small text-ink-2 font-normal mt-1">{f.data.note}</p>}
                   {hasThoughts(f) && (
-                    <a href={`${base}/watching/${f.id}/`} class="font-sans text-sm font-medium text-rust link">My thoughts →</a>
+                    <a href={`${base}/watching/${f.id}/`} class="link text-small inline-flex items-center gap-1.5 mt-2">
+                      My thoughts
+                      <ArrowRight size={16} stroke-width={1.5} aria-hidden="true" class="i-fwd" />
+                    </a>
                   )}
                 </li>
               ))}
             </ul>
-            <a href={`${base}/watching/`} class="inline-block mt-6 font-sans text-sm font-medium text-rust link">
-              All {films.length} films →
+            <a href={`${base}/watching/`} class="link text-small inline-flex items-center gap-1.5 mt-6">
+              All {films.length} films
+              <ArrowRight size={16} stroke-width={1.5} aria-hidden="true" class="i-fwd" />
             </a>
           </div>
         )}
 
         {links.spotify && (
-          <div>
-            <h3 class="kicker text-teal mb-6">{latest ? "Last played" : "Listening"}</h3>
+          <div class="min-w-0">
+            <h3 class="text-small font-semibold text-ink mb-5">{latest ? "Last played" : "Listening"}</h3>
             {latest && (
               <>
                 <iframe
@@ -127,20 +123,20 @@ const filmPreview = randomise ? filmsThisYear : pinned;
                   height="80"
                   loading="lazy"
                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                  class="rounded-xl mb-6 border-0"
+                  class="rounded-md mb-6 border-0"
                 ></iframe>
                 <ul class="space-y-4 mb-6">
                   {recent.map((t) => (
                     <li>
-                      <a href={t.url} target="_blank" rel="noopener noreferrer" class="group grid grid-cols-[3rem_1fr] gap-3 items-center">
+                      <a href={t.url} target="_blank" rel="noopener noreferrer" class="group grid grid-cols-[2.75rem_minmax(0,1fr)] gap-3 items-center min-h-11">
                         {t.image ? (
-                          <img src={t.image} alt="" width="48" height="48" loading="lazy" class="w-12 h-12 object-cover" />
+                          <img src={t.image} alt="" width="44" height="44" loading="lazy" class="size-11 rounded-xs shadow-rest object-cover" />
                         ) : (
-                          <span class="w-12 h-12 bg-paper-deep" />
+                          <span class="size-11 rounded-xs bg-sunken" />
                         )}
-                        <span>
-                          <span class="block font-display text-xl leading-tight group-hover:text-rust transition-colors">{t.name}</span>
-                          <span class="block font-sans text-sm text-muted">{t.artists.join(", ")} · {played(t.playedAt)}</span>
+                        <span class="min-w-0">
+                          <span class="block text-small font-[560] group-hover:text-accent transition-colors duration-150">{t.name}</span>
+                          <span class="block text-meta text-muted num">{t.artists.join(", ")}, {played(t.playedAt)}</span>
                           <span class="sr-only"> (opens Spotify in a new tab)</span>
                         </span>
                       </a>
@@ -149,8 +145,10 @@ const filmPreview = randomise ? filmsThisYear : pinned;
                 </ul>
               </>
             )}
-            <a href={links.spotify} target="_blank" rel="noopener noreferrer" class:list={[latest ? "font-sans text-sm font-medium text-rust link" : "font-display text-2xl link"]}>
-              {latest ? "My Spotify profile ↗" : "On Spotify ↗"}<span class="sr-only"> (opens in a new tab)</span>
+            <a href={links.spotify} target="_blank" rel="noopener noreferrer" class:list={[latest ? "link text-small inline-flex items-center gap-1.5" : "link text-body"]}>
+              {latest ? "My Spotify profile" : "On Spotify"}
+              <ArrowUpRight size={16} stroke-width={1.5} aria-hidden="true" class="i-out" />
+              <span class="sr-only"> (opens in a new tab)</span>
             </a>
           </div>
         )}
@@ -162,6 +160,7 @@ const filmPreview = randomise ? filmsThisYear : pinned;
 <script>
   const list = document.querySelector<HTMLElement>("[data-film-list][data-random]");
   const button = document.querySelector<HTMLButtonElement>("[data-film-shuffle]");
+  const wrap = document.querySelector<HTMLElement>("[data-film-shuffle-wrap]");
   const status = document.querySelector<HTMLElement>("[data-film-status]");
 
   if (list) {
@@ -180,7 +179,7 @@ const filmPreview = randomise ? filmsThisYear : pinned;
 
     shuffle();
     if (button) {
-      button.classList.remove("hidden");
+      wrap?.classList.remove("hidden");
       button.addEventListener("click", () => {
         shuffle();
         button.classList.remove("spin");
@@ -193,13 +192,13 @@ const filmPreview = randomise ? filmsThisYear : pinned;
 </script>
 
 <style>
-  .spin .shuffle-icon {
+  .spin :global(.shuffle-icon) {
     animation: shuffle-spin 0.5s var(--ease-out);
   }
   @keyframes shuffle-spin {
     to { transform: rotate(360deg); }
   }
   @media (prefers-reduced-motion: reduce) {
-    .spin .shuffle-icon { animation: none; }
+    .spin :global(.shuffle-icon) { animation: none; }
   }
 </style>

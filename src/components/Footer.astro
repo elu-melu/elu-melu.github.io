@@ -2,9 +2,9 @@
 import { siteConfig } from "../data/siteData";
 ---
 
-<footer class="bg-ink text-paper">
-  <div class="max-w-6xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-2 font-sans text-sm">
-    <p class="text-paper/80">&copy; {new Date().getFullYear()} {siteConfig.name}</p>
-    <a href={`mailto:${siteConfig.email}`} class="text-paper/80 hover:text-paper">{siteConfig.email}</a>
+<footer class="on-ink bg-ink text-on-ink-muted">
+  <div class="max-w-page mx-auto px-gutter py-6 flex flex-wrap justify-between gap-2 text-meta num border-t border-ground/15">
+    <p>&copy; {new Date().getFullYear()} {siteConfig.name}</p>
+    <a href={`mailto:${siteConfig.email}`} class="hover:text-ground transition-colors duration-150">{siteConfig.email}</a>
   </div>
 </footer>

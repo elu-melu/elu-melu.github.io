@@ -1,40 +1,38 @@
 ---
 import { Image } from "astro:assets";
+import { Download } from "@lucide/vue";
 import { siteConfig, photos } from "../data/siteData";
 import cover from "../assets/photos/bucket-hat.jpg";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
-<section id="hero" class="pt-28 md:pt-32 pb-16 md:pb-20">
-  <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-12 gap-10 md:gap-12 items-end">
-    <div class="md:col-span-7">
-      <h1 class="hero-in font-display text-[3.75rem] leading-[0.95] md:text-[7.5rem] tracking-tight mb-8">
-        Webster<br /><em class="italic">Elumelu</em>
-      </h1>
-      <p class="hero-in text-2xl md:text-[1.75rem] leading-snug max-w-xl mb-10" style="animation-delay: 80ms">{siteConfig.tagline}</p>
-      <div class="hero-in flex flex-wrap gap-4 font-sans text-sm" style="animation-delay: 160ms">
-        <a href="#work" class="bg-ink text-paper font-medium px-6 py-3 hover:bg-rust transition-colors">View work</a>
-        <a
-          href={`${base}/${siteConfig.resume}`}
-          class="border border-ink font-medium px-6 py-3 hover:bg-ink hover:text-paper transition-colors"
-        >
-          Download resume
-        </a>
-      </div>
-    </div>
+<section id="hero" class="pt-16 md:pt-24">
+  <div class="max-w-page mx-auto px-gutter">
+    <h1 class="text-display animate-settle -ml-[0.04em]">Webster<br />Elumelu</h1>
 
-    <figure class="hero-in md:col-span-5 md:justify-self-end w-full max-w-sm mx-auto md:mx-0 rotate-[1.5deg]" style="animation-delay: 240ms">
-      <div class="print">
+    <div class="grid lg:grid-cols-12 gap-x-6 mt-10 md:mt-16">
+      <div class="lg:col-start-4 lg:col-span-6">
+        <p class="text-lead text-ink-2 max-w-measure">{siteConfig.tagline}</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#work" class="btn btn-primary">View work</a>
+          <a href={`${base}/${siteConfig.resume}`} class="btn">
+            Download resume
+            <Download size={16} stroke-width={1.5} aria-hidden="true" />
+          </a>
+        </div>
+      </div>
+
+      <figure class="lg:col-start-11 lg:col-span-2 lg:-mt-40 mt-12 w-36 lg:w-full ml-auto">
         <Image
           src={cover}
           alt={photos.cover.alt}
-          widths={[400, 700, 950]}
-          sizes="(min-width: 768px) 384px, 90vw"
+          widths={[200, 400]}
+          sizes="(min-width: 1024px) 180px, 144px"
           loading="eager"
-          class="w-full h-auto"
+          class="w-full h-auto rounded-md shadow-rest"
         />
-      </div>
-      <figcaption class="font-display italic text-lg text-muted mt-3 text-center">{photos.cover.caption}</figcaption>
-    </figure>
+        <figcaption class="text-meta text-muted mt-3">{photos.cover.caption}</figcaption>
+      </figure>
+    </div>
   </div>
 </section>

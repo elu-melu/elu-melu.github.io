@@ -1,121 +1,276 @@
 @import "tailwindcss";
-@import "@fontsource/instrument-serif/400.css";
-@import "@fontsource/instrument-serif/400-italic.css";
-@import "@fontsource/newsreader/400.css";
-@import "@fontsource/newsreader/400-italic.css";
-@import "@fontsource/newsreader/500.css";
-@import "@fontsource/inter/400.css";
-@import "@fontsource/inter/500.css";
-@import "@fontsource/inter/600.css";
+@import "@fontsource-variable/inter/opsz.css";
+@import "@fontsource-variable/inter/opsz-italic.css";
 
-/* Palette taken from the cover photo: a paper ground, ink type, the rust
-   of the jacket cuffs, the teal of the jacket and the blue of the hat. */
 @theme {
-  --color-paper: #F4EEE4;
-  --color-paper-deep: #EAE1D3;
-  --color-ink: #1C1A17;
-  --color-muted: #5A5248;
-  --color-rule: #CFC4B4;
-  --color-rust: #A8401C;
-  --color-rust-light: #E07A4F;
-  --color-teal: #1D5860;
-  --color-sky: #A9C6D2;
+  /* colour */
+  --color-*: initial;
+  --color-white: #fff;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  --color-ground: #F3F2F5;
+  --color-surface: #FCFBFD;
+  --color-sunken: #E8E6EC;
+  --color-ink: #17141C;
+  --color-ink-2: #45404E;
+  --color-muted: #676170;
+  --color-line: #D9D6DF;
+  --color-line-strong: #837D8E;
+  --color-accent: #6B5287;
+  --color-accent-deep: #523E69;
+  --color-accent-tint: #EDE8F3;
+  --color-accent-light: #C3B2DA;
+  --color-on-ink-muted: #B5AFBE;
+  --color-positive: #2B6A4C;
+  --color-negative: #A23A3F;
+  --color-warning: #855C12;
 
-  --font-display: "Instrument Serif", "Times New Roman", serif;
-  --font-serif: "Newsreader", Georgia, serif;
-  --font-sans: "Inter", system-ui, sans-serif;
+  /* type: one family */
+  --font-sans: "Inter Variable", "Inter", system-ui, sans-serif;
 
+  /* type scale: size / line-height / tracking / weight */
+  --text-display: clamp(3.5rem, 17vw, 11rem);
+  --text-display--line-height: 0.86;
+  --text-display--letter-spacing: -0.05em;
+  --text-display--font-weight: 620;
+
+  --text-figure: clamp(4rem, 15vw, 9rem);
+  --text-figure--line-height: 0.9;
+  --text-figure--letter-spacing: -0.055em;
+  --text-figure--font-weight: 300;
+
+  --text-headline: clamp(2.125rem, 6vw, 4.5rem);
+  --text-headline--line-height: 1;
+  --text-headline--letter-spacing: -0.035em;
+  --text-headline--font-weight: 560;
+
+  --text-title: 1.75rem;
+  --text-title--line-height: 1.15;
+  --text-title--letter-spacing: -0.022em;
+  --text-title--font-weight: 560;
+
+  --text-heading: 1.25rem;
+  --text-heading--line-height: 1.3;
+  --text-heading--letter-spacing: -0.017em;
+  --text-heading--font-weight: 600;
+
+  --text-lead: clamp(1.1875rem, 2.2vw, 1.4375rem);
+  --text-lead--line-height: 1.45;
+  --text-lead--letter-spacing: -0.016em;
+  --text-lead--font-weight: 400;
+
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.6;
+  --text-body--letter-spacing: -0.011em;
+  --text-body--font-weight: 400;
+
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.45;
+  --text-small--letter-spacing: -0.006em;
+  --text-small--font-weight: 450;
+
+  --text-meta: 0.8125rem;
+  --text-meta--line-height: 1.4;
+  --text-meta--letter-spacing: 0;
+  --text-meta--font-weight: 500;
+
+  /* space */
+  --spacing-gutter: clamp(1.25rem, 5vw, 3rem);
+  --spacing-block: clamp(3.5rem, 8vw, 6rem);
+  --spacing-section: clamp(6rem, 16vw, 12rem);
+  --container-page: 76rem;
+  --container-measure: 38rem;
+
+  /* radii: small and exact */
+  --radius-*: initial;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-full: 9999px;
+
+  /* light: source top-left, shadows fall down-right, tinted with ink */
+  --shadow-*: initial;
+  --shadow-rest:
+    inset 0 1px 0 #fff,
+    0 0 0 1px rgb(23 20 28 / 0.07),
+    1px 2px 2px -1px rgb(23 20 28 / 0.06),
+    3px 6px 12px -4px rgb(23 20 28 / 0.08);
+  --shadow-lift:
+    inset 0 1px 0 #fff,
+    0 0 0 1px rgb(23 20 28 / 0.08),
+    2px 4px 4px -2px rgb(23 20 28 / 0.06),
+    8px 16px 28px -8px rgb(43 30 62 / 0.16);
+  --shadow-press:
+    inset 1px 1px 2px rgb(23 20 28 / 0.12),
+    0 0 0 1px rgb(23 20 28 / 0.09);
+  --shadow-well: inset 1px 2px 3px rgb(23 20 28 / 0.08), inset 0 0 0 1px rgb(23 20 28 / 0.05);
+  --shadow-accent:
+    inset 0 1px 0 rgb(255 255 255 / 0.22),
+    1px 2px 2px -1px rgb(43 30 62 / 0.3),
+    3px 6px 14px -4px rgb(107 82 135 / 0.45);
+  --shadow-glow: 0 0 0 4px rgb(107 82 135 / 0.2);
+
+  /* motion */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --animate-settle: settle 900ms cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+@keyframes settle {
+  from { font-weight: 300; letter-spacing: -0.02em; opacity: 0; }
+}
+
+:root {
+  color-scheme: light;
+  --t-press: 100ms;   /* going down: quick */
+  --t-hover: 180ms;   /* lifting: slower */
+  --t-release: 240ms; /* coming back: slowest */
+  --t-panel: 240ms;
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
+  scroll-padding-top: 4.5rem;
+  scrollbar-color: var(--color-line-strong) transparent;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.6;
+  letter-spacing: -0.011em;
+  font-optical-sizing: auto;
+  /* calt: contextual forms; ss03: round quotes and commas; cv05: l with tail; cv08: I with serifs is NOT used */
+  font-feature-settings: "calt", "ss03", "cv05";
+  font-kerning: normal;
   color: var(--color-ink);
-  background-color: var(--color-paper);
+  background-color: var(--color-ground);
+  caret-color: var(--color-accent);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 1.125rem;
-  line-height: 1.6;
+  text-rendering: optimizeLegibility;
 }
 
-::selection {
-  background-color: var(--color-rust);
-  color: var(--color-paper);
+/* The light itself: a pool at the top-left of the viewport. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(90rem 60rem at 10% -10%, #fff 0%, transparent 60%);
 }
+
+h1, h2, h3 { text-wrap: balance; }
+p { text-wrap: pretty; }
+
+::selection { background-color: var(--color-accent); color: #fff; }
 
 :focus-visible {
-  outline: 2px solid var(--color-rust);
+  outline: 2px solid var(--color-accent);
   outline-offset: 3px;
+  border-radius: var(--radius-xs);
 }
+.on-ink :focus-visible { outline-color: var(--color-accent-light); }
+.on-ink ::selection { background-color: var(--color-accent-light); color: var(--color-ink); }
 
-/* Small-caps labels used for section kickers and metadata. */
-.kicker {
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
+/* Numerals: every date, count, year, amount. */
+.num { font-variant-numeric: tabular-nums slashed-zero; }
 
-.drop-cap::first-letter {
-  font-family: var(--font-display);
-  float: left;
-  font-size: 4.6em;
-  line-height: 0.8;
-  padding: 0.08em 0.12em 0 0;
-  color: var(--color-rust);
-}
-
+/* Text link. */
 .link {
+  color: var(--color-accent);
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.2em;
-  text-decoration-color: var(--color-rule);
-  transition: text-decoration-color 0.2s, color 0.2s;
+  text-underline-offset: 0.22em;
+  text-decoration-color: color-mix(in srgb, currentColor 40%, transparent);
+  transition: color var(--t-hover) var(--ease-out), text-decoration-color var(--t-hover) var(--ease-out);
 }
-.link:hover {
-  color: var(--color-rust);
-  text-decoration-color: currentColor;
-}
+.link:hover { color: var(--color-accent-deep); text-decoration-color: currentColor; }
+.on-ink .link { color: var(--color-accent-light); }
+.on-ink .link:hover { color: #fff; }
+/* Icon after a link label nudges toward where it points. */
+.link svg, .btn svg { display: inline-block; vertical-align: -0.15em; transition: translate var(--t-hover) var(--ease-out); }
+.link:hover .i-out, .btn:hover .i-out { translate: 2px -2px; }
+.link:hover .i-fwd, .btn:hover .i-fwd { translate: 3px 0; }
+.link:hover .i-back { translate: -3px 0; }
 
-.hero-in { animation: hero-in 500ms var(--ease-out) both; }
-@keyframes hero-in {
-  from { opacity: 0; translate: 0 12px; }
+/* Buttons: lit objects. Lift slowly, press quickly. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0 1.125rem;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-small);
+  font-weight: 560;
+  letter-spacing: -0.006em;
+  white-space: nowrap;
+  color: var(--color-ink);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-rest);
+  transition:
+    scale var(--t-release) var(--ease-out),
+    translate var(--t-release) var(--ease-out),
+    box-shadow var(--t-release) var(--ease-out),
+    background-color var(--t-hover) var(--ease-out);
 }
+.btn:hover { translate: 0 -1px; box-shadow: var(--shadow-lift); transition-duration: var(--t-hover); }
+.btn:active { scale: 0.97; translate: 0 1px; background: var(--color-sunken); box-shadow: var(--shadow-press); transition-duration: var(--t-press); }
+.btn-primary { color: #fff; background: var(--color-accent); box-shadow: var(--shadow-accent); }
+.btn-primary:hover { background: var(--color-accent); box-shadow: var(--shadow-accent), var(--shadow-glow); }
+.btn-primary:active { background: var(--color-accent-deep); box-shadow: inset 1px 2px 3px rgb(0 0 0 / 0.3); }
+.on-ink .btn:not(.btn-primary) { color: var(--color-ground); background: transparent; box-shadow: inset 0 0 0 1px rgb(243 242 245 / 0.35); }
+.on-ink .btn:not(.btn-primary):hover { box-shadow: inset 0 0 0 1px var(--color-ground); }
+.on-ink .btn:not(.btn-primary):active { background: rgb(243 242 245 / 0.08); }
 
-/* A printed-photo frame for the childhood pictures. */
-.print {
-  background: #fbf8f2;
-  padding: 0.75rem 0.75rem 2.75rem;
-  box-shadow: 0 1px 2px rgb(28 26 23 / 0.08), 0 12px 30px -12px rgb(28 26 23 / 0.25);
+/* Raised panel that is itself a link (Dangote feature). */
+.lit {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-rest);
+  transition: translate var(--t-release) var(--ease-out), scale var(--t-release) var(--ease-out), box-shadow var(--t-release) var(--ease-out);
 }
+a.lit:hover { translate: 0 -2px; box-shadow: var(--shadow-lift); transition-duration: var(--t-hover); }
+a.lit:active { translate: 0 1px; scale: 0.99; box-shadow: var(--shadow-press); transition-duration: var(--t-press); }
+
+/* Long-form text on film pages. */
+.prose-film { font-size: 1.125rem; line-height: 1.7; max-width: 62ch; }
+.prose-film > * + * { margin-top: 1.25em; }
+.prose-film h2 { font-size: var(--text-title); line-height: 1.15; letter-spacing: -0.022em; font-weight: 560; margin-top: 2.5em; }
+.prose-film blockquote { border-left: 2px solid var(--color-accent); padding-left: 1.25rem; font-size: var(--text-lead); line-height: 1.45; font-weight: 450; }
+.prose-film a { color: var(--color-accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.22em; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .hero-in { animation: none; }
+  *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+  .btn:hover, .btn:active, a.lit:hover, a.lit:active { translate: none; scale: none; }
 }
 
-/* Long-form text on film pages. */
-.prose-film > p:first-child::first-letter {
-  font-family: var(--font-display);
-  float: left;
-  font-size: 4.2em;
-  line-height: 0.8;
-  padding: 0.08em 0.12em 0 0;
-  color: var(--color-rust);
+/* Rove10 specimens: component colour comes only from these variables. */
+.rv {
+  --rv-bg: var(--color-sunken);
+  --rv-surface: var(--color-surface);
+  --rv-surface-hover: var(--color-accent-tint);
+  --rv-text: var(--color-ink);
+  --rv-text-2: var(--color-ink-2);
+  --rv-text-muted: var(--color-muted);
+  --rv-border: var(--color-line);
+  --rv-border-control: var(--color-line-strong);
+  --rv-primary: var(--color-accent);
+  --rv-primary-hover: var(--color-accent-deep);
+  --rv-primary-fg: #fff;
+  --rv-ring: rgb(107 82 135 / 0.2);
+  --rv-positive: var(--color-positive);
+  --rv-negative: var(--color-negative);
+  --rv-warning: var(--color-warning);
+  --rv-chart-1: var(--color-accent);
+  --rv-chart-2: var(--color-line-strong);
+  --rv-chart-grid: var(--color-line);
+  --rv-scrim: rgb(23 20 28 / 0.45);
+  --rv-radius: var(--radius-md);
+  --rv-radius-control: var(--radius-sm);
+  --rv-shadow: var(--shadow-rest);
+  --rv-shadow-pop: var(--shadow-lift);
 }
-.prose-film blockquote {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 1.6em;
-  line-height: 1.25;
-  border-left: 2px solid var(--color-rust);
-  padding-left: 1rem;
-}
-.prose-film a { text-decoration: underline; text-underline-offset: 0.2em; }
-.prose-film h2 { font-family: var(--font-display); font-size: 2rem; line-height: 1.1; margin-top: 2rem; }

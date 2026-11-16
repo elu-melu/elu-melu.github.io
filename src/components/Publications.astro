@@ -1,0 +1,35 @@
+---
+import { publications, links } from "../data/siteData";
+const published = publications.filter((p) => p.status === "published");
+const review = publications.filter((p) => p.status === "under review");
+---
+
+<section id="publications" class="py-24 bg-pale-teal">
+  <div class="max-w-6xl mx-auto px-6">
+    <h2 class="font-mono text-4xl md:text-5xl text-deep-teal mb-2 section-reveal">Publications</h2>
+    <div class="w-12 h-[2px] bg-deep-teal mb-6 section-reveal"></div>
+    <p class="text-charcoal/85 mb-12 section-reveal">
+      Full list on
+      <a href={links.scholar} target="_blank" rel="noopener noreferrer" class="text-deep-teal font-medium underline underline-offset-4 hover:text-charcoal">
+        Google Scholar<span class="sr-only"> (opens in a new tab)</span></a
+      >.
+    </p>
+
+    <h3 class="text-deep-teal text-sm font-semibold uppercase tracking-wider mb-4 section-reveal">Published</h3>
+    <ol class="space-y-6 mb-12">
+      {published.map((p) => (
+        <li class="section-reveal">
+          <p class="text-charcoal font-semibold leading-snug">{p.title}</p>
+          <p class="text-charcoal/80 text-sm mt-1">{p.venue}, {p.year}</p>
+        </li>
+      ))}
+    </ol>
+
+    <h3 class="text-deep-teal text-sm font-semibold uppercase tracking-wider mb-4 section-reveal">Under review</h3>
+    <ol class="space-y-4">
+      {review.map((p) => (
+        <li class="text-charcoal leading-snug section-reveal">{p.title}</li>
+      ))}
+    </ol>
+  </div>
+</section>

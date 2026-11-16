@@ -8,6 +8,7 @@
 @theme {
   --color-deep-teal: #014346;
   --color-charcoal: #303E3F;
+  --color-ink: #253031;
   --color-teal: #70B0AE;
   --color-light-teal: #A7D5D4;
   --color-pale-teal: #B7D5D4;
@@ -19,6 +20,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
 body {
@@ -45,4 +47,42 @@ body {
 ::-webkit-scrollbar-thumb {
   background: var(--color-teal);
   border-radius: 4px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-teal);
+  outline-offset: 3px;
+}
+
+/* Reveal on scroll. Content is only hidden once JavaScript has run (the
+   `js` class is set in the <head>), so it stays visible without JS and
+   for readers, crawlers and link previews. */
+.js .section-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.js .section-reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .js .section-reveal,
+  .js .section-reveal.visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

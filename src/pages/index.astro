@@ -4,33 +4,25 @@ import Navbar from "../components/Navbar.astro";
 import Hero from "../components/Hero.astro";
 import About from "../components/About.astro";
 import Work from "../components/Work.astro";
+import Publications from "../components/Publications.astro";
 import LearningTracker from "../components/LearningTracker.vue";
 import Contact from "../components/Contact.astro";
 ---
 
 <BaseLayout>
+  <a href="#about" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:bg-teal focus:text-charcoal focus:px-4 focus:py-2">Skip to content</a>
   <Navbar />
   <main>
     <Hero />
     <About />
     <Work />
+    <Publications />
     <LearningTracker client:visible />
     <Contact />
   </main>
 </BaseLayout>
 
-<style is:global>
-  .section-reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-  }
 
-  .section-reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-</style>
 
 <script>
   const observer = new IntersectionObserver(

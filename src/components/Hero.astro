@@ -1,58 +1,77 @@
 ---
-import { siteConfig } from "../data/siteData";
+import { siteConfig, stats } from "../data/siteData";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
-<section
-  id="hero"
-  class="relative min-h-screen flex items-center justify-center bg-charcoal overflow-hidden"
->
-  <div class="absolute inset-0 bg-gradient-to-b from-charcoal via-charcoal to-deep-teal opacity-80"></div>
+<section id="hero" class="relative min-h-screen flex items-center bg-charcoal overflow-hidden pt-24 pb-16">
+  <div class="absolute inset-0 bg-gradient-to-b from-charcoal via-charcoal to-deep-teal opacity-80" aria-hidden="true"></div>
+  <div
+    class="absolute inset-0 opacity-[0.03]"
+    aria-hidden="true"
+    style="background-image: repeating-linear-gradient(0deg, #fff 0px, #fff 1px, transparent 1px, transparent 60px), repeating-linear-gradient(90deg, #fff 0px, #fff 1px, transparent 1px, transparent 60px);"
+  ></div>
 
-  <!-- Grid pattern overlay -->
-  <div class="absolute inset-0 opacity-[0.03]" style="background-image: repeating-linear-gradient(0deg, #fff 0px, #fff 1px, transparent 1px, transparent 60px), repeating-linear-gradient(90deg, #fff 0px, #fff 1px, transparent 1px, transparent 60px);"></div>
-
-  <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
-    <p class="font-mono text-teal text-lg md:text-xl mb-4 hero-fade" style="--delay: 0">
-      hello, i'm
-    </p>
-    <h1 class="font-mono text-white text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 hero-fade" style="--delay: 1">
-      {siteConfig.name.split(" ")[0].toLowerCase()}
-    </h1>
-    <div class="w-16 h-[2px] bg-teal mx-auto mb-6 hero-fade" style="--delay: 2"></div>
-    <p class="text-white/60 text-lg md:text-xl max-w-2xl mx-auto mb-8 hero-fade" style="--delay: 3">
+  <div class="relative z-10 max-w-6xl mx-auto px-6 w-full">
+    <p class="text-teal text-base md:text-lg font-medium mb-3 hero-fade" style="--delay: 0">
       {siteConfig.title}
     </p>
-    <p class="text-white/40 text-sm font-mono hero-fade" style="--delay: 4">
-      {siteConfig.location}
+    <h1 class="font-mono text-white text-6xl md:text-8xl tracking-tight leading-none mb-6 hero-fade" style="--delay: 1">
+      {siteConfig.name}
+    </h1>
+    <p class="text-white/85 text-xl md:text-2xl max-w-2xl mb-3 hero-fade" style="--delay: 2">
+      {siteConfig.tagline}
     </p>
-    <div class="mt-12 hero-fade" style="--delay: 5">
+    <p class="text-white/70 text-sm mb-10 hero-fade" style="--delay: 3">
+      {siteConfig.location}. {siteConfig.seeking}
+    </p>
+
+    <div class="flex flex-wrap gap-4 mb-16 hero-fade" style="--delay: 4">
       <a
-        href="#about"
-        class="inline-block border border-teal text-teal px-8 py-3 text-sm tracking-wider hover:bg-teal hover:text-charcoal transition-all duration-300"
+        href="#work"
+        class="inline-block bg-teal text-charcoal font-medium px-7 py-3 text-sm hover:bg-light-teal transition-colors"
       >
-        explore
+        View work
+      </a>
+      <a
+        href={`${base}/${siteConfig.resume}`}
+        class="inline-block border border-teal text-teal font-medium px-7 py-3 text-sm hover:bg-teal hover:text-charcoal transition-colors"
+      >
+        Download resume
       </a>
     </div>
-  </div>
 
-  <!-- Scroll indicator -->
-  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 hero-fade" style="--delay: 6">
-    <div class="w-[1px] h-12 bg-gradient-to-b from-teal to-transparent animate-pulse"></div>
+    <dl class="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl hero-fade" style="--delay: 5">
+      {stats.map((s) => (
+        <div class="border-l-2 border-teal pl-4">
+          <dt class="sr-only">{s.label}</dt>
+          <dd class="text-white text-3xl font-semibold">{s.value}</dd>
+          <dd class="text-white/70 text-sm mt-1">{s.label}</dd>
+        </div>
+      ))}
+    </dl>
   </div>
 </section>
 
 <style>
   .hero-fade {
     opacity: 0;
-    transform: translateY(20px);
-    animation: heroFadeIn 0.8s ease-out forwards;
-    animation-delay: calc(0.3s + var(--delay) * 0.15s);
+    transform: translateY(16px);
+    animation: heroFadeIn 0.7s ease-out forwards;
+    animation-delay: calc(0.2s + var(--delay) * 0.12s);
   }
 
   @keyframes heroFadeIn {
     to {
       opacity: 1;
-      transform: translateY(0);
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-fade {
+      opacity: 1;
+      transform: none;
+      animation: none;
     }
   }
 </style>

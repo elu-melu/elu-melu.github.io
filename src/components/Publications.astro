@@ -1,15 +1,22 @@
 ---
-import SectionHead from "./SectionHead.astro";
 import { publications, links } from "../data/siteData";
 const published = publications.filter((p) => p.status === "published");
 const review = publications.filter((p) => p.status === "under review");
 ---
 
 <section id="publications" class="py-16 md:py-24 bg-paper-deep">
-  <div class="max-w-6xl mx-auto px-6">
-    <SectionHead title="Publications" />
-    <div class="grid md:grid-cols-12 gap-10">
-      <div class="md:col-span-8">
+  <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-12 gap-x-10 gap-y-8">
+    <h2 class="md:col-span-4 self-start md:sticky md:top-24 font-display text-5xl md:text-6xl leading-none">Publications</h2>
+    <div class="md:col-span-8">
+      <aside class="mb-14">
+        <p class="font-display italic text-2xl md:text-3xl leading-snug max-w-2xl mb-4">
+          Vulnerability forecasting, access control, and benchmarks for AI agents that fix real-world vulnerabilities.
+        </p>
+        <a href={links.scholar} target="_blank" rel="noopener noreferrer" class="font-sans text-sm font-medium text-rust link">
+          Google Scholar ↗<span class="sr-only"> (opens in a new tab)</span>
+        </a>
+      </aside>
+      <div>
         <p class="kicker text-muted mb-6">Published</p>
         <ol class="space-y-8 mb-14">
           {published.map((p, i) => (
@@ -27,14 +34,6 @@ const review = publications.filter((p) => p.status === "under review");
           {review.map((p) => <li class="text-lg leading-snug">{p.title}</li>)}
         </ul>
       </div>
-      <aside class="md:col-span-4 md:border-l border-rule md:pl-8">
-        <p class="font-display italic text-2xl leading-snug mb-4">
-          Vulnerability forecasting, access control, and benchmarks for AI agents that fix real-world vulnerabilities.
-        </p>
-        <a href={links.scholar} target="_blank" rel="noopener noreferrer" class="font-sans text-sm font-medium text-rust link">
-          Google Scholar ↗<span class="sr-only"> (opens in a new tab)</span>
-        </a>
-      </aside>
     </div>
   </div>
 </section>

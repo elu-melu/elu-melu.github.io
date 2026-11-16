@@ -7,7 +7,7 @@ export const siteConfig = {
   title: "Software Engineer & Security Researcher",
   location: "Abuja, NG",
   email: "elumeluwebster@gmail.com",
-  bio: `Software engineer building payment products end to end at 78 Financials: React, TypeScript and Vue frontends, Spring Boot and Python backends, and the databases behind them. I also research AI security at the LaBackDoor Cybersecurity Research Lab, with published work on vulnerability forecasting and access control. M.S. in Computer Science (Computing Systems) in progress at Georgia Tech.`,
+  bio: `I build payment software, from the screen a merchant sees to the Spring Boot service that moves the money. At 78 Financials that meant Payaza's and Rove10's merchant apps and the platform behind the Dangote IPO. Outside work hours I'm at LaBackDoor, a security research lab, where we've published on forecasting vulnerabilities and controlling access, and we're now building an AI that finds and fixes them. Who doesn't need their money to move quickly? Who doesn't want secure infrastructure with the advent of glorified cron jobs (AI) running tasks and other day-to-day activities for us?`,
 };
 
 export const links = {
@@ -79,10 +79,10 @@ export const experience: ExperienceEntry[] = [
     date: "Jan 2025 - Present",
     caseStudy: { href: "work/dangote-ipo/", label: "Read the Dangote IPO case study" },
     bullets: [
-      "Build Spring Boot REST APIs and microservices for transfers and bill payments, with OAuth, RBAC and audit logging",
-      "Build and maintain the Payaza merchant app and Rove10 back office in React, TypeScript and Vue",
-      "Helped design and build the Dangote IPO platform: client side, admin panel and multi-broker deployments; over 2.79 million shares (over NGN 1.46 billion) sold",
-      "Shipped Payaza Give end to end, including multi-currency settlement",
+      "Own the Payaza merchant app and the Rove10 back office (React, TypeScript, Vue)",
+      "Build the Spring Boot services behind transfers and bill payments, with OAuth, role-based access and audit logging",
+      "Helped build the Dangote IPO platform: the investor-facing side, the admin panel, and a setup that let different brokers run on it. It sold over 2.79 million shares, worth over ₦1.46 billion",
+      "Shipped Payaza Give from start to finish, including settling payments in multiple currencies, designed to hold up under many people paying at once and under attack",
     ],
   },
   {
@@ -90,10 +90,10 @@ export const experience: ExperienceEntry[] = [
     company: "LaBackDoor Cybersecurity Research Lab",
     date: "Jun 2023 - Present",
     bullets: [
-      "Automated provisioning of 30+ virtualised lab environments (Terraform, Ansible, Proxmox)",
-      "Built an access-control framework (AW-TRBAC) for large distributed NoSQL databases",
-      "Built distributed Python network-analysis systems and a Rust networking stack",
-      "Prototyped an LLM-driven agentic system for finding and fixing software vulnerabilities",
+      "Automated 30+ virtual lab environments with Terraform, Ansible and Proxmox",
+      "Built AW-TRBAC, an access-control framework for large distributed NoSQL databases",
+      "Wrote distributed Python network-analysis tools and a Rust networking stack",
+      "Prototyped an LLM agent that finds and fixes software vulnerabilities",
     ],
   },
   {
@@ -102,8 +102,8 @@ export const experience: ExperienceEntry[] = [
     location: "Remote",
     date: "Dec 2024 - Jan 2026",
     bullets: [
-      "Built training data and evaluation benchmarks for AI models in the cybersecurity domain",
-      "Simulated attacks on large language models and documented failure modes and mitigations",
+      "Built training data and test benchmarks for AI models in cybersecurity",
+      "Attacked large language models on purpose, then documented how they failed and how to fix it",
     ],
   },
   {
@@ -112,7 +112,7 @@ export const experience: ExperienceEntry[] = [
     location: "Abuja, NG",
     date: "Jan 2024 - Oct 2024",
     bullets: [
-      "Supported malware detection and protection projects and enterprise hardware maintenance",
+      "Supported malware detection and protection projects, and kept enterprise hardware running",
     ],
   },
   {
@@ -122,7 +122,7 @@ export const experience: ExperienceEntry[] = [
     date: "Nov 2022 - Aug 2024",
     bullets: [
       "Built React and TypeScript components for internal and client-facing products",
-      "Standardised technical documentation in a central repository",
+      "Moved scattered technical docs into one central repository",
     ],
   },
 ];

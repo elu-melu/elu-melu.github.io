@@ -28,14 +28,12 @@ const filmPreview = randomise ? filmsThisYear : pinned;
   <div class="max-w-6xl mx-auto px-6">
     <SectionHead title="Off the clock" />
 
-    <div class="grid md:grid-cols-12 gap-10 mb-16">
-      <div class="md:col-span-4">
-        <p class="font-sans text-sm text-muted mb-2">{bareMax.role}</p>
-        <a href={links.bareMax} target="_blank" rel="noopener noreferrer" class="font-display text-5xl leading-none link">
-          Bare Max<span class="sr-only"> (opens in a new tab)</span>
-        </a>
-      </div>
-      <p class="md:col-span-8 text-xl leading-relaxed">{bareMax.body}</p>
+    <div class="mb-16">
+      <p class="font-sans text-sm text-muted mb-2">{bareMax.role}</p>
+      <a href={links.bareMax} target="_blank" rel="noopener noreferrer" class="font-display italic text-7xl md:text-[9rem] leading-[0.9] link">
+        Bare Max<span class="sr-only"> (opens in a new tab)</span>
+      </a>
+      <p class="mt-8 max-w-2xl md:ml-[33%] text-xl leading-relaxed">{bareMax.body}</p>
     </div>
 
     {(books.length > 0 || filmsThisYear.length > 0 || links.spotify) && (

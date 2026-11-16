@@ -12,13 +12,12 @@ const social = [
 
 <section id="contact" class="py-20 md:py-32 bg-ink text-paper">
   <div class="max-w-6xl mx-auto px-6">
-    <p class="font-display italic text-4xl text-rust-light mb-6 section-reveal">V.</p>
-    <h2 class="font-display text-6xl md:text-8xl leading-[0.95] mb-8 section-reveal">
-      Say <em>hello.</em>
+    <h2 class="font-display text-6xl md:text-8xl leading-[0.95] mb-8">
+      Write <em>to me.</em>
     </h2>
-    <p class="text-xl text-paper/85 max-w-xl mb-10 section-reveal">{siteConfig.seeking}</p>
+    <p class="text-xl text-paper/85 max-w-xl mb-10">{siteConfig.seeking}</p>
 
-    <div class="flex flex-wrap gap-4 font-sans text-sm mb-14 section-reveal">
+    <div class="flex flex-wrap gap-4 font-sans text-sm mb-14">
       <a href={`mailto:${siteConfig.email}`} class="bg-paper text-ink font-medium px-6 py-3 hover:bg-sky transition-colors">Send email</a>
       <button id="copy-email" type="button" class="border border-paper font-medium px-6 py-3 hover:bg-paper hover:text-ink transition-colors">
         Copy email
@@ -29,7 +28,7 @@ const social = [
     </div>
     <p id="copy-status" class="sr-only" aria-live="polite"></p>
 
-    <ul class="flex flex-wrap gap-x-8 gap-y-3 font-sans text-sm border-t border-paper/25 pt-6 section-reveal">
+    <ul class="flex flex-wrap gap-x-8 gap-y-3 font-sans text-sm border-t border-paper/25 pt-6">
       {social.map((s) => (
         <li>
           <a href={s.href} target="_blank" rel="noopener noreferrer" class="text-paper/85 hover:text-rust-light underline-offset-4 hover:underline">

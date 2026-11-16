@@ -11,7 +11,7 @@ const run = [...words, ...words];
       <ul class="flex shrink-0 items-center">
         {run.map((w) => (
           <li class="flex items-center font-display italic text-3xl md:text-4xl whitespace-nowrap px-6">
-            {w}<span class="ml-12 text-rust not-italic text-2xl">✶</span>
+            {w}<span class="ml-12 size-1.5 rounded-full bg-rust" aria-hidden="true"></span>
           </li>
         ))}
       </ul>

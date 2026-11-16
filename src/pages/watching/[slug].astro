@@ -26,9 +26,8 @@ const watched = film.data.watched
   <main id="film" class="flex-1 pt-32 pb-24">
     <article class="max-w-2xl mx-auto px-6">
       <a href={`${base}/watching/`} class="font-sans text-sm text-rust link">← All films</a>
-      <p class="kicker text-muted mt-10 mb-3">Watched {watched}</p>
-      <h1 class="font-display text-6xl md:text-7xl leading-none mb-3"><em>{film.data.title}</em></h1>
-      {meta && <p class="font-sans text-sm text-muted mb-10">{meta}</p>}
+      <h1 class="font-display text-6xl md:text-7xl leading-none mt-10 mb-3"><em>{film.data.title}</em></h1>
+      <p class="font-sans text-sm text-muted mb-10">{[meta, `Watched ${watched}`].filter(Boolean).join(" · ")}</p>
       <div class="prose-film text-xl leading-relaxed space-y-5">
         <Content />
       </div>

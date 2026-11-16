@@ -24,6 +24,8 @@
   --font-display: "Instrument Serif", "Times New Roman", serif;
   --font-serif: "Newsreader", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 html {
@@ -81,6 +83,11 @@ body {
   text-decoration-color: currentColor;
 }
 
+.hero-in { animation: hero-in 500ms var(--ease-out) both; }
+@keyframes hero-in {
+  from { opacity: 0; translate: 0 12px; }
+}
+
 /* A printed-photo frame for the childhood pictures. */
 .print {
   background: #fbf8f2;
@@ -88,26 +95,9 @@ body {
   box-shadow: 0 1px 2px rgb(28 26 23 / 0.08), 0 12px 30px -12px rgb(28 26 23 / 0.25);
 }
 
-/* Reveal on scroll, only once JavaScript has run, and never when the
-   reader has asked for reduced motion. */
-.js .section-reveal {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-}
-.js .section-reveal.visible {
-  opacity: 1;
-  transform: none;
-}
-
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .js .section-reveal,
-  .js .section-reveal.visible {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
+  .hero-in { animation: none; }
 }
 
 /* Long-form text on film pages. */

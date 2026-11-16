@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import SectionHead from "./SectionHead.astro";
 import { getFilms, hasThoughts } from "../lib/films";
 import { bareMax, links } from "../data/siteData";
+import spotify from "../data/spotify.json";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 const books = (await getCollection("books")).sort((a, b) => {
@@ -11,6 +12,9 @@ const books = (await getCollection("books")).sort((a, b) => {
   return t !== 0 ? t : (a.data.order ?? 0) - (b.data.order ?? 0);
 });
 const films = await getFilms();
+const recent = (spotify.tracks ?? []) as { id: string; name: string; artists: string[]; album: string; image: string; url: string; playedAt: string }[];
+const latest = recent[0];
+const played = (iso: string) => new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
 const year = films[0]?.data.seen ?? new Date().getFullYear();
 const filmsThisYear = films.filter((f) => f.data.seen === year);
 // Pinned films (featured: 1-5) show in that order. With none pinned, five are
@@ -90,9 +94,40 @@ const filmPreview = randomise ? filmsThisYear : pinned;
 
         {links.spotify && (
           <div class="section-reveal">
-            <h3 class="kicker text-teal mb-6">Listening</h3>
-            <a href={links.spotify} target="_blank" rel="noopener noreferrer" class="font-display text-2xl link">
-              On Spotify ↗<span class="sr-only"> (opens in a new tab)</span>
+            <h3 class="kicker text-teal mb-6">{latest ? "Last played" : "Listening"}</h3>
+            {latest && (
+              <>
+                <iframe
+                  title={`Spotify player: ${latest.name} by ${latest.artists.join(", ")}`}
+                  src={`https://open.spotify.com/embed/track/${latest.id}?theme=0`}
+                  width="100%"
+                  height="80"
+                  loading="lazy"
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  class="rounded-xl mb-6 border-0"
+                ></iframe>
+                <ul class="space-y-4 mb-6">
+                  {recent.map((t) => (
+                    <li>
+                      <a href={t.url} target="_blank" rel="noopener noreferrer" class="group grid grid-cols-[3rem_1fr] gap-3 items-center">
+                        {t.image ? (
+                          <img src={t.image} alt="" width="48" height="48" loading="lazy" class="w-12 h-12 object-cover" />
+                        ) : (
+                          <span class="w-12 h-12 bg-paper-deep" />
+                        )}
+                        <span>
+                          <span class="block font-display text-xl leading-tight group-hover:text-rust transition-colors">{t.name}</span>
+                          <span class="block font-sans text-sm text-muted">{t.artists.join(", ")} · {played(t.playedAt)}</span>
+                          <span class="sr-only"> (opens Spotify in a new tab)</span>
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+            <a href={links.spotify} target="_blank" rel="noopener noreferrer" class:list={[latest ? "font-sans text-sm font-medium text-rust link" : "font-display text-2xl link"]}>
+              {latest ? "My Spotify profile ↗" : "On Spotify ↗"}<span class="sr-only"> (opens in a new tab)</span>
             </a>
           </div>
         )}

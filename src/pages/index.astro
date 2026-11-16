@@ -2,40 +2,24 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Navbar from "../components/Navbar.astro";
 import Hero from "../components/Hero.astro";
-import About from "../components/About.astro";
+import Marquee from "../components/Marquee.astro";
 import Work from "../components/Work.astro";
 import Publications from "../components/Publications.astro";
+import OffTheClock from "../components/OffTheClock.astro";
+import About from "../components/About.astro";
 import Contact from "../components/Contact.astro";
 ---
 
 <BaseLayout>
-  <a href="#about" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:bg-teal focus:text-charcoal focus:px-4 focus:py-2">Skip to content</a>
+  <a href="#work" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:bg-ink focus:text-paper focus:px-4 focus:py-2">Skip to content</a>
   <Navbar />
   <main>
     <Hero />
-    <About />
+    <Marquee />
     <Work />
     <Publications />
+    <OffTheClock />
+    <About />
     <Contact />
   </main>
 </BaseLayout>
-
-
-
-<script>
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
-
-  document.querySelectorAll(".section-reveal").forEach((el) => {
-    observer.observe(el);
-  });
-</script>

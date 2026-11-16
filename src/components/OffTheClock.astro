@@ -1,0 +1,147 @@
+---
+import { getCollection } from "astro:content";
+import SectionHead from "./SectionHead.astro";
+import { getFilms, hasThoughts } from "../lib/films";
+import { bareMax, links } from "../data/siteData";
+import spotify from "../data/spotify.json";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+const books = (await getCollection("books")).sort((a, b) => {
+  if (a.data.status !== b.data.status) return a.data.status === "reading" ? -1 : 1;
+  const t = (b.data.finished?.getTime() ?? 0) - (a.data.finished?.getTime() ?? 0);
+  return t !== 0 ? t : (a.data.order ?? 0) - (b.data.order ?? 0);
+});
+const films = await getFilms();
+const recent = (spotify.tracks ?? []) as { id: string; name: string; artists: string[]; album: string; image: string; url: string; playedAt: string }[];
+const latest = recent[0];
+const played = (iso: string) => new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+const year = films[0]?.data.seen ?? new Date().getFullYear();
+const filmsThisYear = films.filter((f) => f.data.seen === year);
+// Pinned films (featured: 1-5) show in that order. With none pinned, five are
+// picked at random on each visit; without JavaScript the five newest show.
+const pinned = filmsThisYear.filter((f) => f.data.featured).sort((a, b) => a.data.featured! - b.data.featured!);
+const randomise = pinned.length === 0;
+const filmPreview = randomise ? filmsThisYear : pinned;
+---
+
+<section id="off-the-clock" class="py-16 md:py-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <SectionHead number="III" title="Off the clock" />
+
+    <div class="grid md:grid-cols-12 gap-10 mb-16 section-reveal">
+      <div class="md:col-span-4">
+        <p class="kicker text-rust mb-2">{bareMax.role}</p>
+        <a href={links.bareMax} target="_blank" rel="noopener noreferrer" class="font-display text-5xl leading-none link">
+          Bare Max<span class="sr-only"> (opens in a new tab)</span>
+        </a>
+      </div>
+      <p class="md:col-span-8 text-xl leading-relaxed">{bareMax.body}</p>
+    </div>
+
+    {(books.length > 0 || filmsThisYear.length > 0 || links.spotify) && (
+      <div class="grid md:grid-cols-3 gap-x-10 gap-y-12 border-t border-ink pt-8">
+        {books.length > 0 && (
+          <div class="section-reveal">
+            <h3 class="kicker text-teal mb-6">Reading</h3>
+            <ul class="space-y-5">
+              {books.map((b) => (
+                <li>
+                  <p class="font-display text-2xl leading-tight">
+                    <em>{b.data.title}</em>
+                  </p>
+                  {(b.data.author || b.data.status === "reading") && (
+                    <p class="font-sans text-sm text-muted">
+                      {[b.data.author, b.data.status === "reading" && "reading now"].filter(Boolean).join(" · ")}
+                    </p>
+                  )}
+                  {b.data.note && <p class="text-base mt-1">{b.data.note}</p>}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {filmsThisYear.length > 0 && (
+          <div class="section-reveal">
+            <h3 class="kicker text-teal mb-6">
+              {filmsThisYear.length} films in {year}{randomise && <span class="text-muted"> · five at random</span>}
+            </h3>
+            <ul class="space-y-5" data-film-list data-random={randomise ? "" : undefined}>
+              {filmPreview.map((f, i) => (
+                <li data-film class:list={[randomise && i >= 5 && "hidden"]}>
+                  <p class="font-display text-2xl leading-tight">
+                    {hasThoughts(f) ? (
+                      <a href={`${base}/watching/${f.id}/`} class="link"><em>{f.data.title}</em></a>
+                    ) : (
+                      <em>{f.data.title}</em>
+                    )}
+                  </p>
+                  {(f.data.director || f.data.year) && (
+                    <p class="font-sans text-sm text-muted">{[f.data.director, f.data.year].filter(Boolean).join(", ")}</p>
+                  )}
+                  {f.data.note && <p class="text-base mt-1">{f.data.note}</p>}
+                  {hasThoughts(f) && (
+                    <a href={`${base}/watching/${f.id}/`} class="font-sans text-sm font-medium text-rust link">My thoughts →</a>
+                  )}
+                </li>
+              ))}
+            </ul>
+            <a href={`${base}/watching/`} class="inline-block mt-6 font-sans text-sm font-medium text-rust link">
+              All {films.length} films →
+            </a>
+          </div>
+        )}
+
+        {links.spotify && (
+          <div class="section-reveal">
+            <h3 class="kicker text-teal mb-6">{latest ? "Last played" : "Listening"}</h3>
+            {latest && (
+              <>
+                <iframe
+                  title={`Spotify player: ${latest.name} by ${latest.artists.join(", ")}`}
+                  src={`https://open.spotify.com/embed/track/${latest.id}?theme=0`}
+                  width="100%"
+                  height="80"
+                  loading="lazy"
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  class="rounded-xl mb-6 border-0"
+                ></iframe>
+                <ul class="space-y-4 mb-6">
+                  {recent.map((t) => (
+                    <li>
+                      <a href={t.url} target="_blank" rel="noopener noreferrer" class="group grid grid-cols-[3rem_1fr] gap-3 items-center">
+                        {t.image ? (
+                          <img src={t.image} alt="" width="48" height="48" loading="lazy" class="w-12 h-12 object-cover" />
+                        ) : (
+                          <span class="w-12 h-12 bg-paper-deep" />
+                        )}
+                        <span>
+                          <span class="block font-display text-xl leading-tight group-hover:text-rust transition-colors">{t.name}</span>
+                          <span class="block font-sans text-sm text-muted">{t.artists.join(", ")} · {played(t.playedAt)}</span>
+                          <span class="sr-only"> (opens Spotify in a new tab)</span>
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+            <a href={links.spotify} target="_blank" rel="noopener noreferrer" class:list={[latest ? "font-sans text-sm font-medium text-rust link" : "font-display text-2xl link"]}>
+              {latest ? "My Spotify profile ↗" : "On Spotify ↗"}<span class="sr-only"> (opens in a new tab)</span>
+            </a>
+          </div>
+        )}
+      </div>
+    )}
+  </div>
+</section>
+
+<script>
+  const list = document.querySelector<HTMLElement>("[data-film-list][data-random]");
+  if (list) {
+    const items = [...list.querySelectorAll<HTMLElement>("[data-film]")];
+    const picks = new Set<number>();
+    while (picks.size < Math.min(5, items.length)) picks.add(Math.floor(Math.random() * items.length));
+    items.forEach((el, i) => el.classList.toggle("hidden", !picks.has(i)));
+  }
+</script>

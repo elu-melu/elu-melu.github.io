@@ -1,89 +1,91 @@
 ---
+import SectionHead from "./SectionHead.astro";
 import { experience, projects, skills } from "../data/siteData";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
-<section id="work" class="py-24 bg-charcoal">
+<section id="work" class="py-16 md:py-24">
   <div class="max-w-6xl mx-auto px-6">
-    <h2 class="font-mono text-4xl md:text-5xl text-white mb-2 section-reveal">Work</h2>
-    <div class="w-12 h-[2px] bg-teal mb-12 section-reveal"></div>
+    <SectionHead number="I" title="Work" />
 
-    <h3 class="text-white text-xl font-semibold mb-8 section-reveal">Experience</h3>
-    <div class="space-y-10 mb-20">
+    <ol class="divide-y divide-rule border-b border-rule mb-20">
       {experience.map((job) => (
-        <div class="border-l-2 border-teal/40 pl-6 hover:border-teal transition-colors section-reveal">
-          <div class="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1 mb-3">
-            <div>
-              <h4 class="text-white font-semibold text-lg">{job.role}</h4>
-              <p class="text-teal">
-                {job.company}
-                {job.location && <span class="text-white/70"> · {job.location}</span>}
-              </p>
-            </div>
-            <p class="text-white/70 text-sm shrink-0">{job.date}</p>
+        <li class="grid md:grid-cols-12 gap-x-8 gap-y-2 py-8 section-reveal">
+          <div class="md:col-span-3 font-sans text-sm text-muted pt-1">
+            <p>{job.date}</p>
+            {job.location && <p>{job.location}</p>}
           </div>
-          <ul class="space-y-2">
-            {job.bullets.map((bullet) => (
-              <li class="text-white/85 pl-4 relative before:content-[''] before:absolute before:left-0 before:top-2.5 before:w-1.5 before:h-1.5 before:bg-teal before:rounded-full">
-                {bullet}
-              </li>
-            ))}
-          </ul>
-          {job.caseStudy && (
-            <a
-              href={`${base}/${job.caseStudy.href}`}
-              class="inline-block mt-4 text-sm font-medium text-teal hover:text-light-teal underline underline-offset-4"
-            >
-              {job.caseStudy.label} →
-            </a>
-          )}
-        </div>
+          <div class="md:col-span-9">
+            <h3 class="font-display text-3xl leading-tight">{job.role}</h3>
+            <p class="kicker text-teal mt-2 mb-4">{job.company}</p>
+            <ul class="space-y-2 max-w-2xl">
+              {job.bullets.map((b) => (
+                <li class="pl-5 relative before:content-['—'] before:absolute before:left-0 before:text-muted">{b}</li>
+              ))}
+            </ul>
+            {job.caseStudy && (
+              <a href={`${base}/${job.caseStudy.href}`} class="inline-block mt-5 font-sans text-sm font-medium text-rust link">
+                {job.caseStudy.label} →
+              </a>
+            )}
+          </div>
+        </li>
       ))}
-    </div>
+    </ol>
 
-    <h3 class="text-white text-xl font-semibold mb-8 section-reveal">Projects</h3>
-    <div class="grid md:grid-cols-2 gap-6 mb-20">
-      {projects.map((project) => (
-        <article class="flex flex-col border border-white/15 p-6 hover:border-teal transition-colors section-reveal">
-          <h4 class="text-white font-semibold text-lg mb-2">{project.title}</h4>
-          <p class="text-white/85 mb-4">{project.description}</p>
-          <ul class="mb-4">
-            {project.highlights.map((h) => (
-              <li class="text-white/70 text-sm">{h}</li>
-            ))}
-          </ul>
-          <ul class="flex flex-wrap gap-2 mb-4">
-            {project.tech.map((t) => (
-              <li class="text-xs bg-teal/15 text-light-teal px-2 py-1">{t}</li>
-            ))}
-          </ul>
-          {project.link && (
-            <a
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="mt-auto self-start text-sm font-medium text-teal hover:text-light-teal underline underline-offset-4"
-            >
-              {project.linkLabel ?? "View project"}
-              <span class="sr-only"> for {project.title} (opens in a new tab)</span>
-            </a>
-          )}
-        </article>
-      ))}
-    </div>
+    <a
+      href={`${base}/work/dangote-ipo/`}
+      class="group block bg-ink text-paper p-8 md:p-12 mb-20 section-reveal hover:bg-teal transition-colors"
+    >
+      <p class="kicker text-rust-light mb-4">Feature</p>
+      <p class="font-display text-4xl md:text-6xl leading-[1.02] max-w-3xl mb-6">
+        The platform behind 2.79&nbsp;million Dangote IPO shares
+      </p>
+      <p class="text-paper/85 max-w-2xl mb-6">
+        An open offer that grew from Nigeria-only to the diaspora. I built the client side, owned the admin panel and
+        designed the deployments that let different brokers run on it.
+      </p>
+      <span class="font-sans text-sm font-medium underline underline-offset-4">Read the case study →</span>
+    </a>
 
-    <h3 class="text-white text-xl font-semibold mb-6 section-reveal">Core skills</h3>
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 section-reveal">
-      {Object.entries(skills).map(([category, items]) => (
-        <div>
-          <h4 class="text-teal text-sm font-semibold uppercase tracking-wider mb-3">{category}</h4>
-          <ul class="space-y-1">
-            {items.map((skill) => (
-              <li class="text-white/85">{skill}</li>
-            ))}
-          </ul>
-        </div>
-      ))}
+    <div class="flex items-baseline justify-between border-t border-ink pt-4 mb-2 section-reveal">
+      <h3 class="font-display text-4xl">Index of projects</h3>
+      <p class="font-sans text-sm text-muted">{projects.length} projects</p>
+    </div>
+    <ol class="mb-20">
+      {projects.map((project, i) => {
+        const Tag = project.link ? "a" : "div";
+        return (
+          <li class="border-b border-rule section-reveal">
+            <Tag
+              {...(project.link ? { href: project.link, target: "_blank", rel: "noopener noreferrer" } : {})}
+              class:list={["grid grid-cols-[2.5rem_1fr] md:grid-cols-[3rem_minmax(0,5fr)_minmax(0,7fr)_4rem] gap-x-6 gap-y-1 py-6 items-baseline", project.link && "group hover:bg-paper-deep transition-colors"]}
+            >
+              <span class="font-sans text-sm text-muted">{String(i + 1).padStart(2, "0")}</span>
+              <span class="font-display text-3xl leading-tight group-hover:text-rust transition-colors">{project.title}</span>
+              <span class="col-start-2 md:col-start-auto">
+                <span class="block">{project.description}</span>
+                <span class="block font-sans text-xs text-muted mt-2">{project.tech.join(" · ")}</span>
+              </span>
+              <span class="col-start-2 md:col-start-auto font-sans text-sm font-medium text-rust">
+                {project.link ? <>Code ↗<span class="sr-only"> for {project.title} (opens in a new tab)</span></> : ""}
+              </span>
+            </Tag>
+          </li>
+        );
+      })}
+    </ol>
+
+    <div class="border-t border-ink pt-4 section-reveal">
+      <h3 class="font-display text-4xl mb-8">Toolkit</h3>
+      <dl class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        {Object.entries(skills).map(([category, items]) => (
+          <div>
+            <dt class="kicker text-teal mb-3">{category}</dt>
+            {items.map((skill) => <dd>{skill}</dd>)}
+          </div>
+        ))}
+      </dl>
     </div>
   </div>
 </section>

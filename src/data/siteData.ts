@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "Webster C. Elumelu",
   handle: "get-webster",
-  tagline: "I build payment systems and research AI security.",
+  tagline: "I build payment systems, research AI security, and edit stories about Nigerian creatives.",
   resume: "webster-elumelu-resume.pdf",
   seeking: "Open to software and security engineering roles worldwide, remote or on-site.",
   title: "Software Engineer & Security Researcher",
@@ -16,6 +16,9 @@ export const links = {
   githubLab: "https://github.com/LaBackDoor",
   labackdoor: "https://www.labackdoor.com",
   scholar: "https://scholar.google.com/citations?user=ukgh9BkAAAAJ",
+  // Paste your Spotify profile or playlist link here; the Listening column appears once it is set.
+  spotify: "https://open.spotify.com/user/lrhdt8pv6tr2wzng7jho127l1",
+  bareMax: "https://www.bare-max.club/",
 };
 
 export const stats = [
@@ -268,3 +271,17 @@ export const affiliations = [
     description: "Spotlighting Nigerians in the creative industry",
   },
 ];
+
+// Films without exact dates are ordered by their "order" number. Set this to
+// match your list: "oldest-first" if you add new films at the bottom.
+export const filmListOrder: "oldest-first" | "newest-first" = "oldest-first";
+
+export const bareMax = {
+  role: "Editor",
+  body: "I'm the editor at Bare Max, which spotlights Nigerians in the creative industry. I research each creative, write interview questions tailored to them, and shape their answers into stories that keep the artist's voice intact. I also bring an engineer's and researcher's rigour to the process, and handle the technical side of getting each issue out.",
+};
+
+export const photos = {
+  cover: { src: "bucket-hat", alt: "Webster as a toddler in a light-blue bucket hat and a teal and red jacket, crouching by a wooden wall and smiling at the camera.", caption: "Early days." },
+  about: { src: "portrait", alt: "Webster as a baby in a studio portrait, wearing denim dungarees over a white top and looking straight at the camera.", caption: "If you reject me, this is who you reject." },
+};

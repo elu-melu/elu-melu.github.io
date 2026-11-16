@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Refresh "Last played" from Spotify every 3 hours.
+  schedule:
+    - cron: "23 */3 * * *"
 
 permissions:
   contents: read
@@ -28,8 +31,14 @@ jobs:
       - run: bun install --frozen-lockfile
       # Bun installs dependencies; the build itself runs on Node 22 (.nvmrc).
       # site and base come from Pages, so the same build works at
-      # elu-melu.github.io/elumeludotdev or, later, at a custom domain.
+      # elu-melu.github.io or, later, at a custom domain.
       - run: node --version
+      - name: Fetch recently played from Spotify
+        run: node scripts/fetch-spotify.mjs
+        env:
+          SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+          SPOTIFY_REFRESH_TOKEN: ${{ secrets.SPOTIFY_REFRESH_TOKEN }}
       - run: npx --no-install astro build --site "${{ steps.pages.outputs.origin }}" --base "${{ steps.pages.outputs.base_path }}/"
       - uses: actions/upload-pages-artifact@v5
         with:

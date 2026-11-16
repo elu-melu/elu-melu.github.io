@@ -1,20 +1,28 @@
 @import "tailwindcss";
-@import "@fontsource/vt323";
+@import "@fontsource/instrument-serif/400.css";
+@import "@fontsource/instrument-serif/400-italic.css";
+@import "@fontsource/newsreader/400.css";
+@import "@fontsource/newsreader/400-italic.css";
+@import "@fontsource/newsreader/500.css";
 @import "@fontsource/inter/400.css";
 @import "@fontsource/inter/500.css";
 @import "@fontsource/inter/600.css";
-@import "@fontsource/inter/700.css";
 
+/* Palette taken from the cover photo: a paper ground, ink type, the rust
+   of the jacket cuffs, the teal of the jacket and the blue of the hat. */
 @theme {
-  --color-deep-teal: #014346;
-  --color-charcoal: #303E3F;
-  --color-ink: #253031;
-  --color-teal: #70B0AE;
-  --color-light-teal: #A7D5D4;
-  --color-pale-teal: #B7D5D4;
-  --color-white: #FFFFFF;
+  --color-paper: #F4EEE4;
+  --color-paper-deep: #EAE1D3;
+  --color-ink: #1C1A17;
+  --color-muted: #5A5248;
+  --color-rule: #CFC4B4;
+  --color-rust: #A8401C;
+  --color-rust-light: #E07A4F;
+  --color-teal: #1D5860;
+  --color-sky: #A9C6D2;
 
-  --font-mono: "VT323", monospace;
+  --font-display: "Instrument Serif", "Times New Roman", serif;
+  --font-serif: "Newsreader", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
 }
 
@@ -24,65 +32,100 @@ html {
 }
 
 body {
-  font-family: var(--font-sans);
-  color: var(--color-charcoal);
-  background-color: var(--color-charcoal);
+  font-family: var(--font-serif);
+  color: var(--color-ink);
+  background-color: var(--color-paper);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 1.125rem;
+  line-height: 1.6;
 }
 
 ::selection {
-  background-color: var(--color-teal);
-  color: var(--color-white);
-}
-
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--color-charcoal);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-teal);
-  border-radius: 4px;
+  background-color: var(--color-rust);
+  color: var(--color-paper);
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-teal);
+  outline: 2px solid var(--color-rust);
   outline-offset: 3px;
 }
 
-/* Reveal on scroll. Content is only hidden once JavaScript has run (the
-   `js` class is set in the <head>), so it stays visible without JS and
-   for readers, crawlers and link previews. */
-.js .section-reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+/* Small-caps labels used for section kickers and metadata. */
+.kicker {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
+.drop-cap::first-letter {
+  font-family: var(--font-display);
+  float: left;
+  font-size: 4.6em;
+  line-height: 0.8;
+  padding: 0.08em 0.12em 0 0;
+  color: var(--color-rust);
+}
+
+.link {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: var(--color-rule);
+  transition: text-decoration-color 0.2s, color 0.2s;
+}
+.link:hover {
+  color: var(--color-rust);
+  text-decoration-color: currentColor;
+}
+
+/* A printed-photo frame for the childhood pictures. */
+.print {
+  background: #fbf8f2;
+  padding: 0.75rem 0.75rem 2.75rem;
+  box-shadow: 0 1px 2px rgb(28 26 23 / 0.08), 0 12px 30px -12px rgb(28 26 23 / 0.25);
+}
+
+/* Reveal on scroll, only once JavaScript has run, and never when the
+   reader has asked for reduced motion. */
+.js .section-reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
 .js .section-reveal.visible {
   opacity: 1;
   transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+  html { scroll-behavior: auto; }
   .js .section-reveal,
   .js .section-reveal.visible {
     opacity: 1;
     transform: none;
     transition: none;
   }
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
 }
+
+/* Long-form text on film pages. */
+.prose-film > p:first-child::first-letter {
+  font-family: var(--font-display);
+  float: left;
+  font-size: 4.2em;
+  line-height: 0.8;
+  padding: 0.08em 0.12em 0 0;
+  color: var(--color-rust);
+}
+.prose-film blockquote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.6em;
+  line-height: 1.25;
+  border-left: 2px solid var(--color-rust);
+  padding-left: 1rem;
+}
+.prose-film a { text-decoration: underline; text-underline-offset: 0.2em; }
+.prose-film h2 { font-family: var(--font-display); font-size: 2rem; line-height: 1.1; margin-top: 2rem; }

@@ -11,6 +11,7 @@ const books = (await getCollection("books")).sort((a, b) => {
 const films = (await getCollection("films")).sort((a, b) => b.data.watched.getTime() - a.data.watched.getTime());
 const year = new Date().getFullYear();
 const filmsThisYear = films.filter((f) => f.data.watched.getFullYear() === year);
+const filmPreview = filmsThisYear.slice(0, 5);
 const hasThoughts = (body?: string) => !!body && body.trim().length > 0;
 ---
 
@@ -53,7 +54,7 @@ const hasThoughts = (body?: string) => !!body && body.trim().length > 0;
           <div class="section-reveal">
             <h3 class="kicker text-teal mb-6">Watched in {year}</h3>
             <ul class="space-y-5">
-              {filmsThisYear.map((f) => (
+              {filmPreview.map((f) => (
                 <li>
                   <p class="font-display text-2xl leading-tight">
                     {hasThoughts(f.body) ? (
@@ -74,6 +75,9 @@ const hasThoughts = (body?: string) => !!body && body.trim().length > 0;
                 </li>
               ))}
             </ul>
+            <a href={`${base}/watching/`} class="inline-block mt-6 font-sans text-sm font-medium text-rust link">
+              All {films.length} films →
+            </a>
           </div>
         )}
 

@@ -279,5 +279,5 @@ export const bareMax = {
 
 export const photos = {
   cover: { src: "bucket-hat", alt: "Webster as a toddler in a light-blue bucket hat and a teal and red jacket, crouching by a wooden wall and smiling at the camera.", caption: "Early days." },
-  about: { src: "sofa", alt: "Webster as a young child sitting on a sofa next to an older man in white, in front of leaf-patterned curtains.", caption: "Early days, on the sofa." },
+  about: { src: "portrait", alt: "Webster as a baby in a studio portrait, wearing denim dungarees over a white top and looking straight at the camera.", caption: "If you reject me, this is who you reject." },
 };

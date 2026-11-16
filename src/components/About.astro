@@ -2,7 +2,7 @@
 import { Image } from "astro:assets";
 import SectionHead from "./SectionHead.astro";
 import { siteConfig, interests, education, photos } from "../data/siteData";
-import sofa from "../assets/photos/sofa.jpg";
+import portrait from "../assets/photos/portrait.jpg";
 ---
 
 <section id="about" class="py-16 md:py-24 bg-paper-deep">
@@ -31,7 +31,7 @@ import sofa from "../assets/photos/sofa.jpg";
 
       <figure class="md:col-span-5 max-w-sm w-full mx-auto rotate-[-1.5deg] section-reveal">
         <div class="print">
-          <Image src={sofa} alt={photos.about.alt} widths={[400, 700, 1000]} sizes="(min-width: 768px) 384px, 90vw" class="w-full h-auto" />
+          <Image src={portrait} alt={photos.about.alt} widths={[400, 700, 934]} sizes="(min-width: 768px) 384px, 90vw" class="w-full h-auto" />
         </div>
         <figcaption class="font-display italic text-lg text-muted mt-3 text-center">{photos.about.caption}</figcaption>
       </figure>

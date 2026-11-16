@@ -15,7 +15,9 @@ const { film } = Astro.props;
 const { Content } = await render(film);
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const meta = [film.data.director, film.data.year].filter(Boolean).join(", ");
-const watched = film.data.watched.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+const watched = film.data.watched
+  ? film.data.watched.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })
+  : String(film.data.seen);
 ---
 
 <BaseLayout title={`${film.data.title} | Webster Elumelu`} description={film.data.note ?? `Webster Elumelu on ${film.data.title}.`}>

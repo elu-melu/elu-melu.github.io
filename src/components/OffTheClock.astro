@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import SectionHead from "./SectionHead.astro";
+import { getFilms, hasThoughts } from "../lib/films";
 import { bareMax, links } from "../data/siteData";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
@@ -8,11 +9,14 @@ const books = (await getCollection("books")).sort((a, b) => {
   if (a.data.status !== b.data.status) return a.data.status === "reading" ? -1 : 1;
   return (b.data.finished?.getTime() ?? 0) - (a.data.finished?.getTime() ?? 0);
 });
-const films = (await getCollection("films")).sort((a, b) => b.data.watched.getTime() - a.data.watched.getTime());
-const year = new Date().getFullYear();
-const filmsThisYear = films.filter((f) => f.data.watched.getFullYear() === year);
-const filmPreview = filmsThisYear.slice(0, 5);
-const hasThoughts = (body?: string) => !!body && body.trim().length > 0;
+const films = await getFilms();
+const year = films[0]?.data.seen ?? new Date().getFullYear();
+const filmsThisYear = films.filter((f) => f.data.seen === year);
+// Pinned films (featured: 1-5) show in that order. With none pinned, five are
+// picked at random on each visit; without JavaScript the five newest show.
+const pinned = filmsThisYear.filter((f) => f.data.featured).sort((a, b) => a.data.featured! - b.data.featured!);
+const randomise = pinned.length === 0;
+const filmPreview = randomise ? filmsThisYear : pinned;
 ---
 
 <section id="off-the-clock" class="py-16 md:py-24">
@@ -52,25 +56,25 @@ const hasThoughts = (body?: string) => !!body && body.trim().length > 0;
 
         {filmsThisYear.length > 0 && (
           <div class="section-reveal">
-            <h3 class="kicker text-teal mb-6">Watched in {year}</h3>
-            <ul class="space-y-5">
-              {filmPreview.map((f) => (
-                <li>
+            <h3 class="kicker text-teal mb-6">
+              {filmsThisYear.length} films in {year}{randomise && <span class="text-muted"> · five at random</span>}
+            </h3>
+            <ul class="space-y-5" data-film-list data-random={randomise ? "" : undefined}>
+              {filmPreview.map((f, i) => (
+                <li data-film class:list={[randomise && i >= 5 && "hidden"]}>
                   <p class="font-display text-2xl leading-tight">
-                    {hasThoughts(f.body) ? (
+                    {hasThoughts(f) ? (
                       <a href={`${base}/watching/${f.id}/`} class="link"><em>{f.data.title}</em></a>
                     ) : (
                       <em>{f.data.title}</em>
                     )}
                   </p>
-                  <p class="font-sans text-sm text-muted">
-                    {[f.data.director, f.data.year].filter(Boolean).join(", ")}
-                  </p>
+                  {(f.data.director || f.data.year) && (
+                    <p class="font-sans text-sm text-muted">{[f.data.director, f.data.year].filter(Boolean).join(", ")}</p>
+                  )}
                   {f.data.note && <p class="text-base mt-1">{f.data.note}</p>}
-                  {hasThoughts(f.body) && (
-                    <a href={`${base}/watching/${f.id}/`} class="font-sans text-sm font-medium text-rust link">
-                      My thoughts →
-                    </a>
+                  {hasThoughts(f) && (
+                    <a href={`${base}/watching/${f.id}/`} class="font-sans text-sm font-medium text-rust link">My thoughts →</a>
                   )}
                 </li>
               ))}
@@ -93,3 +97,13 @@ const hasThoughts = (body?: string) => !!body && body.trim().length > 0;
     )}
   </div>
 </section>
+
+<script>
+  const list = document.querySelector<HTMLElement>("[data-film-list][data-random]");
+  if (list) {
+    const items = [...list.querySelectorAll<HTMLElement>("[data-film]")];
+    const picks = new Set<number>();
+    while (picks.size < Math.min(5, items.length)) picks.add(Math.floor(Math.random() * items.length));
+    items.forEach((el, i) => el.classList.toggle("hidden", !picks.has(i)));
+  }
+</script>

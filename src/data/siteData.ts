@@ -272,6 +272,10 @@ export const affiliations = [
   },
 ];
 
+// Films without exact dates are ordered by their "order" number. Set this to
+// match your list: "oldest-first" if you add new films at the bottom.
+export const filmListOrder: "oldest-first" | "newest-first" = "oldest-first";
+
 export const bareMax = {
   role: "Editor",
   body: "I'm the editor at Bare Max, which spotlights Nigerians in the creative industry. I research each creative, write interview questions tailored to them, and shape their answers into stories that keep the artist's voice intact. I also bring an engineer's and researcher's rigour to the process, and handle the technical side of getting each issue out.",

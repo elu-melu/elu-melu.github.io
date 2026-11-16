@@ -20,9 +20,12 @@ const films = defineCollection({
   loader: glob({ pattern: "**/[^_]*.md", base: "./src/content/films" }),
   schema: z.object({
     title: z.string(),
-    year: z.number().int().optional(),
+    year: z.number().int().optional(), // release year, shown after the title
     director: z.string().optional(),
-    watched: z.coerce.date(),
+    seen: z.number().int(), // the year you watched it; groups the /watching/ page
+    watched: z.coerce.date().optional(), // exact date, if you know it
+    order: z.number().int().optional(), // position in your list, used when there's no date
+    featured: z.number().int().min(1).max(5).optional(), // 1-5 pins it to the home page in that order
     note: z.string().optional(),
   }),
 });

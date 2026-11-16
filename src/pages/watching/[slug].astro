@@ -1,0 +1,36 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+
+export async function getStaticPaths() {
+  const films = await getCollection("films");
+  return films
+    .filter((f) => f.body && f.body.trim().length > 0)
+    .map((film) => ({ params: { slug: film.id }, props: { film } }));
+}
+
+const { film } = Astro.props;
+const { Content } = await render(film);
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const meta = [film.data.director, film.data.year].filter(Boolean).join(", ");
+const watched = film.data.watched.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+---
+
+<BaseLayout title={`${film.data.title} | Webster Elumelu`} description={film.data.note ?? `Webster Elumelu on ${film.data.title}.`}>
+  <a href="#film" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:bg-ink focus:text-paper focus:px-4 focus:py-2">Skip to content</a>
+  <Navbar />
+  <main id="film" class="flex-1 pt-32 pb-24">
+    <article class="max-w-2xl mx-auto px-6">
+      <a href={`${base}/#off-the-clock`} class="font-sans text-sm text-rust link">← Off the clock</a>
+      <p class="kicker text-muted mt-10 mb-3">Watched {watched}</p>
+      <h1 class="font-display text-6xl md:text-7xl leading-none mb-3"><em>{film.data.title}</em></h1>
+      {meta && <p class="font-sans text-sm text-muted mb-10">{meta}</p>}
+      <div class="prose-film text-xl leading-relaxed space-y-5">
+        <Content />
+      </div>
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>

@@ -1,7 +1,7 @@
 export const siteConfig = {
   name: "Webster C. Elumelu",
   handle: "get-webster",
-  tagline: "I build payment systems and research AI security.",
+  tagline: "I build payment systems, research AI security, and edit stories about Nigerian creatives.",
   resume: "webster-elumelu-resume.pdf",
   seeking: "Open to software and security engineering roles worldwide, remote or on-site.",
   title: "Software Engineer & Security Researcher",
@@ -16,6 +16,9 @@ export const links = {
   githubLab: "https://github.com/LaBackDoor",
   labackdoor: "https://www.labackdoor.com",
   scholar: "https://scholar.google.com/citations?user=ukgh9BkAAAAJ",
+  // Paste your Spotify profile or playlist link here; the Listening column appears once it is set.
+  spotify: "",
+  bareMax: "https://www.bare-max.club/",
 };
 
 export const stats = [
@@ -268,3 +271,13 @@ export const affiliations = [
     description: "Spotlighting Nigerians in the creative industry",
   },
 ];
+
+export const bareMax = {
+  role: "Editor",
+  body: "I'm the editor at Bare Max, which spotlights Nigerians in the creative industry. I research each creative, write interview questions tailored to them, and shape their answers into stories that keep the artist's voice intact. I also bring an engineer's and researcher's rigour to the process, and handle the technical side of getting each issue out.",
+};
+
+export const photos = {
+  cover: { src: "bucket-hat", alt: "Webster as a toddler in a light-blue bucket hat and a teal and red jacket, crouching by a wooden wall and smiling at the camera.", caption: "Early days." },
+  about: { src: "sofa", alt: "Webster as a young child sitting on a sofa next to an older man in white, in front of leaf-patterned curtains.", caption: "Early days, on the sofa." },
+};

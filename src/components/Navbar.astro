@@ -2,51 +2,52 @@
 import { siteConfig } from "../data/siteData";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const nav = [
-  { href: `${base}/#about`, label: "About" },
   { href: `${base}/#work`, label: "Work" },
   { href: `${base}/#publications`, label: "Publications" },
+  { href: `${base}/#off-the-clock`, label: "Off the clock" },
+  { href: `${base}/#about`, label: "About" },
   { href: `${base}/#contact`, label: "Contact" },
 ];
 ---
 
-<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-charcoal/95 backdrop-blur-sm">
-  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-    <a href={`${base}/`} class="font-mono text-2xl text-white tracking-wide hover:text-teal transition-colors">
+<header class="fixed top-0 inset-x-0 z-50 bg-paper/95 backdrop-blur-sm border-b border-rule">
+  <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between" aria-label="Main">
+    <a href={`${base}/`} class="font-display text-2xl leading-none hover:text-rust transition-colors">
       {siteConfig.name}
     </a>
-    <div class="hidden md:flex items-center gap-7">
+    <div class="hidden md:flex items-center gap-7 font-sans text-sm">
       {nav.map((n) => (
-        <a href={n.href} class="text-sm text-white/80 hover:text-teal transition-colors">{n.label}</a>
+        <a href={n.href} class="text-ink/80 hover:text-rust transition-colors">{n.label}</a>
       ))}
       <a
         href={`${base}/${siteConfig.resume}`}
-        class="text-sm font-medium border border-teal text-teal px-4 py-1.5 hover:bg-teal hover:text-charcoal transition-colors"
+        class="font-medium border border-ink px-4 py-1.5 hover:bg-ink hover:text-paper transition-colors"
       >
         Resume
       </a>
     </div>
     <button
       id="menu-toggle"
-      class="md:hidden text-white/80 hover:text-teal transition-colors"
+      class="md:hidden text-ink hover:text-rust transition-colors"
       aria-label="Open menu"
       aria-expanded="false"
       aria-controls="mobile-menu"
     >
       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path id="menu-icon-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        <path id="menu-icon-close" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M18 6L6 18" />
+        <path id="menu-icon-open" stroke-linecap="round" stroke-width="1.5" d="M4 7h16M4 12h16M4 17h16" />
+        <path id="menu-icon-close" class="hidden" stroke-linecap="round" stroke-width="1.5" d="M6 6l12 12M18 6L6 18" />
       </svg>
     </button>
-  </div>
-  <div id="mobile-menu" class="md:hidden max-h-0 overflow-hidden transition-all duration-300 bg-charcoal/95">
-    <div class="px-6 py-4 flex flex-col gap-4">
+  </nav>
+  <div id="mobile-menu" class="md:hidden max-h-0 overflow-hidden transition-all duration-300 bg-paper">
+    <div class="px-6 py-4 flex flex-col gap-4 font-sans text-sm border-t border-rule">
       {nav.map((n) => (
-        <a href={n.href} class="text-sm text-white/80 hover:text-teal transition-colors">{n.label}</a>
+        <a href={n.href} class="text-ink/80 hover:text-rust">{n.label}</a>
       ))}
-      <a href={`${base}/${siteConfig.resume}`} class="text-sm font-medium text-teal">Resume (PDF)</a>
+      <a href={`${base}/${siteConfig.resume}`} class="font-medium text-rust">Resume (PDF)</a>
     </div>
   </div>
-</nav>
+</header>
 
 <script>
   const toggle = document.getElementById("menu-toggle");
@@ -63,11 +64,6 @@ const nav = [
     iconClose?.classList.toggle("hidden", !open);
   }
 
-  toggle?.addEventListener("click", () => {
-    setOpen(toggle.getAttribute("aria-expanded") !== "true");
-  });
-
-  menu?.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => setOpen(false));
-  });
+  toggle?.addEventListener("click", () => setOpen(toggle.getAttribute("aria-expanded") !== "true"));
+  menu?.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setOpen(false)));
 </script>

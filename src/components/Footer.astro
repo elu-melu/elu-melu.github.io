@@ -1,0 +1,10 @@
+---
+import { siteConfig } from "../data/siteData";
+---
+
+<footer class="bg-ink text-paper">
+  <div class="max-w-6xl mx-auto px-6 py-6 flex flex-col sm:flex-row items-center justify-between gap-2 font-sans text-sm">
+    <p class="text-paper/80">&copy; {new Date().getFullYear()} {siteConfig.name}</p>
+    <a href={`mailto:${siteConfig.email}`} class="text-paper/80 hover:text-paper">{siteConfig.email}</a>
+  </div>
+</footer>

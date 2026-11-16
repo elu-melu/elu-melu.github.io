@@ -1,35 +1,40 @@
 ---
+import SectionHead from "./SectionHead.astro";
 import { publications, links } from "../data/siteData";
 const published = publications.filter((p) => p.status === "published");
 const review = publications.filter((p) => p.status === "under review");
 ---
 
-<section id="publications" class="py-24 bg-pale-teal">
+<section id="publications" class="py-16 md:py-24 bg-paper-deep">
   <div class="max-w-6xl mx-auto px-6">
-    <h2 class="font-mono text-4xl md:text-5xl text-deep-teal mb-2 section-reveal">Publications</h2>
-    <div class="w-12 h-[2px] bg-deep-teal mb-6 section-reveal"></div>
-    <p class="text-charcoal/85 mb-12 section-reveal">
-      Full list on
-      <a href={links.scholar} target="_blank" rel="noopener noreferrer" class="text-deep-teal font-medium underline underline-offset-4 hover:text-charcoal">
-        Google Scholar<span class="sr-only"> (opens in a new tab)</span></a
-      >.
-    </p>
-
-    <h3 class="text-deep-teal text-sm font-semibold uppercase tracking-wider mb-4 section-reveal">Published</h3>
-    <ol class="space-y-6 mb-12">
-      {published.map((p) => (
-        <li class="section-reveal">
-          <p class="text-charcoal font-semibold leading-snug">{p.title}</p>
-          <p class="text-charcoal/80 text-sm mt-1">{p.venue}, {p.year}</p>
-        </li>
-      ))}
-    </ol>
-
-    <h3 class="text-deep-teal text-sm font-semibold uppercase tracking-wider mb-4 section-reveal">Under review</h3>
-    <ol class="space-y-4">
-      {review.map((p) => (
-        <li class="text-charcoal leading-snug section-reveal">{p.title}</li>
-      ))}
-    </ol>
+    <SectionHead number="II" title="Publications" />
+    <div class="grid md:grid-cols-12 gap-10">
+      <div class="md:col-span-8">
+        <p class="kicker text-muted mb-6 section-reveal">Published</p>
+        <ol class="space-y-8 mb-14">
+          {published.map((p, i) => (
+            <li class="grid grid-cols-[2.5rem_1fr] section-reveal">
+              <span class="font-display text-3xl text-rust leading-none">{i + 1}</span>
+              <div>
+                <p class="font-display text-2xl md:text-3xl leading-tight">{p.title}</p>
+                <p class="font-sans text-sm text-muted mt-2">{p.venue}, {p.year}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <p class="kicker text-muted mb-6 section-reveal">Under review</p>
+        <ul class="space-y-4">
+          {review.map((p) => <li class="text-lg leading-snug section-reveal">{p.title}</li>)}
+        </ul>
+      </div>
+      <aside class="md:col-span-4 md:border-l border-rule md:pl-8 section-reveal">
+        <p class="font-display italic text-2xl leading-snug mb-4">
+          Vulnerability forecasting, access control, and benchmarks for AI agents that fix real-world vulnerabilities.
+        </p>
+        <a href={links.scholar} target="_blank" rel="noopener noreferrer" class="font-sans text-sm font-medium text-rust link">
+          Google Scholar ↗<span class="sr-only"> (opens in a new tab)</span>
+        </a>
+      </aside>
+    </div>
   </div>
 </section>

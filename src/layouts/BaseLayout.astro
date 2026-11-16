@@ -22,6 +22,7 @@ const ogImage = Astro.site ? new URL(`${base}/og.png`, Astro.site).href : `${bas
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#F4EEE4" />
     <script is:inline>document.documentElement.classList.add("js");</script>
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
     <title>{title}</title>
@@ -42,7 +43,21 @@ const ogImage = Astro.site ? new URL(`${base}/og.png`, Astro.site).href : `${bas
 
     <meta name="generator" content={Astro.generator} />
   </head>
-  <body class="min-h-screen">
+  <body class="min-h-screen flex flex-col">
     <slot />
+    <script>
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.1 }
+      );
+      document.querySelectorAll(".section-reveal").forEach((el) => observer.observe(el));
+    </script>
   </body>
 </html>

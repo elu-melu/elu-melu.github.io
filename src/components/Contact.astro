@@ -1,5 +1,6 @@
 ---
 import { siteConfig, links } from "../data/siteData";
+import Footer from "./Footer.astro";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const social = [
   { href: links.linkedin, label: "LinkedIn" },
@@ -9,53 +10,37 @@ const social = [
 ];
 ---
 
-<section id="contact" class="py-24 bg-charcoal">
-  <div class="max-w-6xl mx-auto px-6 text-center">
-    <h2 class="font-mono text-4xl md:text-5xl text-white mb-2 section-reveal">Contact</h2>
-    <div class="w-12 h-[2px] bg-teal mx-auto mb-8 section-reveal"></div>
-    <p class="text-white/85 text-lg max-w-xl mx-auto mb-10 section-reveal">{siteConfig.seeking}</p>
+<section id="contact" class="py-20 md:py-32 bg-ink text-paper">
+  <div class="max-w-6xl mx-auto px-6">
+    <p class="font-display italic text-4xl text-rust-light mb-6 section-reveal">V.</p>
+    <h2 class="font-display text-6xl md:text-8xl leading-[0.95] mb-8 section-reveal">
+      Say <em>hello.</em>
+    </h2>
+    <p class="text-xl text-paper/85 max-w-xl mb-10 section-reveal">{siteConfig.seeking}</p>
 
-    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 section-reveal">
-      <a
-        href={`mailto:${siteConfig.email}`}
-        class="inline-block bg-teal text-charcoal font-medium px-7 py-3 text-sm hover:bg-light-teal transition-colors"
-      >
-        Send email
-      </a>
-      <button
-        id="copy-email"
-        type="button"
-        class="inline-block border border-teal text-teal font-medium px-7 py-3 text-sm hover:bg-teal hover:text-charcoal transition-colors"
-      >
+    <div class="flex flex-wrap gap-4 font-sans text-sm mb-14 section-reveal">
+      <a href={`mailto:${siteConfig.email}`} class="bg-paper text-ink font-medium px-6 py-3 hover:bg-sky transition-colors">Send email</a>
+      <button id="copy-email" type="button" class="border border-paper font-medium px-6 py-3 hover:bg-paper hover:text-ink transition-colors">
         Copy email
       </button>
-      <a
-        href={`${base}/${siteConfig.resume}`}
-        class="inline-block border border-teal text-teal font-medium px-7 py-3 text-sm hover:bg-teal hover:text-charcoal transition-colors"
-      >
+      <a href={`${base}/${siteConfig.resume}`} class="border border-paper font-medium px-6 py-3 hover:bg-paper hover:text-ink transition-colors">
         Download resume
       </a>
     </div>
     <p id="copy-status" class="sr-only" aria-live="polite"></p>
 
-    <ul class="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 section-reveal">
+    <ul class="flex flex-wrap gap-x-8 gap-y-3 font-sans text-sm border-t border-paper/25 pt-6 section-reveal">
       {social.map((s) => (
         <li>
-          <a href={s.href} target="_blank" rel="noopener noreferrer" class="text-teal font-medium hover:text-light-teal underline-offset-4 hover:underline">
-            {s.label}<span class="sr-only"> (opens in a new tab)</span>
+          <a href={s.href} target="_blank" rel="noopener noreferrer" class="text-paper/85 hover:text-rust-light underline-offset-4 hover:underline">
+            {s.label} ↗<span class="sr-only"> (opens in a new tab)</span>
           </a>
         </li>
       ))}
     </ul>
   </div>
 </section>
-
-<footer class="bg-deep-teal py-6">
-  <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm">
-    <p class="text-white/80">&copy; {new Date().getFullYear()} {siteConfig.name}</p>
-    <a href={`mailto:${siteConfig.email}`} class="text-white/80 hover:text-white">{siteConfig.email}</a>
-  </div>
-</footer>
+<Footer />
 
 <script define:vars={{ email: siteConfig.email }}>
   const btn = document.getElementById("copy-email");

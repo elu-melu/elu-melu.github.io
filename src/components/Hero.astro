@@ -1,73 +1,53 @@
 ---
-import { siteConfig, stats } from "../data/siteData";
+import { Image } from "astro:assets";
+import { siteConfig, stats, photos } from "../data/siteData";
+import cover from "../assets/photos/bucket-hat.jpg";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
-<section id="hero" class="relative min-h-screen flex items-center bg-charcoal overflow-hidden pt-24 pb-16">
-  <div class="absolute inset-0 bg-gradient-to-b from-charcoal via-charcoal to-deep-teal opacity-80" aria-hidden="true"></div>
-  <div
-    class="absolute inset-0 opacity-[0.03]"
-    aria-hidden="true"
-    style="background-image: repeating-linear-gradient(0deg, #fff 0px, #fff 1px, transparent 1px, transparent 60px), repeating-linear-gradient(90deg, #fff 0px, #fff 1px, transparent 1px, transparent 60px);"
-  ></div>
-
-  <div class="relative z-10 max-w-6xl mx-auto px-6 w-full">
-    <p class="text-teal text-base md:text-lg font-medium mb-3 hero-fade" style="--delay: 0">
-      {siteConfig.title}
-    </p>
-    <h1 class="font-mono text-white text-6xl md:text-8xl tracking-tight leading-none mb-6 hero-fade" style="--delay: 1">
-      {siteConfig.name}
-    </h1>
-    <p class="text-white/85 text-xl md:text-2xl max-w-2xl mb-10 hero-fade" style="--delay: 2">
-      {siteConfig.tagline}
-    </p>
-    <div class="flex flex-wrap gap-4 mb-16 hero-fade" style="--delay: 4">
-      <a
-        href="#work"
-        class="inline-block bg-teal text-charcoal font-medium px-7 py-3 text-sm hover:bg-light-teal transition-colors"
-      >
-        View work
-      </a>
-      <a
-        href={`${base}/${siteConfig.resume}`}
-        class="inline-block border border-teal text-teal font-medium px-7 py-3 text-sm hover:bg-teal hover:text-charcoal transition-colors"
-      >
-        Download resume
-      </a>
+<section id="hero" class="pt-28 md:pt-32 pb-16 md:pb-20">
+  <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-12 gap-10 md:gap-12 items-end">
+    <div class="md:col-span-7">
+      <p class="kicker text-rust mb-6">{siteConfig.title}</p>
+      <h1 class="font-display text-[3.75rem] leading-[0.95] md:text-[7.5rem] tracking-tight mb-8">
+        Webster<br /><em class="italic">Elumelu</em>
+      </h1>
+      <p class="text-2xl md:text-[1.75rem] leading-snug max-w-xl mb-10">{siteConfig.tagline}</p>
+      <div class="flex flex-wrap gap-4 font-sans text-sm">
+        <a href="#work" class="bg-ink text-paper font-medium px-6 py-3 hover:bg-rust transition-colors">View work</a>
+        <a
+          href={`${base}/${siteConfig.resume}`}
+          class="border border-ink font-medium px-6 py-3 hover:bg-ink hover:text-paper transition-colors"
+        >
+          Download resume
+        </a>
+      </div>
     </div>
 
-    <dl class="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl hero-fade" style="--delay: 5">
-      {stats.map((s) => (
-        <div class="border-l-2 border-teal pl-4">
+    <figure class="md:col-span-5 md:justify-self-end w-full max-w-sm mx-auto md:mx-0 rotate-[1.5deg]">
+      <div class="print">
+        <Image
+          src={cover}
+          alt={photos.cover.alt}
+          widths={[400, 700, 950]}
+          sizes="(min-width: 768px) 384px, 90vw"
+          loading="eager"
+          class="w-full h-auto"
+        />
+      </div>
+      <figcaption class="font-display italic text-lg text-muted mt-3 text-center">{photos.cover.caption}</figcaption>
+    </figure>
+  </div>
+
+  <div class="max-w-6xl mx-auto px-6 mt-16 md:mt-24">
+    <dl class="grid grid-cols-2 lg:grid-cols-4 border-t border-ink">
+      {stats.map((s, i) => (
+        <div class:list={["py-5 pr-4", i > 0 && "lg:pl-6 lg:border-l border-rule", i % 2 === 1 && "pl-4 border-l border-rule lg:pl-6"]}>
           <dt class="sr-only">{s.label}</dt>
-          <dd class="text-white text-3xl font-semibold">{s.value}</dd>
-          <dd class="text-white/70 text-sm mt-1">{s.label}</dd>
+          <dd class="font-display text-4xl md:text-5xl leading-none">{s.value}</dd>
+          <dd class="font-sans text-sm text-muted mt-2">{s.label}</dd>
         </div>
       ))}
     </dl>
   </div>
 </section>
-
-<style>
-  .hero-fade {
-    opacity: 0;
-    transform: translateY(16px);
-    animation: heroFadeIn 0.7s ease-out forwards;
-    animation-delay: calc(0.2s + var(--delay) * 0.12s);
-  }
-
-  @keyframes heroFadeIn {
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hero-fade {
-      opacity: 1;
-      transform: none;
-      animation: none;
-    }
-  }
-</style>

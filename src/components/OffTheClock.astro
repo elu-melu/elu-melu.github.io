@@ -1,0 +1,91 @@
+---
+import { getCollection } from "astro:content";
+import SectionHead from "./SectionHead.astro";
+import { bareMax, links } from "../data/siteData";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+const books = (await getCollection("books")).sort((a, b) => {
+  if (a.data.status !== b.data.status) return a.data.status === "reading" ? -1 : 1;
+  return (b.data.finished?.getTime() ?? 0) - (a.data.finished?.getTime() ?? 0);
+});
+const films = (await getCollection("films")).sort((a, b) => b.data.watched.getTime() - a.data.watched.getTime());
+const year = new Date().getFullYear();
+const filmsThisYear = films.filter((f) => f.data.watched.getFullYear() === year);
+const hasThoughts = (body?: string) => !!body && body.trim().length > 0;
+---
+
+<section id="off-the-clock" class="py-16 md:py-24">
+  <div class="max-w-6xl mx-auto px-6">
+    <SectionHead number="III" title="Off the clock" />
+
+    <div class="grid md:grid-cols-12 gap-10 mb-16 section-reveal">
+      <div class="md:col-span-4">
+        <p class="kicker text-rust mb-2">{bareMax.role}</p>
+        <a href={links.bareMax} target="_blank" rel="noopener noreferrer" class="font-display text-5xl leading-none link">
+          Bare Max<span class="sr-only"> (opens in a new tab)</span>
+        </a>
+      </div>
+      <p class="md:col-span-8 text-xl leading-relaxed">{bareMax.body}</p>
+    </div>
+
+    {(books.length > 0 || filmsThisYear.length > 0 || links.spotify) && (
+      <div class="grid md:grid-cols-3 gap-x-10 gap-y-12 border-t border-ink pt-8">
+        {books.length > 0 && (
+          <div class="section-reveal">
+            <h3 class="kicker text-teal mb-6">Reading</h3>
+            <ul class="space-y-5">
+              {books.map((b) => (
+                <li>
+                  <p class="font-display text-2xl leading-tight">
+                    <em>{b.data.title}</em>
+                  </p>
+                  <p class="font-sans text-sm text-muted">
+                    {b.data.author}{b.data.status === "reading" && " · reading now"}
+                  </p>
+                  {b.data.note && <p class="text-base mt-1">{b.data.note}</p>}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {filmsThisYear.length > 0 && (
+          <div class="section-reveal">
+            <h3 class="kicker text-teal mb-6">Watched in {year}</h3>
+            <ul class="space-y-5">
+              {filmsThisYear.map((f) => (
+                <li>
+                  <p class="font-display text-2xl leading-tight">
+                    {hasThoughts(f.body) ? (
+                      <a href={`${base}/watching/${f.id}/`} class="link"><em>{f.data.title}</em></a>
+                    ) : (
+                      <em>{f.data.title}</em>
+                    )}
+                  </p>
+                  <p class="font-sans text-sm text-muted">
+                    {[f.data.director, f.data.year].filter(Boolean).join(", ")}
+                  </p>
+                  {f.data.note && <p class="text-base mt-1">{f.data.note}</p>}
+                  {hasThoughts(f.body) && (
+                    <a href={`${base}/watching/${f.id}/`} class="font-sans text-sm font-medium text-rust link">
+                      My thoughts →
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {links.spotify && (
+          <div class="section-reveal">
+            <h3 class="kicker text-teal mb-6">Listening</h3>
+            <a href={links.spotify} target="_blank" rel="noopener noreferrer" class="font-display text-2xl link">
+              On Spotify ↗<span class="sr-only"> (opens in a new tab)</span>
+            </a>
+          </div>
+        )}
+      </div>
+    )}
+  </div>
+</section>

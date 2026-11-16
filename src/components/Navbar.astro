@@ -39,7 +39,7 @@ const nav = [
       </svg>
     </button>
   </nav>
-  <div id="mobile-menu" class="md:hidden max-h-0 overflow-hidden transition-all duration-300 bg-paper">
+  <div id="mobile-menu" class="md:hidden max-h-0 overflow-hidden transition-[max-height] duration-300 ease-[var(--ease-out)] bg-paper">
     <div class="px-6 py-4 flex flex-col gap-4 font-sans text-sm border-t border-rule">
       {nav.map((n) => (
         <a href={n.href} class="text-ink/80 hover:text-rust">{n.label}</a>

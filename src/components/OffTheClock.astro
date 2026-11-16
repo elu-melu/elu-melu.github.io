@@ -26,11 +26,11 @@ const filmPreview = randomise ? filmsThisYear : pinned;
 
 <section id="off-the-clock" class="py-16 md:py-24">
   <div class="max-w-6xl mx-auto px-6">
-    <SectionHead number="III" title="Off the clock" />
+    <SectionHead title="Off the clock" />
 
-    <div class="grid md:grid-cols-12 gap-10 mb-16 section-reveal">
+    <div class="grid md:grid-cols-12 gap-10 mb-16">
       <div class="md:col-span-4">
-        <p class="kicker text-rust mb-2">{bareMax.role}</p>
+        <p class="font-sans text-sm text-muted mb-2">{bareMax.role}</p>
         <a href={links.bareMax} target="_blank" rel="noopener noreferrer" class="font-display text-5xl leading-none link">
           Bare Max<span class="sr-only"> (opens in a new tab)</span>
         </a>
@@ -41,7 +41,7 @@ const filmPreview = randomise ? filmsThisYear : pinned;
     {(books.length > 0 || filmsThisYear.length > 0 || links.spotify) && (
       <div class="grid md:grid-cols-3 gap-x-10 gap-y-12 border-t border-ink pt-8">
         {books.length > 0 && (
-          <div class="section-reveal">
+          <div>
             <h3 class="kicker text-teal mb-6">Reading</h3>
             <ul class="space-y-5">
               {books.map((b) => (
@@ -62,7 +62,7 @@ const filmPreview = randomise ? filmsThisYear : pinned;
         )}
 
         {filmsThisYear.length > 0 && (
-          <div class="section-reveal">
+          <div>
             <div class="flex items-center justify-between gap-4 mb-6">
               <h3 class="kicker text-teal">
                 {filmsThisYear.length} films in {year}{randomise && <span class="text-muted"> · five at random</span>}
@@ -118,7 +118,7 @@ const filmPreview = randomise ? filmsThisYear : pinned;
         )}
 
         {links.spotify && (
-          <div class="section-reveal">
+          <div>
             <h3 class="kicker text-teal mb-6">{latest ? "Last played" : "Listening"}</h3>
             {latest && (
               <>
@@ -196,7 +196,7 @@ const filmPreview = randomise ? filmsThisYear : pinned;
 
 <style>
   .spin .shuffle-icon {
-    animation: shuffle-spin 0.5s ease-out;
+    animation: shuffle-spin 0.5s var(--ease-out);
   }
   @keyframes shuffle-spin {
     to { transform: rotate(360deg); }

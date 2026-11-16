@@ -7,13 +7,13 @@ const review = publications.filter((p) => p.status === "under review");
 
 <section id="publications" class="py-16 md:py-24 bg-paper-deep">
   <div class="max-w-6xl mx-auto px-6">
-    <SectionHead number="II" title="Publications" />
+    <SectionHead title="Publications" />
     <div class="grid md:grid-cols-12 gap-10">
       <div class="md:col-span-8">
-        <p class="kicker text-muted mb-6 section-reveal">Published</p>
+        <p class="kicker text-muted mb-6">Published</p>
         <ol class="space-y-8 mb-14">
           {published.map((p, i) => (
-            <li class="grid grid-cols-[2.5rem_1fr] section-reveal">
+            <li class="grid grid-cols-[2.5rem_1fr]">
               <span class="font-display text-3xl text-rust leading-none">{i + 1}</span>
               <div>
                 <p class="font-display text-2xl md:text-3xl leading-tight">{p.title}</p>
@@ -22,12 +22,12 @@ const review = publications.filter((p) => p.status === "under review");
             </li>
           ))}
         </ol>
-        <p class="kicker text-muted mb-6 section-reveal">Under review</p>
+        <p class="kicker text-muted mb-6">Under review</p>
         <ul class="space-y-4">
-          {review.map((p) => <li class="text-lg leading-snug section-reveal">{p.title}</li>)}
+          {review.map((p) => <li class="text-lg leading-snug">{p.title}</li>)}
         </ul>
       </div>
-      <aside class="md:col-span-4 md:border-l border-rule md:pl-8 section-reveal">
+      <aside class="md:col-span-4 md:border-l border-rule md:pl-8">
         <p class="font-display italic text-2xl leading-snug mb-4">
           Vulnerability forecasting, access control, and benchmarks for AI agents that fix real-world vulnerabilities.
         </p>

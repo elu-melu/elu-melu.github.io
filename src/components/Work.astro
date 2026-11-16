@@ -6,18 +6,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 <section id="work" class="py-16 md:py-24">
   <div class="max-w-6xl mx-auto px-6">
-    <SectionHead number="I" title="Work" />
+    <SectionHead title="Work" />
 
     <ol class="divide-y divide-rule border-b border-rule mb-20">
       {experience.map((job) => (
-        <li class="grid md:grid-cols-12 gap-x-8 gap-y-2 py-8 section-reveal">
+        <li class="grid md:grid-cols-12 gap-x-8 gap-y-2 py-8">
           <div class="md:col-span-3 font-sans text-sm text-muted pt-1">
             <p>{job.date}</p>
             {job.location && <p>{job.location}</p>}
           </div>
           <div class="md:col-span-9">
             <h3 class="font-display text-3xl leading-tight">{job.role}</h3>
-            <p class="kicker text-teal mt-2 mb-4">{job.company}</p>
+            <p class="font-sans text-base text-teal mt-2 mb-4">{job.company}</p>
             <ul class="space-y-2 max-w-2xl">
               {job.bullets.map((b) => (
                 <li class="pl-5 relative before:content-['—'] before:absolute before:left-0 before:text-muted">{b}</li>
@@ -35,9 +35,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
     <a
       href={`${base}/work/dangote-ipo/`}
-      class="group block bg-ink text-paper p-8 md:p-12 mb-20 section-reveal hover:bg-teal transition-colors"
+      class="group block bg-ink text-paper p-8 md:p-12 mb-20 hover:bg-teal transition-colors"
     >
-      <p class="kicker text-rust-light mb-4">Feature</p>
       <p class="font-display text-4xl md:text-6xl leading-[1.02] max-w-3xl mb-6">
         The platform behind 2.79&nbsp;million Dangote IPO shares
       </p>
@@ -48,7 +47,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       <span class="font-sans text-sm font-medium underline underline-offset-4">Read the case study →</span>
     </a>
 
-    <div class="flex items-baseline justify-between border-t border-ink pt-4 mb-2 section-reveal">
+    <div class="flex items-baseline justify-between border-t border-ink pt-4 mb-2">
       <h3 class="font-display text-4xl">Index of projects</h3>
       <p class="font-sans text-sm text-muted">{projects.length} projects</p>
     </div>
@@ -56,7 +55,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       {projects.map((project, i) => {
         const Tag = project.link ? "a" : "div";
         return (
-          <li class="border-b border-rule section-reveal">
+          <li class="border-b border-rule">
             <Tag
               {...(project.link ? { href: project.link, target: "_blank", rel: "noopener noreferrer" } : {})}
               class:list={["grid grid-cols-[2.5rem_1fr] md:grid-cols-[3rem_minmax(0,5fr)_minmax(0,7fr)_4rem] gap-x-6 gap-y-1 py-6 items-baseline", project.link && "group hover:bg-paper-deep transition-colors"]}
@@ -76,7 +75,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
       })}
     </ol>
 
-    <div class="border-t border-ink pt-4 section-reveal">
+    <div class="border-t border-ink pt-4">
       <h3 class="font-display text-4xl mb-8">Toolkit</h3>
       <dl class="grid grid-cols-2 md:grid-cols-4 gap-8">
         {Object.entries(skills).map(([category, items]) => (

@@ -3,11 +3,11 @@ import { ArrowRight, ArrowUpRight, Check, Copy } from "@lucide/vue";
 import { siteConfig, links } from "../data/siteData";
 import Footer from "./Footer.astro";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
-const social = [
+const social: { href: string; label: string; chip?: string }[] = [
   { href: links.linkedin, label: "LinkedIn" },
   { href: links.github, label: "GitHub" },
   { href: links.scholar, label: "Google Scholar" },
-  { href: links.labackdoor, label: "LaBackDoor" },
+  { href: links.labackdoor, label: "LaBackDoor", chip: "labackdoor" },
 ];
 ---
 
@@ -39,7 +39,7 @@ const social = [
     <ul class="mt-block pt-6 border-t border-ground/15 flex flex-wrap gap-x-8 gap-y-3 text-small">
       {social.map((s) => (
         <li>
-          <a href={s.href} target="_blank" rel="noopener noreferrer" class="text-on-ink-muted hover:text-ground transition-colors duration-150 inline-flex items-center gap-1 min-h-11">
+          <a href={s.href} target="_blank" rel="noopener noreferrer" data-chip={s.chip} class="text-on-ink-muted hover:text-ground transition-colors duration-150 inline-flex items-center gap-1 min-h-11">
             {s.label}
             <ArrowUpRight size={16} stroke-width={1.5} aria-hidden="true" class="i-out" />
             <span class="sr-only"> (opens in a new tab)</span>

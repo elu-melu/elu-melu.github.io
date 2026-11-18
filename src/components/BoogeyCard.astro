@@ -1,0 +1,273 @@
+---
+import { boogeymen } from "../data/siteData";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<figure id="boogey-card" aria-hidden="true">
+  <img alt="" width="220" height="275" decoding="async" />
+  <figcaption>
+    <span data-title></span>
+    <span data-credit></span>
+  </figcaption>
+</figure>
+
+<style>
+  #boogey-card {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 60;
+    box-sizing: border-box;
+    width: 220px;
+    margin: 0;
+    padding: 6px;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-rest);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 120ms ease;
+  }
+  #boogey-card img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    background: var(--color-accent-tint);
+  }
+  #boogey-card figcaption {
+    display: grid;
+    gap: 2px;
+    margin-top: 6px;
+    padding: 0 2px;
+    font-size: var(--text-meta);
+    line-height: 1.3;
+    color: var(--color-muted);
+  }
+  [data-title] {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #boogey-card {
+      transition: none;
+    }
+  }
+</style>
+
+<script define:vars={{ items: boogeymen, base }}>
+  (() => {
+    const card = document.getElementById("boogey-card");
+    const img = card.querySelector("img");
+    const OFFSET = 16;
+    const EDGE = 8;
+    const GAP = 8;
+    const STORAGE_KEY = "boogeymen-seen";
+    // Hover devices follow the cursor/focus; touch devices toggle a pinned card on tap.
+    const hoverMQ = matchMedia("(hover: hover)");
+    const touchMQ = matchMedia("(hover: none)");
+    const reduceMQ = matchMedia("(prefers-reduced-motion: reduce)");
+    const files = new Set(items.map((item) => item.file));
+    const poked = new WeakSet();
+    let target = null;
+    let last = -1;
+    let shown = null;
+    let x = 0;
+    let y = 0;
+    let frame = 0;
+
+    const pick = (node) => {
+      const el = node instanceof Element ? node.closest("[data-boogey]") : null;
+      return el;
+    };
+
+    // Storage can be blocked (private mode, disabled site data); the Set still works for this visit.
+    function loadSeen() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+        return new Set(Array.isArray(saved) ? saved.filter((f) => files.has(f)) : []);
+      } catch {
+        return new Set();
+      }
+    }
+    const seen = loadSeen();
+
+    function saveSeen() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify([...seen]));
+      } catch {
+        // Ignored: the in-memory set keeps counting for this visit.
+      }
+    }
+
+    function renderCount() {
+      const el = document.querySelector("[data-found]");
+      if (!el) return;
+      const n = seen.size;
+      const total = items.length;
+      el.hidden = n === 0;
+      el.textContent = n === total ? `all ${total} found. you can stop now.` : `${n} of ${total} found`;
+    }
+
+    function markSeen(item) {
+      if (seen.has(item.file)) return;
+      seen.add(item.file);
+      saveSeen();
+      renderCount();
+    }
+
+    // Prefer unseen items; once all are seen, any item except the one shown last.
+    function candidates() {
+      const others = items.map((_, i) => i).filter((i) => i !== last);
+      const unseen = others.filter((i) => !seen.has(items[i].file));
+      if (unseen.length) return unseen;
+      return others.length ? others : [0];
+    }
+
+    function nextIndex() {
+      const pool = candidates();
+      last = pool[Math.floor(Math.random() * pool.length)];
+      return last;
+    }
+
+    function fill() {
+      const item = items[nextIndex()];
+      img.src = `${base}/boogeymen/${item.file}`;
+      img.style.objectPosition = item.position ?? "center";
+      card.querySelector("[data-title]").textContent = item.title;
+      card.querySelector("[data-credit]").textContent = `${item.credit}, ${item.license}`;
+      return item;
+    }
+
+    function place() {
+      frame = 0;
+      const left = Math.min(Math.max(x + OFFSET, EDGE), innerWidth - card.offsetWidth - EDGE);
+      const top = Math.min(Math.max(y + OFFSET, EDGE), innerHeight - card.offsetHeight - EDGE);
+      card.style.transform = `translate3d(${left}px, ${top}px, 0)`;
+    }
+
+    function track(px, py) {
+      x = px;
+      y = py;
+      if (!frame) frame = requestAnimationFrame(place);
+    }
+
+    // Touch: centre under the button, clamped to the viewport.
+    function pinBelow(el) {
+      const r = el.getBoundingClientRect();
+      const left = Math.min(
+        Math.max(r.left + r.width / 2 - card.offsetWidth / 2, EDGE),
+        innerWidth - card.offsetWidth - EDGE,
+      );
+      const top = Math.min(r.bottom + GAP, innerHeight - card.offsetHeight - EDGE);
+      card.style.transform = `translate3d(${left}px, ${top}px, 0)`;
+    }
+
+    // Warm the cache once so later hovers never show an empty frame.
+    let warmed = false;
+    function warm() {
+      if (warmed) return;
+      warmed = true;
+      items.forEach((item) => {
+        new Image().src = `${base}/boogeymen/${item.file}`;
+      });
+    }
+
+    // A hover or tap ends the attention pulse for good.
+    function poke(el) {
+      poked.add(el);
+      el.classList.remove("boogey--nudge");
+    }
+
+    function show(el) {
+      target = el;
+      poke(el);
+      warm();
+      const item = fill();
+      shown = item;
+      // Reveal only once the image is ready; decode() rejects on broken files, so show anyway.
+      img.decode().catch(() => {}).then(() => {
+        if (target !== el || shown !== item) return;
+        card.style.opacity = "1";
+        markSeen(item);
+      });
+    }
+
+    function hide() {
+      if (touchMQ.matches && target) target.setAttribute("aria-expanded", "false");
+      target = null;
+      card.style.opacity = "0";
+    }
+
+    function openTouch(el) {
+      if (target) target.setAttribute("aria-expanded", "false");
+      show(el);
+      el.setAttribute("aria-expanded", "true");
+      pinBelow(el);
+    }
+
+    // One pulse per trigger, on first scroll-in, unless the visitor already touched it.
+    function onScrollIn(io, entry) {
+      if (!entry.isIntersecting) return;
+      io.unobserve(entry.target);
+      if (!poked.has(entry.target)) entry.target.classList.add("boogey--nudge");
+    }
+
+    function nudgeOnScroll() {
+      if (reduceMQ.matches || !("IntersectionObserver" in window)) return;
+      const io = new IntersectionObserver((entries) => entries.forEach((entry) => onScrollIn(io, entry)), {
+        threshold: 0.6,
+      });
+      document.querySelectorAll("[data-boogey]").forEach((el) => {
+        el.addEventListener("animationend", () => el.classList.remove("boogey--nudge"));
+        io.observe(el);
+      });
+    }
+
+    if (card && hoverMQ.matches) {
+      document.addEventListener("pointerover", (e) => {
+        const el = pick(e.target);
+        if (e.pointerType === "touch" || !el || el === target) return;
+        show(el);
+        track(e.clientX, e.clientY);
+      });
+      document.addEventListener("pointerout", (e) => {
+        if (target && !target.contains(e.relatedTarget)) hide();
+      });
+      document.addEventListener("pointermove", (e) => {
+        if (target) track(e.clientX, e.clientY);
+      });
+      document.addEventListener("focusin", (e) => {
+        const el = pick(e.target);
+        if (!el) return;
+        show(el);
+        const r = el.getBoundingClientRect();
+        track(r.left, r.bottom);
+      });
+      document.addEventListener("focusout", hide);
+    }
+
+    if (card && touchMQ.matches) {
+      // Button click also fires for Enter/Space, so keyboard users toggle too.
+      document.addEventListener("click", (e) => {
+        const el = pick(e.target);
+        if (el && el !== target) openTouch(el);
+        else hide();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") hide();
+      });
+      window.addEventListener("scroll", hide, { passive: true });
+    }
+
+    // The counter sits after this script in the DOM, so wait for parsing to finish.
+    const ready = () => {
+      renderCount();
+      nudgeOnScroll();
+    };
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", ready);
+    else ready();
+  })();
+</script>

@@ -1,0 +1,58 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import Work from "../components/Work.astro";
+import Publications from "../components/Publications.astro";
+import { ArrowLeft, Download } from "@lucide/vue";
+import { education, siteConfig } from "../data/siteData";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<BaseLayout title="CV | Webster Elumelu" description="The formal CV of Webster Elumelu: experience, publications, education, and toolkit.">
+  <a href="#cv" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:bg-ink focus:text-ground focus:rounded-sm focus:px-4 focus:py-2">Skip to content</a>
+  <Navbar />
+  <main id="cv" class="flex-1 pt-16 md:pt-24 pb-section">
+    <div class="max-w-page mx-auto px-gutter">
+      <a href={`${base}/`} class="link text-small inline-flex items-center gap-1.5">
+        <ArrowLeft size={16} stroke-width={1.5} aria-hidden="true" class="i-back" />
+        Home
+      </a>
+      <h1 class="text-headline mt-10">CV</h1>
+      <p class="text-lead text-ink-2 max-w-measure mt-4">The formal version. The stories are on the front page.</p>
+      <p class="text-body text-ink-2 max-w-measure mt-4">{siteConfig.seeking}</p>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href={`${base}/${siteConfig.resume}`} class="btn btn-primary">
+          Download resume
+          <Download size={16} stroke-width={1.5} aria-hidden="true" />
+        </a>
+        <a href={`mailto:${siteConfig.email}`} class="btn">Email</a>
+      </div>
+    </div>
+
+    <Work />
+    <Publications />
+
+    <section id="education" class="pt-section">
+      <div class="max-w-page mx-auto px-gutter grid lg:grid-cols-12 gap-x-6">
+        <div class="lg:col-span-3 lg:sticky lg:top-20 self-start mb-8 lg:mb-0">
+          <h2 class="text-title">Education</h2>
+        </div>
+        <ul class="lg:col-span-9 min-w-0 divide-y divide-line">
+          {education.map((edu) => (
+            <li class="grid sm:grid-cols-[9.5rem_minmax(0,1fr)] gap-x-6 gap-y-1 py-8 first:pt-0">
+              <p class="text-meta text-muted num sm:pt-1">{edu.date}</p>
+              <div class="min-w-0">
+                <h3 class="text-heading">{edu.school}</h3>
+                <p class="text-small text-ink-2 mt-1">{edu.degree}{edu.focus && `, ${edu.focus}`}{edu.minor && `, minor in ${edu.minor}`}</p>
+                <p class="text-meta text-muted mt-1">{edu.location}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

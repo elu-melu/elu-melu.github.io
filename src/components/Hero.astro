@@ -1,8 +1,9 @@
 ---
 import { Image } from "astro:assets";
-import { Download } from "@lucide/vue";
+import { ArrowRight } from "@lucide/vue";
 import { siteConfig, photos } from "../data/siteData";
-import cover from "../assets/photos/bucket-hat.jpg";
+import portrait from "../assets/photos/portrait.jpg";
+import NowPlaying from "./NowPlaying.astro";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
@@ -13,25 +14,28 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     <div class="grid lg:grid-cols-12 gap-x-6 mt-10 md:mt-16">
       <div class="lg:col-start-4 lg:col-span-6">
         <p class="text-lead text-ink-2 max-w-measure">{siteConfig.tagline}</p>
+        <p class="text-body text-ink-2 max-w-measure mt-4">{siteConfig.subline}</p>
         <div class="mt-8 flex flex-wrap gap-3">
-          <a href="#work" class="btn btn-primary">View work</a>
-          <a href={`${base}/${siteConfig.resume}`} class="btn">
-            Download resume
-            <Download size={16} stroke-width={1.5} aria-hidden="true" />
+          <a href="#selected" class="btn btn-primary">
+            See the work
+            <ArrowRight size={16} stroke-width={1.5} aria-hidden="true" class="i-fwd" />
           </a>
+          <a href={`${base}/log/`} class="btn">Read the log</a>
         </div>
       </div>
 
-      <figure class="lg:col-start-11 lg:col-span-2 lg:-mt-40 mt-12 w-36 lg:w-full ml-auto">
+      <NowPlaying />
+
+      <figure class="lg:col-start-10 lg:col-span-3 lg:-mt-40 mt-12 w-36 lg:w-full ml-auto">
         <Image
-          src={cover}
-          alt={photos.cover.alt}
-          widths={[200, 400]}
-          sizes="(min-width: 1024px) 180px, 144px"
+          src={portrait}
+          alt={photos.portrait.alt}
+          widths={[288, 576]}
+          sizes="(min-width: 1024px) 269px, 144px"
           loading="eager"
           class="w-full h-auto rounded-md shadow-rest"
         />
-        <figcaption class="text-meta text-muted mt-3">{photos.cover.caption}</figcaption>
+        <figcaption class="text-meta text-muted mt-3">{photos.portrait.caption}</figcaption>
       </figure>
     </div>
   </div>

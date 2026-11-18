@@ -1,43 +1,40 @@
-# Astro Starter Kit: Minimal
+# elu-melu.github.io
+
+The personal site of Webster Elumelu, built with Astro. The front page is the self-portrait: **Selected** (work), **Now** (what's current), and the **log** (a diary of builds, reading, films, places, thoughts). The CV lives at `/cv/`.
+
+## Run it
 
 ```sh
-bun create astro@latest -- --template minimal
+bun install
+bun dev      # localhost:4321
+bun build    # dist/
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Editing
 
-## 🚀 Project Structure
+### From a phone: Pages CMS
 
-Inside of your Astro project, you'll see the following folders and files:
+1. Go to the Pages CMS project for this repo.
+2. **Log → Add entry.** Fill in title, type, date, and one or two sentences. Save.
+3. The edit commits to `main`, GitHub Actions rebuilds, and the site updates.
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+The three most recent entries also show up on the front page.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+Fields:
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- `type`: `build`, `research`, `edit`, `read`, `watch`, `place`, `thought`
+- `note`: the sentence that appears on the page. Required — an entry without a note stays in the log but never reaches the front page.
+- `link` / `linkLabel`: optional, internal (`/work/dangote-ipo/`) or external.
+- `image`: optional, uploaded to `public/uploads/`.
 
-Any static assets, like images, can be placed in the `public/` directory.
+### From GitHub
 
-## 🧞 Commands
+Same thing in the web editor: copy `src/content/notes/_example.md`, rename it, drop the leading underscore.
 
-All commands are run from the root of the project, from a terminal:
+### Films and books
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
-| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun astro -- --help` | Get help using the Astro CLI                     |
+`src/content/films/` and `src/content/books/` are the diary shelves; `/log/` merges them with the notes by year. Films without an exact `watched` date are ordered by `order`. Set `filmListOrder` in `src/data/siteData.ts` to match how you add new ones.
 
-## 👀 Want to learn more?
+## Deploy
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Push to `main`. `.github/workflows/pages.yml` builds and publishes to GitHub Pages.

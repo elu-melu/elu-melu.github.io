@@ -1,0 +1,175 @@
+---
+import { getCollection } from "astro:content";
+import { ArrowLeft, ArrowRight, ArrowUpRight } from "@lucide/vue";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import { getFilms, hasThoughts } from "../../lib/films";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+type Entry = {
+  key: string;
+  date: Date;
+  year: number;
+  order: number;
+  type: string;
+  dateLabel: string;
+  title: string;
+  meta?: string;
+  note?: string;
+  image?: string;
+  href?: string;
+  linkLabel?: string;
+  external?: boolean;
+};
+
+const notes = await getCollection("notes");
+const films = await getFilms();
+const books = (await getCollection("books")).sort((a, b) => {
+  const t = (b.data.finished?.getTime() ?? 0) - (a.data.finished?.getTime() ?? 0);
+  return t !== 0 ? t : (a.data.order ?? 0) - (b.data.order ?? 0);
+});
+
+const entries: Entry[] = [];
+
+for (const n of notes) {
+  const date = n.data.date;
+  entries.push({
+    key: `note-${n.id}`,
+    date,
+    year: date.getFullYear(),
+    order: date.getTime(),
+    type: n.data.type[0].toUpperCase() + n.data.type.slice(1),
+    dateLabel: date.toLocaleDateString("en-GB", { day: "numeric", month: "short" }),
+    title: n.data.title,
+    note: n.data.note,
+    image: n.data.image,
+    href: n.data.link
+      ? n.data.link.startsWith("http")
+        ? n.data.link
+        : `${base}${n.data.link}`
+      : undefined,
+    linkLabel: n.data.linkLabel ?? "Read",
+    external: n.data.link?.startsWith("http"),
+  });
+}
+
+for (const f of films) {
+  const date = f.data.watched ?? new Date(f.data.seen, 0, 1);
+  entries.push({
+    key: `film-${f.id}`,
+    date,
+    year: f.data.seen,
+    order: f.data.watched?.getTime() ?? (f.data.order ?? 0),
+    type: "Watch",
+    dateLabel: f.data.watched
+      ? f.data.watched.toLocaleDateString("en-GB", { day: "numeric", month: "short" })
+      : "",
+    title: f.data.title,
+    meta: [f.data.director, f.data.year].filter(Boolean).join(", "),
+    note: f.data.note,
+    href: hasThoughts(f) ? `${base}/watching/${f.id}/` : undefined,
+    linkLabel: "My thoughts",
+  });
+}
+
+for (const b of books) {
+  const date = b.data.finished ?? new Date(0);
+  entries.push({
+    key: `book-${b.id}`,
+    date,
+    year: b.data.finished ? date.getFullYear() : 0,
+    order: b.data.finished?.getTime() ?? (b.data.order ?? 0),
+    type: "Read",
+    dateLabel: b.data.finished
+      ? date.toLocaleDateString("en-GB", { day: "numeric", month: "short" })
+      : "",
+    title: b.data.title,
+    meta: b.data.author,
+    note: b.data.note,
+  });
+}
+
+const byYear = new Map<number, Entry[]>();
+for (const entry of entries) {
+  byYear.set(entry.year, [...(byYear.get(entry.year) ?? []), entry]);
+}
+const groups = [...byYear.entries()]
+  .sort((a, b) => b[0] - a[0])
+  .map(([year, list]) => ({
+    year,
+    list: list.sort((a, b) => b.date.getTime() - a.date.getTime() || b.order - a.order),
+  }));
+---
+
+<BaseLayout title="Log | Webster Elumelu" description="A diary of what Webster Elumelu has been asked, chosen, watched, and read.">
+  <a href="#log" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:bg-ink focus:text-ground focus:rounded-sm focus:px-4 focus:py-2">Skip to content</a>
+  <Navbar />
+  <main id="log" class="flex-1 pt-16 md:pt-24 pb-section">
+    <div class="max-w-page mx-auto px-gutter">
+      <a href={`${base}/`} class="link text-small inline-flex items-center gap-1.5">
+        <ArrowLeft size={16} stroke-width={1.5} aria-hidden="true" class="i-back" />
+        Home
+      </a>
+      <h1 class="text-headline mt-10">Log</h1>
+      <p class="text-lead text-ink-2 max-w-measure mt-4 mb-block">
+        What I've been asked, what I've chosen, and what I've been watching. A diary, not a feed.
+      </p>
+    </div>
+
+    <div class="max-w-page mx-auto px-gutter">
+      {groups.map((group) => (
+        <section class="grid lg:grid-cols-12 gap-x-6 mb-block">
+          <div class="lg:col-span-3 lg:sticky lg:top-20 self-start mb-4">
+            <h2 class="text-title font-light num">{group.year === 0 ? "Shelf" : group.year}</h2>
+            <p class="text-meta text-muted num mt-1">
+              {group.year === 0
+                ? "Books without a finish date"
+                : `${group.list.length} ${group.list.length === 1 ? "entry" : "entries"}`}
+            </p>
+          </div>
+          <ol class="lg:col-span-9 min-w-0 divide-y divide-line">
+            {group.list.map((entry) => (
+              <li class="grid grid-cols-[4.25rem_minmax(0,1fr)] sm:grid-cols-[7rem_minmax(0,1fr)] gap-x-4 sm:gap-x-6 py-4">
+                <div class="text-meta text-muted num pt-1">
+                  {entry.dateLabel && <p>{entry.dateLabel}</p>}
+                  <p class:list={[entry.dateLabel ? "text-accent" : "text-muted"]}>{entry.type}</p>
+                </div>
+                <div class="min-w-0">
+                  <p class="text-body font-[560]">{entry.title}</p>
+                  {entry.meta && <p class="text-meta text-muted num mt-0.5">{entry.meta}</p>}
+                  {entry.note && <p class="text-small text-ink-2 font-normal mt-1.5 max-w-measure">{entry.note}</p>}
+                  {entry.image && (
+                    <img
+                      src={entry.image}
+                      alt=""
+                      loading="lazy"
+                      class="w-full max-w-sm h-auto rounded-md shadow-rest mt-4"
+                    />
+                  )}
+                  {entry.href && (
+                    <a
+                      href={entry.href}
+                      target={entry.external ? "_blank" : undefined}
+                      rel={entry.external ? "noopener noreferrer" : undefined}
+                      class="link text-small inline-flex items-center gap-1.5 mt-2"
+                    >
+                      {entry.linkLabel}
+                      {entry.external ? (
+                        <ArrowUpRight size={16} stroke-width={1.5} aria-hidden="true" class="i-out" />
+                      ) : (
+                        <ArrowRight size={16} stroke-width={1.5} aria-hidden="true" class="i-fwd" />
+                      )}
+                      {entry.external && <span class="sr-only"> (opens in a new tab)</span>}
+                    </a>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+      ))}
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>

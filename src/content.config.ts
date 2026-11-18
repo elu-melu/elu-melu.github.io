@@ -23,7 +23,7 @@ const films = defineCollection({
     title: z.string(),
     year: z.number().int().optional(), // release year, shown after the title
     director: z.string().optional(),
-    seen: z.number().int(), // the year you watched it; groups the /watching/ page
+    seen: z.number().int(), // the year you watched it; groups the /log/ page
     watched: z.coerce.date().optional(), // exact date, if you know it
     order: z.number().int().optional(), // position in your list, used when there's no date
     featured: z.number().int().min(1).max(5).optional(), // 1-5 pins it to the home page in that order
@@ -31,4 +31,17 @@ const films = defineCollection({
   }),
 });
 
-export const collections = { books, films };
+const notes = defineCollection({
+  loader: glob({ pattern: "**/[^_]*.md", base: "./src/content/notes" }),
+  schema: z.object({
+    title: z.string(),
+    type: z.enum(["build", "research", "edit", "read", "watch", "place", "thought"]),
+    date: z.coerce.date(),
+    note: z.string(),
+    link: z.string().optional(),
+    linkLabel: z.string().optional(),
+    image: z.string().optional(),
+  }),
+});
+
+export const collections = { books, films, notes };

@@ -1,0 +1,132 @@
+---
+import { brandChips } from "../data/siteData";
+---
+
+<div id="brand-chip" aria-hidden="true">
+  <span data-dot></span>
+  <strong data-name></strong>
+  <span data-desc></span>
+  <span data-host></span>
+</div>
+
+<style>
+  #brand-chip {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 60;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0 0.75em;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-full);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-rest);
+    color: var(--color-ink);
+    font-size: var(--text-small);
+    line-height: 1;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 120ms ease;
+  }
+  [data-dot] {
+    width: 0.5em;
+    height: 0.5em;
+    flex: none;
+    border-radius: var(--radius-full);
+  }
+  [data-name] {
+    font-weight: 600;
+  }
+  [data-desc],
+  [data-host] {
+    color: var(--color-muted);
+  }
+  [data-host]:empty {
+    display: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #brand-chip {
+      transition: none;
+    }
+  }
+</style>
+
+<script define:vars={{ brands: brandChips }}>
+  const chip = document.getElementById("brand-chip");
+  const OFFSET = 14;
+  const EDGE = 8;
+  const enabled = chip && !matchMedia("(hover: none)").matches;
+  let target = null;
+  let x = 0;
+  let y = 0;
+  let frame = 0;
+
+  const pick = (node) => {
+    const el = node instanceof Element ? node.closest("[data-chip]") : null;
+    return el && brands[el.dataset.chip] ? el : null;
+  };
+
+  function fill(el) {
+    const brand = brands[el.dataset.chip];
+    const cs = getComputedStyle(el);
+    const lineHeight = cs.lineHeight === "normal" ? parseFloat(cs.fontSize) * 1.4 : parseFloat(cs.lineHeight);
+    chip.style.fontSize = cs.fontSize;
+    chip.style.height = `${lineHeight}px`;
+    chip.querySelector("[data-dot]").style.background = brand.color;
+    chip.querySelector("[data-name]").textContent = brand.name;
+    chip.querySelector("[data-desc]").textContent = brand.descriptor;
+    const link = el.closest("a[href]");
+    chip.querySelector("[data-host]").textContent = link ? link.host : "";
+  }
+
+  function place() {
+    frame = 0;
+    const left = Math.min(Math.max(x + OFFSET, EDGE), innerWidth - chip.offsetWidth - EDGE);
+    const top = Math.min(Math.max(y + OFFSET, EDGE), innerHeight - chip.offsetHeight - EDGE);
+    chip.style.transform = `translate3d(${left}px, ${top}px, 0)`;
+  }
+
+  function track(px, py) {
+    x = px;
+    y = py;
+    if (!frame) frame = requestAnimationFrame(place);
+  }
+
+  function show(el) {
+    target = el;
+    fill(el);
+    chip.style.opacity = "1";
+  }
+
+  function hide() {
+    target = null;
+    chip.style.opacity = "0";
+  }
+
+  if (enabled) {
+    document.addEventListener("pointerover", (e) => {
+      const el = pick(e.target);
+      if (e.pointerType === "touch" || !el || el === target) return;
+      show(el);
+      track(e.clientX, e.clientY);
+    });
+    document.addEventListener("pointerout", (e) => {
+      if (target && !target.contains(e.relatedTarget)) hide();
+    });
+    document.addEventListener("pointermove", (e) => {
+      if (target) track(e.clientX, e.clientY);
+    });
+    document.addEventListener("focusin", (e) => {
+      const el = pick(e.target);
+      if (!el) return;
+      show(el);
+      const r = el.getBoundingClientRect();
+      track(r.left - OFFSET, r.bottom - OFFSET);
+    });
+    document.addEventListener("focusout", hide);
+  }
+</script>

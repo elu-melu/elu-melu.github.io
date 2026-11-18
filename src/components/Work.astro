@@ -5,9 +5,11 @@ import Rove10Charts from "./rove10/Rove10Charts.vue";
 import Rove10Table from "./rove10/Rove10Table.vue";
 
 const products = [
-  { name: "Rove10", href: "https://app.rove10.com" },
-  { name: "Payaza Business", href: "https://business.payaza.africa" },
+  { name: "Rove10", href: "https://app.rove10.com", chip: "rove10" },
+  { name: "Payaza Business", href: "https://business.payaza.africa", chip: "payaza" },
 ];
+const companyChips: Record<string, string> = { "78 Financials": "78financials", Payaza: "payaza", Rove10: "rove10" };
+const companyPattern = new RegExp(`(${Object.keys(companyChips).join("|")})`);
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
@@ -25,7 +27,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
             </div>
             <div class="min-w-0">
               <h3 class="text-heading">{job.role}</h3>
-              <p class="text-small text-ink-2 mt-1">{job.company}</p>
+              <p class="text-small text-ink-2 mt-1">
+                {job.company.split(companyPattern).map((part) => (companyChips[part] ? <span data-chip={companyChips[part]}>{part}</span> : part))}
+              </p>
               <ul class="mt-4 space-y-2 max-w-measure text-ink-2">
                 {job.bullets.map((b) => (
                   <li>{b}</li>
@@ -90,7 +94,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
         <p class="mt-12 flex flex-wrap gap-x-6 gap-y-2 text-small">
           {products.map((p) => (
-            <a href={p.href} target="_blank" rel="noopener noreferrer" class="link inline-flex items-center gap-1">
+            <a href={p.href} target="_blank" rel="noopener noreferrer" data-chip={p.chip} class="link inline-flex items-center gap-1">
               {p.name}
               <ArrowUpRight size={16} stroke-width={1.5} aria-hidden="true" class="i-out" />
               <span class="sr-only"> (opens in a new tab)</span>

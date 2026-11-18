@@ -37,6 +37,32 @@ export const links = {
   bareMax: "https://www.bare-max.club/",
 };
 
+export interface BrandChip {
+  name: string;
+  color: string;
+  descriptor: string;
+}
+
+// Keys match the data-chip attribute on the elements the chip follows.
+export const brandChips: Record<string, BrandChip> = {
+  payaza: {
+    name: "Payaza",
+    color: "#0B7A5B",
+    descriptor: "payments for african business",
+  },
+  rove10: { name: "Rove10", color: "#C2571A", descriptor: "back office" },
+  "78financials": {
+    name: "78 Financials",
+    color: "#2F5D8C",
+    descriptor: "fintech group",
+  },
+  labackdoor: {
+    name: "LaBackDoor",
+    color: "#A0522D",
+    descriptor: "security research lab",
+  },
+};
+
 export const education = [
   {
     school: "Georgia Institute of Technology",

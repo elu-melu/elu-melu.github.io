@@ -9,7 +9,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "spotify": "node scripts/fetch-spotify.mjs",
+    "worker:dev": "npx --yes wrangler@4 dev --config worker/wrangler.toml",
+    "worker:deploy": "npx --yes wrangler@4 deploy --config worker/wrangler.toml"
   },
   "dependencies": {
     "@astrojs/vue": "^6.0.1",

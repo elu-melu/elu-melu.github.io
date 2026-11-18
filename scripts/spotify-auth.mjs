@@ -17,12 +17,15 @@ if (!id || !secret) {
 
 const redirect = "http://127.0.0.1:8888/callback";
 const state = randomBytes(16).toString("hex");
+// user-read-recently-played feeds the build-time list; the other two let the
+// Worker read what is playing right now. One token covers both.
+const scope = "user-read-recently-played user-read-currently-playing user-read-playback-state";
 const authUrl =
   "https://accounts.spotify.com/authorize?" +
   new URLSearchParams({
     response_type: "code",
     client_id: id,
-    scope: "user-read-recently-played",
+    scope,
     redirect_uri: redirect,
     state,
   });

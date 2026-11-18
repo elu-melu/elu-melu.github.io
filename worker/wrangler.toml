@@ -1,0 +1,20 @@
+# Deploy from the repo root:
+#   npx wrangler login
+#   npx wrangler secret put SPOTIFY_CLIENT_ID     --config worker/wrangler.toml
+#   npx wrangler secret put SPOTIFY_CLIENT_SECRET --config worker/wrangler.toml
+#   npx wrangler secret put SPOTIFY_REFRESH_TOKEN --config worker/wrangler.toml
+#   npx wrangler deploy --config worker/wrangler.toml
+#
+# Full walkthrough: scripts/SPOTIFY.md
+
+name = "elumelu-now-playing"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+# Served at https://elumelu-now-playing.<your-subdomain>.workers.dev
+workers_dev = true
+
+[vars]
+# Add a future custom domain here (comma-separated) before switching over.
+ALLOWED_ORIGINS = "https://elu-melu.github.io,http://localhost:4321"
+CACHE_SECONDS = "20"

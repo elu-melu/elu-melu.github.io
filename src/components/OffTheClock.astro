@@ -117,10 +117,11 @@ const filmPreview = randomise ? filmsThisYear : pinned;
 
             <a
               data-live
+              hidden
               href={links.spotify}
               target="_blank"
               rel="noopener noreferrer"
-              class="hidden rounded-md border border-line bg-sunken p-3 mb-6 transition-colors duration-150 hover:border-line-strong"
+              class="block rounded-md border border-line bg-sunken p-3 mb-6 transition-colors duration-150 hover:border-line-strong"
             >
               <span class="flex items-center gap-3">
                 <img data-live-art alt="" width="44" height="44" class="hidden size-11 shrink-0 rounded-xs shadow-rest object-cover" />
@@ -287,7 +288,7 @@ const filmPreview = randomise ? filmsThisYear : pinned;
 
       if (!ticker) {
         ticker = window.setInterval(paint, 1000);
-        live.classList.remove("hidden");
+        live.hidden = false;
         embed?.classList.add("hidden");
         if (heading) heading.textContent = "Now playing";
       }

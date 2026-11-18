@@ -18,6 +18,9 @@ export const links = {
   scholar: "https://scholar.google.com/citations?user=ukgh9BkAAAAJ",
   // Paste your Spotify profile or playlist link here; the Listening column appears once it is set.
   spotify: "https://open.spotify.com/user/lrhdt8pv6tr2wzng7jho127l1",
+  // Live now-playing endpoint (see scripts/SPOTIFY.md). Paste the Worker URL after
+  // deploying it. Leave it empty and the column stays on the last-played snapshot.
+  nowPlaying: "https://elumelu-now-playing.elumelu.workers.dev",
   bareMax: "https://www.bare-max.club/",
 };
 

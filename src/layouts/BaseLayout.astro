@@ -8,8 +8,8 @@ interface Props {
 }
 
 const {
-  title = "Webster Elumelu | Software Engineer & Security Researcher",
-  description = `${siteConfig.name}: software engineer building payment systems at 78 Financials, and AI security researcher with published work on vulnerability forecasting and access control.`,
+  title = siteConfig.title,
+  description = siteConfig.description,
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");

@@ -2,21 +2,19 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Navbar from "../components/Navbar.astro";
 import Hero from "../components/Hero.astro";
-import Work from "../components/Work.astro";
-import Publications from "../components/Publications.astro";
-import OffTheClock from "../components/OffTheClock.astro";
+import Featured from "../components/Featured.astro";
+import Now from "../components/Now.astro";
 import About from "../components/About.astro";
 import Contact from "../components/Contact.astro";
 ---
 
 <BaseLayout>
-  <a href="#work" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:bg-ink focus:text-ground focus:rounded-sm focus:px-4 focus:py-2">Skip to content</a>
+  <a href="#selected" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:bg-ink focus:text-ground focus:rounded-sm focus:px-4 focus:py-2">Skip to content</a>
   <Navbar />
   <main>
     <Hero />
-    <Work />
-    <Publications />
-    <OffTheClock />
+    <Featured />
+    <Now />
     <About />
     <Contact />
   </main>

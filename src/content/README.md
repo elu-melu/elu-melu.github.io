@@ -9,5 +9,5 @@ Files whose names start with `_` never appear on the site.
   and `/watching/` lists every film by year. Anything written below the front
   matter becomes its own page at `/watching/<file-name>/`, linked as "My thoughts".
 
-The Listening column appears once `links.spotify` is set in `src/data/siteData.ts`.
-Each column stays hidden until it has something in it.
+The hero's now-playing card shows the last Spotify track (`src/data/spotify.json`) and
+upgrades to live data when `links.nowPlaying` is set in `src/data/siteData.ts`.

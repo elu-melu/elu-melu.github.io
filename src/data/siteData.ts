@@ -1,13 +1,26 @@
 export const siteConfig = {
   name: "Webster C. Elumelu",
   handle: "get-webster",
-  tagline: "I build payment systems, research AI security, and edit stories about Nigerian creatives.",
+  tagline:
+    "I work on what's asked of me and what I can't stop thinking about. Duty and desire, mostly in the same week.",
+  subline: "I'll go where I'm needed, and stay where I'm curious.",
   resume: "webster-elumelu-resume.pdf",
-  seeking: "Open to software and security engineering roles worldwide, remote or on-site.",
-  title: "Software Engineer & Security Researcher",
+  seeking:
+    "Open to software and security engineering roles worldwide, remote or on-site.",
+  title: "Webster Elumelu",
+  description:
+    "The personal site of Webster Elumelu: payment systems, security research, editing, films, books, and the work in between.",
   location: "Abuja, NG",
   email: "elumeluwebster@gmail.com",
-  bio: `I build payment software, from the screen a merchant sees to the Spring Boot service that moves the money. At 78 Financials that meant Payaza's and Rove10's merchant apps and the platform behind the Dangote IPO. Outside work hours I'm at LaBackDoor, a security research lab, where we've published on forecasting vulnerabilities and controlling access, and we're now building an AI that finds and fixes them. Who doesn't need their money to move quickly? Who doesn't want secure infrastructure with the advent of glorified cron jobs (AI) running tasks and other day-to-day activities for us?`,
+  bio: `I grew up in Nigeria, studied in Accra and St. Louis, and came back to work on money that has to move. At 78 Financials that means Payaza and Rove10. At LaBackDoor I research how AI finds and fixes vulnerabilities. At Bare Max I edit interviews with Nigerian creatives. The rest of my time goes to films, books, politics, and the arguments I keep having with all three.`,
+};
+
+export const now = {
+  updated: "November 2026",
+  building:
+    "Payaza and Rove10 at 78 Financials; an agent that finds and fixes vulnerabilities at LaBackDoor.",
+  reading: "Between books. The shelf is in the log.",
+  thinking: "Whether an agent can be trusted to fix what it finds.",
 };
 
 export const links = {
@@ -23,23 +36,6 @@ export const links = {
   nowPlaying: "https://elumelu-now-playing.elumelu.workers.dev",
   bareMax: "https://www.bare-max.club/",
 };
-
-export const stats = [
-  { value: "2.79M+", label: "Dangote IPO shares sold through a system I helped design" },
-  { value: "₦1.46B+", label: "worth of shares sold through it, 14 Sep - 27 Oct 2026" },
-  { value: "30+", label: "lab environments automated with Terraform and Ansible" },
-  { value: "2", label: "published papers, 3 more under review" },
-];
-
-export const interests = [
-  { label: "Design", icon: "pen-tool" },
-  { label: "International Politics", icon: "globe" },
-  { label: "Data", icon: "bar-chart" },
-  { label: "Travel", icon: "map-pin" },
-  { label: "Photography", icon: "camera" },
-  { label: "Mathematics", icon: "sigma" },
-  { label: "Cloud Infrastructure", icon: "shield" },
-];
 
 export const education = [
   {
@@ -59,9 +55,9 @@ export const education = [
 ];
 
 export const skills = {
-  "Frontend": ["React", "TypeScript", "Vue.js"],
-  "Backend": ["Java (Spring Boot)", "Python", "Go", "REST APIs"],
-  "Data": ["PostgreSQL", "MongoDB"],
+  Frontend: ["React", "TypeScript", "Vue.js"],
+  Backend: ["Java (Spring Boot)", "Python", "Go", "REST APIs"],
+  Data: ["PostgreSQL", "MongoDB"],
   "Security & Infra": ["OAuth, MFA, RBAC", "Docker", "Terraform"],
 };
 
@@ -139,31 +135,37 @@ export interface Publication {
 
 export const publications: Publication[] = [
   {
-    title: "A Unified Framework Incorporating AW-TRBAC and Semantic Variational Autoencoders for Dynamic Threat Detection and Access Control",
-    venue: "International Conference on Artificial Intelligence (World Congress in Computer Science, Computer Engineering & Applied Computing)",
+    title:
+      "A Unified Framework Incorporating AW-TRBAC and Semantic Variational Autoencoders for Dynamic Threat Detection and Access Control",
+    venue:
+      "International Conference on Artificial Intelligence (World Congress in Computer Science, Computer Engineering & Applied Computing)",
     year: "2025",
     status: "published",
   },
   {
-    title: "Predicting Software Vulnerability Trends with Multi-Recurrent Neural Networks: A Time Series Forecasting Approach",
+    title:
+      "Predicting Software Vulnerability Trends with Multi-Recurrent Neural Networks: A Time Series Forecasting Approach",
     venue: "NLPAICS 2024, ACL Anthology",
     year: "2024",
     status: "published",
   },
   {
-    title: "SysRepair-Bench: A Benchmark for AI Agents' Ability to Remediate Real-World System Vulnerabilities",
+    title:
+      "SysRepair-Bench: A Benchmark for AI Agents' Ability to Remediate Real-World System Vulnerabilities",
     venue: "Under review",
     year: "",
     status: "under review",
   },
   {
-    title: "SysRepair: A Benchmark and Multi-Architecture Approach to Autonomous Vulnerability Remediation",
+    title:
+      "SysRepair: A Benchmark and Multi-Architecture Approach to Autonomous Vulnerability Remediation",
     venue: "Under review",
     year: "",
     status: "under review",
   },
   {
-    title: "Autonomous System Vulnerability Remediation: A Survey of Agentic AI, Reinforcement Learning, Benchmarks, and Operational Safety",
+    title:
+      "Autonomous System Vulnerability Remediation: A Survey of Agentic AI, Reinforcement Learning, Benchmarks, and Operational Safety",
     venue: "Under review",
     year: "",
     status: "under review",
@@ -182,7 +184,8 @@ export interface Project {
 export const projects: Project[] = [
   {
     title: "Vulnerability trend forecasting",
-    description: "Multi-recurrent neural networks that forecast software vulnerability trends from time-series data. Code for the NLPAICS 2024 paper.",
+    description:
+      "Multi-recurrent neural networks that forecast software vulnerability trends from time-series data. Code for the NLPAICS 2024 paper.",
     tech: ["Python", "RNNs", "Time series"],
     highlights: ["Published in the ACL Anthology (NLPAICS 2024)"],
     link: "https://github.com/LaBackDoor/multi-recurrent-network",
@@ -190,15 +193,19 @@ export const projects: Project[] = [
   },
   {
     title: "AW-TRBAC and SVAE threat detection",
-    description: "Access control for large distributed NoSQL databases combined with semantic variational autoencoders for dynamic threat detection.",
+    description:
+      "Access control for large distributed NoSQL databases combined with semantic variational autoencoders for dynamic threat detection.",
     tech: ["Python", "NoSQL", "VAEs", "Access control"],
-    highlights: ["Published at the International Conference on Artificial Intelligence, 2025"],
+    highlights: [
+      "Published at the International Conference on Artificial Intelligence, 2025",
+    ],
     link: "https://github.com/CybearsecurityLab/svae-based-dynamic-threat-detection",
     linkLabel: "View code",
   },
   {
     title: "Automated lab provisioning",
-    description: "Infrastructure as code that provisions virtualised research environments for the LaBackDoor lab.",
+    description:
+      "Infrastructure as code that provisions virtualised research environments for the LaBackDoor lab.",
     tech: ["Terraform", "Ansible", "Proxmox"],
     highlights: ["30+ environments provisioned with Terraform and Ansible on Proxmox"],
   },
@@ -207,71 +214,6 @@ export const projects: Project[] = [
     description: "Full-stack health platform based on CDC Prevent T2 standards.",
     tech: ["Java", "GCP", "Docker", "MySQL", "GitHub Actions", "OAuth 2.0"],
     highlights: ["Java API, CI/CD on GCP, Gmail API notifications via OAuth 2.0"],
-  },
-];
-
-export interface LearningItem {
-  topic: string;
-  category: string;
-  progress: number; // 0-100
-  status: "active" | "planned" | "completed";
-}
-
-export const learningTracker: LearningItem[] = [
-  {
-    topic: "Kubernetes (CKA)",
-    category: "Cloud Infrastructure",
-    progress: 40,
-    status: "active",
-  },
-  {
-    topic: "Terraform & IaC",
-    category: "Cloud Infrastructure",
-    progress: 70,
-    status: "active",
-  },
-  {
-    topic: "Distributed Systems",
-    category: "MSCS - Georgia Tech",
-    progress: 30,
-    status: "active",
-  },
-  {
-    topic: "Advanced OS Concepts",
-    category: "MSCS - Georgia Tech",
-    progress: 25,
-    status: "active",
-  },
-  {
-    topic: "Astro + Vue",
-    category: "Web Development",
-    progress: 15,
-    status: "active",
-  },
-  {
-    topic: "AWS Solutions Architect",
-    category: "Cloud Infrastructure",
-    progress: 0,
-    status: "planned",
-  },
-  {
-    topic: "Rust",
-    category: "Systems Programming",
-    progress: 40,
-    status: "active",
-  },
-];
-
-export const affiliations = [
-  {
-    name: "LaBackDoor",
-    url: "https://www.labackdoor.com",
-    description: "Security research collective",
-  },
-  {
-    name: "Bare Max",
-    url: "https://www.bare-max.club/",
-    description: "Spotlighting Nigerians in the creative industry",
   },
 ];
 
@@ -285,6 +227,8 @@ export const bareMax = {
 };
 
 export const photos = {
-  cover: { src: "bucket-hat", alt: "Webster as a toddler in a light-blue bucket hat and a teal and red jacket, crouching by a wooden wall and smiling at the camera.", caption: "Early days." },
-  about: { src: "portrait", alt: "Webster as a baby in a studio portrait, wearing denim dungarees over a white top and looking straight at the camera.", caption: "If you reject me, this is who you reject." },
+  portrait: {
+    alt: "Webster as a baby in a studio portrait, wearing denim dungarees over a white top and looking straight at the camera.",
+    caption: "The first draft. No notes yet.",
+  },
 };

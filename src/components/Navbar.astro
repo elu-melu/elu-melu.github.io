@@ -3,9 +3,8 @@ import { Menu, X } from "@lucide/vue";
 import { siteConfig } from "../data/siteData";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const nav = [
-  { href: `${base}/#work`, label: "Work" },
-  { href: `${base}/#publications`, label: "Publications" },
-  { href: `${base}/#off-the-clock`, label: "Off the clock" },
+  { href: `${base}/#selected`, label: "Selected" },
+  { href: `${base}/log/`, label: "Log" },
   { href: `${base}/#about`, label: "About" },
   { href: `${base}/#contact`, label: "Contact" },
 ];
@@ -20,9 +19,7 @@ const nav = [
       {nav.map((n) => (
         <a href={n.href} class="text-ink-2 hover:text-ink transition-colors duration-150 focus-visible:text-ink">{n.label}</a>
       ))}
-      <a href={`${base}/${siteConfig.resume}`} class="btn min-h-9 px-3.5">
-        Resume
-      </a>
+      <a href={`${base}/cv/`} class="btn min-h-9 px-3.5">CV</a>
     </div>
     <button
       id="menu-toggle"
@@ -41,7 +38,7 @@ const nav = [
       {nav.map((n) => (
         <a href={n.href} class="py-3 text-ink-2 hover:text-ink">{n.label}</a>
       ))}
-      <a href={`${base}/${siteConfig.resume}`} class="link py-3">Resume (PDF)</a>
+      <a href={`${base}/cv/`} class="link py-3">CV</a>
     </div>
   </div>
 </header>

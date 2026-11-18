@@ -31,3 +31,6 @@ pnpm-debug.log*
 # agent skills
 .claude/skills/
 skills-lock.json
+
+# others
+handover.md

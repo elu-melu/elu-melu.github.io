@@ -27,9 +27,9 @@ const watched = film.data.watched
   <main id="film" class="flex-1 pt-16 md:pt-24 pb-section">
     <article class="max-w-page mx-auto px-gutter">
       <div class="lg:ml-[25%]">
-        <a href={`${base}/watching/`} class="link text-small inline-flex items-center gap-1.5">
+        <a href={`${base}/log/`} class="link text-small inline-flex items-center gap-1.5">
           <ArrowLeft size={16} stroke-width={1.5} aria-hidden="true" class="i-back" />
-          All films
+          The log
         </a>
         <h1 class="text-headline mt-10 max-w-[18ch]">{film.data.title}</h1>
         <p class="text-meta text-muted num mt-4 mb-10">{[meta, `Watched ${watched}`].filter(Boolean).join(", ")}</p>

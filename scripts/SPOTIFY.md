@@ -1,20 +1,20 @@
 # Spotify on the site
 
-The Listening column in "Off the clock" has two layers:
+The now-playing card in the hero has two layers:
 
-1. **Last played** — built into the HTML at build time. Five recent tracks, an
-   embed for the newest, and no JavaScript at all. Refreshed by the deploy
-   workflow; this is also what the live card falls back to.
+1. **Last played** — built into the HTML at build time from the most recent
+   track in `src/data/spotify.json`, with no JavaScript at all. Refreshed by the
+   deploy workflow; this is also what the live card falls back to.
 2. **Now playing** — one small Cloudflare Worker that reads what is playing
-   right now. The page polls it every 30 s while the column is on screen, shows
-   the album art, title, equalizer and progress bar, then hides the stale embed.
+   right now. The page polls it every 30 s while the card is on screen, swaps in
+   the album art, title, equalizer and progress bar, and tints them from the cover.
 
 Layer 1 is already live. Layer 2 needs the Worker deployed and its URL pasted
 into `src/data/siteData.ts`.
 
 > **Spotify Premium note.** Since late 2024 Spotify only serves the player
 > endpoints (`/v1/me/player`) to Premium accounts. On a Free account the Worker
-> gets HTTP 403 and the site quietly stays on the Last played list. Nothing
+> gets HTTP 403 and the site quietly stays on the Last played snapshot. Nothing
 > breaks; the live card just never appears.
 
 ## Part 1 — Last played (done)

@@ -1,0 +1,79 @@
+---
+import { getCollection } from "astro:content";
+import { ArrowRight } from "@lucide/vue";
+import { getFilms } from "../lib/films";
+import { now } from "../data/siteData";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+const books = await getCollection("books");
+const notes = (await getCollection("notes")).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const recent = notes.slice(0, 3);
+const films = await getFilms();
+const year = films[0]?.data.seen ?? new Date().getFullYear();
+const filmsThisYear = films.filter((f) => f.data.seen === year);
+
+const items = [
+  { label: "Building", value: now.building },
+  { label: "Reading", value: now.reading },
+  { label: "Watching", value: `${filmsThisYear.length} films in ${year}. The diary is in the log.` },
+  { label: "Thinking", value: now.thinking },
+];
+---
+
+<section id="now" class="pt-section">
+  <div class="max-w-page mx-auto px-gutter grid lg:grid-cols-12 gap-x-6">
+    <div class="lg:col-span-3 lg:sticky lg:top-20 self-start mb-8 lg:mb-0">
+      <h2 class="text-title">Now</h2>
+      <p class="text-meta text-muted num mt-2">Updated {now.updated}</p>
+    </div>
+
+    <div class="lg:col-span-9 min-w-0">
+      <dl class="divide-y divide-line">
+        {items.map((item) => (
+          <div class="grid sm:grid-cols-[9.5rem_minmax(0,1fr)] gap-x-6 gap-y-1 py-5 first:pt-0">
+            <dt class="text-meta text-muted sm:pt-1">{item.label}</dt>
+            <dd class="text-body text-ink-2 max-w-measure">{item.value}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <div class="mt-block">
+        <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 mb-4">
+          <h3 class="text-meta text-muted">From the log</h3>
+          <a href={`${base}/log/`} class="link text-small font-[560] inline-flex items-center gap-1.5">
+            All {notes.length} notes
+            <ArrowRight size={16} stroke-width={1.5} aria-hidden="true" class="i-fwd" />
+          </a>
+        </div>
+        <ol class="divide-y divide-line">
+          {recent.map((entry) => (
+            <li class="grid sm:grid-cols-[9.5rem_minmax(0,1fr)] gap-x-6 gap-y-1 py-5">
+              <p class="text-meta text-muted num sm:pt-1">
+                {entry.data.date.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+              </p>
+              <div class="min-w-0">
+                <p class="text-body font-[560]">{entry.data.title}</p>
+                <p class="text-small text-ink-2 font-normal mt-1.5 max-w-measure">{entry.data.note}</p>
+                {entry.data.link && (
+                  <a
+                    href={entry.data.link.startsWith("http") ? entry.data.link : `${base}${entry.data.link}`}
+                    target={entry.data.link.startsWith("http") ? "_blank" : undefined}
+                    rel={entry.data.link.startsWith("http") ? "noopener noreferrer" : undefined}
+                    class="link text-small inline-flex items-center gap-1.5 mt-2"
+                  >
+                    {entry.data.linkLabel ?? "Read"}
+                    <ArrowRight size={16} stroke-width={1.5} aria-hidden="true" class="i-fwd" />
+                  </a>
+                )}
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <p class="text-meta text-muted num mt-6">
+        {films.length} films, {books.length} books, {notes.length} notes
+      </p>
+    </div>
+  </div>
+</section>

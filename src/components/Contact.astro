@@ -1,5 +1,5 @@
 ---
-import { ArrowUpRight, Check, Copy, Download } from "@lucide/vue";
+import { ArrowRight, ArrowUpRight, Check, Copy } from "@lucide/vue";
 import { siteConfig, links } from "../data/siteData";
 import Footer from "./Footer.astro";
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -19,7 +19,9 @@ const social = [
       href={`mailto:${siteConfig.email}`}
       class="block mt-6 text-[clamp(1.25rem,5.6vw,4.5rem)] leading-none tracking-[-0.035em] font-[560] break-all hover:text-accent-light transition-colors duration-150"
     >{siteConfig.email}</a>
-    <p class="text-lead text-on-ink-muted max-w-measure mt-8">{siteConfig.seeking}</p>
+    <p class="text-lead text-on-ink-muted max-w-measure mt-8">
+      If you want to build something, edit something, or argue about a film, write to me.
+    </p>
 
     <div class="mt-8 flex flex-wrap gap-3">
       <button id="copy-email" type="button" class="btn btn-primary">
@@ -27,9 +29,9 @@ const social = [
         <span data-icon="check" class="hidden"><Check size={16} stroke-width={1.5} aria-hidden="true" /></span>
         <span data-label>Copy email</span>
       </button>
-      <a href={`${base}/${siteConfig.resume}`} class="btn">
-        Download resume
-        <Download size={16} stroke-width={1.5} aria-hidden="true" />
+      <a href={`${base}/cv/`} class="btn">
+        Read the CV
+        <ArrowRight size={16} stroke-width={1.5} aria-hidden="true" class="i-fwd" />
       </a>
     </div>
     <p id="copy-status" class="sr-only" aria-live="polite"></p>

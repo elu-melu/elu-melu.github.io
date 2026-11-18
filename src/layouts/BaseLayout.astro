@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { siteConfig } from "../data/siteData";
+import BrandChip from "../components/BrandChip.astro";
 
 interface Props {
   title?: string;
@@ -46,5 +47,6 @@ const ogImage = Astro.site ? new URL(`${base}/og.png`, Astro.site).href : `${bas
   </head>
   <body class="min-h-screen flex flex-col">
     <slot />
+    <BrandChip />
   </body>
 </html>

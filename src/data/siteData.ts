@@ -15,6 +15,81 @@ export const siteConfig = {
   bio: `I grew up in Nigeria, studied in Accra and St. Louis, and came back to work on money that has to move. At 78 Financials that means Payaza and Rove10. At LaBackDoor I research how AI finds and fixes vulnerabilities. At Bare Max I edit interviews with Nigerian creatives. The rest of my time goes to films, books, politics, and the arguments I keep having with all three.`,
 };
 
+// Images shown on hover over [insert_boogeyman] in the bio. Files live in public/boogeymen/.
+export const boogeymen = [
+  {
+    file: "goya.jpg",
+    title: "Que viene el Coco (Los Caprichos, no. 3)",
+    credit: "Francisco Goya, 1799",
+    license: "Public domain",
+    source:
+      "https://commons.wikimedia.org/wiki/File:Goya_-_Que_viene_el_Coco,_bdh0000066336,_1799.jpg",
+  },
+  {
+    file: "kismet.jpg",
+    title: "Kismet, MIT Museum",
+    credit: "Polimerek",
+    license: "CC BY-SA 3.0",
+    source: "https://commons.wikimedia.org/wiki/File:Kismet_robot_at_MIT_Museum.jpg",
+  },
+  {
+    file: "bigfoot.jpg",
+    title: "Bigfoot, Patterson–Gimlin film",
+    credit: "Roger Patterson and Robert Gimlin, 1967",
+    license: "Public domain",
+    source:
+      "https://commons.wikimedia.org/wiki/File:Patterson_Gimlin_Bigfoot_(cropped).jpg",
+  },
+  {
+    file: "matcha.jpg",
+    title: "Hot matcha green tea latte",
+    credit: "NuCastiel",
+    license: "CC BY 2.0",
+    source:
+      "https://commons.wikimedia.org/wiki/File:Hot_Matcha_Green_Tea_Latte_(36622433756).jpg",
+  },
+  {
+    file: "fuseli.jpg",
+    title: "The Nightmare",
+    credit: "Henry Fuseli, 1781",
+    license: "Public domain",
+    source:
+      "https://commons.wikimedia.org/wiki/File:Johann_Heinrich_F%C3%BCssli_-_The_Nightmare_55.5.A-d1-2019-04-15.jpg",
+    position: "30% 50%",
+  },
+  {
+    file: "hokusai.jpg",
+    title: "The Ghost of Kohada Koheiji",
+    credit: "Katsushika Hokusai, 1831–32",
+    license: "Public domain",
+    source:
+      "https://commons.wikimedia.org/wiki/File:Hokusai_The_Ghost_Kohada_Koheiji.jpg",
+  },
+  {
+    file: "goya43.jpg",
+    title: "The Sleep of Reason Produces Monsters (Los Caprichos, no. 43)",
+    credit: "Francisco Goya, 1799",
+    license: "Public domain",
+    source: "https://commons.wikimedia.org/wiki/File:Goya-Capricho-43.jpg",
+  },
+  {
+    file: "nosferatu.jpg",
+    title: "Count Orlok, Nosferatu",
+    credit: "Max Schreck in F. W. Murnau's film, 1922",
+    license: "Public domain",
+    source:
+      "https://commons.wikimedia.org/wiki/File:Max_Schreck_as_Count_Orlok_in_Nosferatu_%E2%80%93_Eine_Symphonie_des_Grauens_(1922).jpg",
+  },
+  {
+    file: "maschinenmensch.jpg",
+    title: "The Maschinenmensch, Metropolis",
+    credit: "Horst von Harbou, 1927",
+    license: "Public domain",
+    source:
+      "https://commons.wikimedia.org/wiki/File:Horst_von_Harbou_-_Metropolis_-_Maschinenmensch.jpg",
+  },
+];
+
 export const now = {
   updated: "November 2026",
   building:

@@ -10,9 +10,15 @@ export const siteConfig = {
   title: "Webster Elumelu",
   description:
     "The personal site of Webster Elumelu: payment systems, security research, editing, films, books, and the work in between.",
-  location: "Abuja, NG",
+  location: "Here, There, Anywhere",
   email: "elumeluwebster@gmail.com",
-  bio: `I grew up in Nigeria, studied in Accra and St. Louis, and came back to work on money that has to move. At 78 Financials that means Payaza and Rove10. At LaBackDoor I research how AI finds and fixes vulnerabilities. At Bare Max I edit interviews with Nigerian creatives. The rest of my time goes to films, books, politics, and the arguments I keep having with all three.`,
+  // bio: `I grew up in Nigeria, studied in Accra and St. Louis, and came back to work on money that has to move. At 78 Financials that means Payaza and Rove10. At LaBackDoor I research how AI finds and fixes vulnerabilities. At Bare Max I edit interviews with Nigerian creatives. The rest of my time goes to films, books, politics, and the arguments I keep having with all three.`,(™)
+  bio: `I was born, as I'm hoping we all were, to the sound of happy people. I wonder if they'd be happy if they knew I'd have to cry at a screen and keyboard trying to get code with no legs to "run".
+  \nCurrently working at 78Financials as a software engineer and Ideas Guy™ at Rove10, and I handle user experience on Payaza's platforms. Good work, great people.
+  \nWe all have questions. "Why does [insert_boogeyman] feel so iminent?" "Why does a computer work like that?" I can say that one of my hats I wear is a researcher's.
+  \nI believe that we're all interesting; especially people who come out of Nigeria, home and abroad, in creative endeavors. I try to fold that philosophy into the questions I ask them over at Bare Max. 
+  \nMy interests: math, jiujitsu, music, skating, design, life & living
+  `,
 };
 
 // Images shown on hover over [insert_boogeyman] in the bio. Files live in public/boogeymen/.
@@ -181,7 +187,7 @@ export const experience: ExperienceEntry[] = [
     bullets: [
       "Own the Payaza merchant app and the Rove10 back office (React, TypeScript, Vue)",
       "Build the Spring Boot services behind transfers and bill payments, with OAuth, role-based access and audit logging",
-      "Helped build the Dangote IPO platform: the investor-facing side, the admin panel, and a setup that let different brokers run on it. It sold over 2.79 million shares, worth over ₦1.46 billion",
+      "Helped build the Dangote IPO platform: the investor-facing side, the admin panel, and a setup that let different brokers run on it. It sold over 2.79 million shares, worth over ₦3.1 billion",
       "Shipped Payaza Give from start to finish, including settling payments in multiple currencies, designed to hold up under many people paying at once and under attack",
     ],
   },

@@ -7,4 +7,4 @@ link: "/work/dangote-ipo/"
 linkLabel: "Read the case study"
 ---
 
-The offer sold over 2.79 million shares, worth over ₦1.46 billion, between 14 September and 27 October 2026.
+The offer sold over 2.79 million shares, worth over ₦3.1 billion, between 14 September and 27 October 2026.

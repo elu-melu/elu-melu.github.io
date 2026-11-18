@@ -64,9 +64,10 @@ async function main() {
 }
 
 // If Spotify can't be reached, reuse what the live site already shows, so a
-// failed fetch never wipes "Last played".
+// failed fetch never wipes "Last played". Also covers a local build with no
+// secrets, which then mirrors production instead of showing an empty column.
 async function keepLive() {
-  const site = process.env.SITE_URL;
+  const site = process.env.SITE_URL ?? "https://elu-melu.github.io";
   if (!site) return;
   try {
     const res = await fetch(`${site.replace(/\/$/, "")}/spotify.json`, { signal: AbortSignal.timeout(10000) });

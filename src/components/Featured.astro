@@ -8,7 +8,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   <div class="max-w-page mx-auto px-gutter">
     <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 mb-block">
       <h2 class="text-title">Selected</h2>
-      <p class="text-meta text-muted">Asked, chosen, shared.</p>
+      <p class="text-meta text-muted">Asked, chosen.</p>
     </div>
 
     <div class="grid md:grid-cols-2 gap-4">
@@ -39,35 +39,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
         target="_blank"
         rel="noopener noreferrer"
         data-chip="labackdoor"
-        class="lit p-6 md:p-8 flex flex-col"
+        class="lit p-6 md:p-8 flex flex-col md:col-span-2"
       >
         <p class="text-meta text-muted num">02 / Chosen</p>
         <h3 class="text-title mt-4">Teaching an agent to fix what it finds</h3>
-        <p class="text-ink-2 mt-4">
+        <p class="text-ink-2 max-w-measure mt-4">
           At LaBackDoor, we're building an AI that finds and remediates real software vulnerabilities. The published work
           started with forecasting them; the agent is the part that has to act.
         </p>
         <span class="link text-small font-[560] inline-flex items-center gap-1.5 mt-auto pt-8">
           LaBackDoor
-          <ArrowUpRight size={16} stroke-width={1.5} aria-hidden="true" class="i-out" />
-          <span class="sr-only"> (opens in a new tab)</span>
-        </span>
-      </a>
-
-      <a
-        href={links.bareMax}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="lit p-6 md:p-8 flex flex-col"
-      >
-        <p class="text-meta text-muted num">03 / Shared</p>
-        <h3 class="text-title mt-4">How I interview a creative</h3>
-        <p class="text-ink-2 mt-4">
-          I research each creative, write questions tailored to them, and shape their answers into stories that keep the
-          artist's voice intact.
-        </p>
-        <span class="link text-small font-[560] inline-flex items-center gap-1.5 mt-auto pt-8">
-          Bare Max
           <ArrowUpRight size={16} stroke-width={1.5} aria-hidden="true" class="i-out" />
           <span class="sr-only"> (opens in a new tab)</span>
         </span>

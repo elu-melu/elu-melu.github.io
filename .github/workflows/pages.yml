@@ -10,11 +10,12 @@ on:
       spotify_only:
         type: boolean
         default: false
+  # Disabled for now; re-enable by uncommenting.
   # Backup refresh. GitHub runs these late or skips them, which is why an
   # external cron also calls workflow_dispatch with spotify_only.
   # Scheduled runs only deploy when the tracks have changed.
-  schedule:
-    - cron: "*/5 * * * *"
+  # schedule:
+  #   - cron: "*/5 * * * *"
 
 permissions:
   contents: read
